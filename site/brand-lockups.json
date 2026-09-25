@@ -1,0 +1,17 @@
+{
+  "livaya": {
+    "width": 152,
+    "height": 44,
+    "icon": "livaya-icon-v2.png"
+  },
+  "alago": {
+    "width": 144,
+    "height": 44,
+    "icon": "alago-icon.png"
+  },
+  "sulivo": {
+    "width": 152,
+    "height": 44,
+    "icon": "sulivo-icon.png"
+  }
+}

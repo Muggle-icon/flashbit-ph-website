@@ -27,7 +27,8 @@ const brands = [
 const route = brand => siteUrl(`${brand.id}financing/`);
 const arrow = '<span aria-hidden="true">↗</span>';
 function brandLogo(brand) {
-  return `<img src="${siteUrl(`assets/${brand.id}-icon.png`)}" width="360" height="360" alt=""><span>${brand.name}</span>`;
+  const width = { alago: 390, livaya: 447, sulivo: 417 }[brand.id];
+  return `<span class="brand-lockup"><img class="brand-symbol" src="${siteUrl(`assets/${brand.id}-icon.png`)}" width="360" height="360" alt=""><img class="brand-lettering" src="${siteUrl(`assets/${brand.id}-wordmark.png`)}" width="${width}" height="201" alt="${brand.name}"></span>`;
 }
 function header(brand = null) {
   const logo = brand
@@ -55,10 +56,10 @@ function shell(title, description, body, brand = null) {
 function home() {
   return shell('Flashbit | Online lending brands in the Philippines', 'Meet LIVAYA, ALAGO and SULIVO. Explore our online lending brands, their apps, loan information and contact details.', `
   <section class="home-hero"><div class="wrap home-hero-grid">
-    <div class="hero-copy"><p class="product-category">Flashbit Philippines</p><h1>Online lending.<br>For everyday needs.</h1><p class="hero-intro">Meet LIVAYA, ALAGO and SULIVO.</p><p class="hero-description">Three brands for everyday financial needs. Explore the apps, learn what to check before borrowing, and find the support you need.</p><div class="home-brand-line">${brands.map(b=>`<span><img src="${siteUrl(`assets/${b.id}-icon.png`)}" width="360" height="360" alt="">${b.name}</span>`).join('')}</div></div>
+    <div class="hero-copy"><p class="product-category">Flashbit Philippines</p><h1>Online lending.<br>For everyday needs.</h1><p class="hero-intro">Meet LIVAYA, ALAGO and SULIVO.</p><p class="hero-description">Three brands for everyday financial needs. Explore the apps, learn what to check before borrowing, and find the support you need.</p><div class="home-brand-line">${brands.map(b=>`<span class="home-brand-badge">${brandLogo(b)}</span>`).join('')}</div></div>
     <div class="home-visual">${portrait(brands[0], 'main-portrait', 'eager')}<div class="portrait-inset">${portrait(brands[1], '', 'eager')}</div><p class="home-photo-note">For work, home and everyday life.</p></div>
   </div></section>
-  <section id="brands" class="brands-section"><div class="wrap"><div class="section-heading"><div><h2>Find your brand.<br>Get to know your loan.</h2></div><p>Start with the app and product information.<br>Make time to understand the details.</p></div><div class="brand-grid">${brands.map(b => `<article class="brand-card ${b.id}"><div class="brand-card-top"><img src="${siteUrl(`assets/${b.id}-icon.png`)}" width="360" height="360" alt="" loading="lazy"><div><h3>${b.name}</h3><p class="card-parent">Online lending</p></div></div><p class="brand-card-title">${b.title}</p><p class="brand-card-desc">${b.description}</p><a class="brand-card-link" href="${route(b)}">Explore ${b.name}</a></article>`).join('')}</div></div></section>`);
+  <section id="brands" class="brands-section"><div class="wrap"><div class="section-heading"><div><h2>Find your brand.<br>Get to know your loan.</h2></div><p>Start with the app and product information.<br>Make time to understand the details.</p></div><div class="brand-grid">${brands.map(b => `<article class="brand-card ${b.id}"><div class="brand-card-top"><h3>${brandLogo(b)}</h3><p class="card-parent">Online lending</p></div><p class="brand-card-title">${b.title}</p><p class="brand-card-desc">${b.description}</p><a class="brand-card-link" href="${route(b)}">Explore ${b.name}</a></article>`).join('')}</div></div></section>`);
 }
 await mkdir(dist, { recursive: true });
 await writeFile(path.join(dist, 'index.html'), home());

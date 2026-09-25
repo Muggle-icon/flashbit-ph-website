@@ -2,13 +2,14 @@
 
 Updated: 2026-09-25
 
-These two images are AI-generated illustrative everyday-life scenes for the website. They are not photographs of identified customers, testimonials, or evidence of actual users' nationality, occupation, or borrowing history. They were made with the built-in OpenAI `image_gen` tool (not a CLI/API fallback or stock-image service).
+These three images are AI-generated illustrative everyday-life scenes for the website. They are not photographs of identified customers, testimonials, or evidence of actual users' nationality, occupation, or borrowing history. They were made with the built-in OpenAI `image_gen` tool (not a CLI/API fallback or stock-image service).
 
 The original user-supplied brand artwork, people and App screenshots remain unchanged. LIVAYA retains the supplied original image. New ALAGO and SULIVO lifestyle imagery responds to the user's request for more varied gender, faces and everyday settings. Existing App screenshots are still the source for product UI and loan information.
 
 | Asset | Exact dimensions | Intended use | Source |
 | --- | --- | --- | --- |
 | `dist/assets/alago-worker-v2.png` | 1254 × 1254 px | ALAGO lifestyle photo; ordinary male retail worker during a phone break | Built-in image_gen, 2026-09-25 |
+| `dist/assets/flashbit-community-v1.png` | 2170 × 725 px | Company homepage; continuous community shop scene with two adults doing ordinary tasks | Built-in image_gen, 2026-09-25 |
 | `dist/assets/sulivo-seller-v2.png` | 1254 × 1254 px | SULIVO lifestyle photo; short-haired female online seller packing orders | Built-in image_gen, 2026-09-25 |
 
 ## Visual inspection
@@ -40,3 +41,9 @@ Must feel clearly different from a long-haired woman in a retail grocery setting
 No typography, logo, watermark, interface overlay, conspicuous shipping label, money, coins, flags, tourist landmarks, palm trees, beach, exaggerated smile, thumbs-up, glamorous clothing, studio advertising pose, poverty narrative or luxurious styling. This is a generated everyday life illustration, not a real customer endorsement.
 ```
 
+
+## Company homepage scene
+
+`flashbit-community-v1.png` is an unchanged AI-generated wide image (2170 × 725), visually inspected before use. An ordinary man arranges stock at a community shop while a woman checks her phone. The complete scene is displayed at its native aspect ratio to keep heads and working hands visible. No customer endorsement or claim of actual borrower identity is made. SHA-256: `e91e44a8c9151e6a8bbd9fddb93b04328e3c1b64f22899a430dac3a8ee4da8f7`.
+
+Prompt direction: candid, eye-level, natural-daylight Philippine community shop; normal clothing, skin and expressions; practical stock and everyday phone use; no direct-to-camera posing, cash, loan UI, flags, Jeepneys, tourism, luxury or poverty framing.

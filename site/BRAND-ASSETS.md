@@ -21,9 +21,9 @@ The original PNG wordmarks are retained byte-for-byte as supplied reference artw
 
 ### Fixed geometry and usage
 
-The master icon is 44 units tall; actual capital height is 24 units; icon-to-lettering gap is 11 units. These are this project's optical design decisions, **not an industry-standard ratio**. Shared cap height and baseline retain consistent lettering across names with and without descenders. Full master dimensions are Livaya 152×44, Alago 144×44, Sulivo 152×44.
+The master icon is 44 units tall; actual capital height is 20 units; icon-to-lettering gap is 10 units, with a shared baseline at 30 units. The 2026-09-25 review reduced the lettering's cap height from 24 to 20 units (16.7%) while preserving the icon size, weight, names, and colors. These are this project's optical design decisions, **not an industry-standard ratio**. Shared cap height and baseline retain consistent lettering across names with and without descenders. Full master dimensions are Livaya 134×44, Alago 128×44, Sulivo 134×44.
 
-Scale the complete asset, never its components separately. Desktop headers use 44px height; mobile headers and product footers use 40px; cards use 48px, or 40px in the narrower three-column layout. At the smallest deployed size, cap height is about 21.8px. Keep at least 11/44 of the rendered icon height clear around the composition; current website containers exceed this. Do not distort, recolor with CSS, stretch to a shared width, or introduce a different icon/text ratio at a breakpoint.
+Scale the complete asset, never its components separately. Desktop headers use 44px height; mobile headers and product footers use 40px; cards use 48px, or 40px in the narrower three-column layout. At the smallest deployed size, cap height is about 18.2px. Keep at least 11/44 of the rendered icon height clear around the composition; current website containers exceed this. Do not distort, recolor with CSS, stretch to a shared width, or introduce a different icon/text ratio at a breakpoint.
 
 All nine formal combinations use the same master asset per brand: three company cards, three product headers, three product footers. LIVAYA's favicon and the carousel heading also use the new icon. Raw App screenshots preserve their original artwork; updating an App screenshot requires a new real screenshot from the product team.
 

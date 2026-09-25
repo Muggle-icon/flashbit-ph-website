@@ -20,12 +20,12 @@ cmap = font.getBestCmap()
 
 # Project-specific optical relationship, not a universal logo-design ratio.
 icon_size = 44
-gap = 11
-cap_height = 24
+gap = 10
+cap_height = 20
 cap_pen = BoundsPen(glyphs)
 glyphs[cmap[ord('H')]].draw(cap_pen)
 scale = cap_height / cap_pen.bounds[3]
-baseline = 32
+baseline = 30
 tracking = -0.35 / scale
 metadata = {}
 

@@ -1,5 +1,9 @@
 # Flashbit Philippines website
 
+Each product page has its own brand logo and product-local navigation. Company and cross-brand discovery links live in the footer.
+
+Asset provenance: [font licenses and official sources](site/FONT-LICENSES.md), [lifestyle image sources](site/IMAGE-SOURCES.md). Web fonts are self-hosted under SIL OFL 1.1. App screenshots remain unchanged.
+
 Four informational pages for Flashbit and its brands: LIVAYA, ALAGO and SULIVO.
 
 ## GitHub Pages

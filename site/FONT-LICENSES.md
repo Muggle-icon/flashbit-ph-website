@@ -7,9 +7,11 @@ Verified on 2026-09-25 against the font projects' official repositories and the 
 | Font | Intended use | Local file | Official version / axes | License |
 | --- | --- | --- | --- | --- |
 | Manrope | HTML body text, headings, navigation and live text wordmarks | `dist/assets/fonts/Manrope-Variable.woff2` | 4.505; normal; weight 200–800 | SIL Open Font License 1.1 |
-| Source Serif 4 | Italic display emphasis | `dist/assets/fonts/SourceSerif4-Italic-Variable.woff2` | 4.005; italic; weight 200–900; optical size 8–60 | SIL Open Font License 1.1 |
+| Source Serif 4 | Retained asset from the previous revision; not loaded by current CSS | `dist/assets/fonts/SourceSerif4-Italic-Variable.woff2` | 4.005; italic; weight 200–900; optical size 8–60 | SIL Open Font License 1.1 |
 
 These are the official complete WOFF2 builds, downloaded without subsetting, conversion or modification. The local filenames are simplified for URLs; the internal font names and copyright metadata are unchanged. Both files include the Philippine peso character `₱` (U+20B1), verified from their Unicode character maps, and the printable basic Latin characters used by these English-language pages.
+
+Manrope is the sole active website typeface after the lending-focused visual revision. Source Serif 4 and its complete license are retained for provenance; the current CSS does not load or use it.
 
 The fonts are self-hosted alongside the website. CSS must use relative font URLs so GitHub Pages repository subpaths remain valid. The build copies the fonts and the complete license texts into `docs/assets/fonts/`.
 
@@ -72,13 +74,6 @@ CSS integration:
   src: url("./assets/fonts/Manrope-Variable.woff2") format("woff2");
   font-style: normal;
   font-weight: 200 800;
-  font-display: swap;
-}
-@font-face {
-  font-family: "Source Serif 4";
-  src: url("./assets/fonts/SourceSerif4-Italic-Variable.woff2") format("woff2");
-  font-style: italic;
-  font-weight: 200 900;
   font-display: swap;
 }
 ```

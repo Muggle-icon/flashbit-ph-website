@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { renderAppCarousel } from './components/app-carousel.mjs';
 
 const baseSegments = (process.env.BASE_PATH || '/').split('/').filter(Boolean);
 if (baseSegments.some(segment => !/^[A-Za-z0-9._~-]+$/.test(segment) || segment === '.' || segment === '..')) {
@@ -9,16 +10,19 @@ if (baseSegments.some(segment => !/^[A-Za-z0-9._~-]+$/.test(segment) || segment 
 }
 const basePath = baseSegments.length ? `/${baseSegments.join('/')}/` : '/';
 const siteUrl = relativePath => `${basePath}${relativePath.replace(/^\/+/, '')}`;
-const styleVersion = createHash('sha256')
-  .update(await readFile(new URL('./dist/styles.css', import.meta.url)))
-  .digest('hex').slice(0, 12);
+const assetVersions = Object.fromEntries(await Promise.all(
+  ['styles.css', 'carousel.css', 'carousel.js'].map(async file => [file,
+    createHash('sha256').update(await readFile(new URL(`./dist/${file}`, import.meta.url))).digest('hex').slice(0, 12),
+  ])
+));
+const assetUrl = file => `${siteUrl(file)}?v=${assetVersions[file]}`;
 const dist = process.env.OUTPUT_DIR
   ? path.resolve(process.env.OUTPUT_DIR)
   : fileURLToPath(new URL('./dist/', import.meta.url));
 const brands = [
-  { id: 'livaya', name: 'LIVAYA', title: 'Room for everyday life.', description: 'For the shop, the household, and the days in between.', label: 'Everyday life, a little clearer.', hero: 'A little room<br>for <em>everyday life.</em>', body: 'For everyday expenses and the small business you look after. Get to know LIVAYA, with loan details you can review at your own pace.', scene: 'A woman checking her phone while working in a local shop.' },
-  { id: 'alago', name: 'ALAGO', title: 'Clarity for your working day.', description: 'Straightforward information, right on your phone.', label: 'Your day. A clearer next step.', hero: 'Your day.<br><em>A clearer view.</em>', body: 'Between work and the rest of your day, keep your loan information close. Explore ALAGO and see what to review before you apply.', photo: 'alago-worker-v2.png', scene: 'A man in a navy polo checking his phone during a break in a neighbourhood shop.' },
-  { id: 'sulivo', name: 'SULIVO', title: 'Keep everyday plans in view.', description: 'A clearer look at borrowing, wherever the day takes you.', label: 'Everyday plans, thoughtfully managed.', hero: 'Your everyday.<br><em>In focus.</em>', body: 'From workdays to running your own business, everyday plans need a little room. Meet SULIVO and take a clear look at borrowing.', photo: 'sulivo-seller-v2.png', scene: 'A short-haired woman checking her phone beside parcels on a small packing table.' },
+  { id: 'livaya', name: 'LIVAYA', title: 'For everyday needs.', description: 'Explore loan information for household expenses and small-business cash flow.', label: 'Home, your shop, and the everyday in between.', hero: 'Online loans for<br><span>everyday needs.</span>', body: 'Household expenses, shop supplies, or a gap between payments. Get to know LIVAYA and review the amount, costs and repayment dates before you decide.', scene: 'A woman checking her phone while working in a local shop.' },
+  { id: 'alago', name: 'ALAGO', title: 'Loan information, on your phone.', description: 'Get familiar with the app, loan details and the steps before you apply.', label: 'Everyday working life. Information on your phone.', hero: 'Online loans.<br><span>Clear next steps.</span>', body: 'For the expenses between one payday and the next. Explore the ALAGO app, check your loan details and understand the repayment schedule before you apply.', photo: 'alago-worker-v2.png', scene: 'A man in a navy polo checking his phone during a break in a neighbourhood shop.' },
+  { id: 'sulivo', name: 'SULIVO', title: 'For work and everyday plans.', description: 'A closer look at borrowing for daily expenses and self-employed life.', label: 'Daily expenses, orders, and your next working day.', hero: 'Everyday plans.<br><span>Online loan options.</span>', body: 'Work, orders and daily expenses do not always follow the same schedule. Explore SULIVO and review your loan options, costs and repayment dates.', photo: 'sulivo-seller-v2.png', scene: 'A short-haired woman checking her phone beside parcels on a small packing table.' },
 ];
 const route = brand => siteUrl(`${brand.id}financing/`);
 const arrow = '<span aria-hidden="true">↗</span>';
@@ -46,19 +50,24 @@ function portrait(brand, cls = '', loading = 'lazy') {
 }
 function shell(title, description, body, brand = null) {
   const favicon = brand ? siteUrl(`assets/${brand.id}-icon.png`) : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="16" fill="%23183F42"/%3E%3Cpath d="M23 49V28H17V21H23V18Q23 8 34 8H43V16H36Q32 16 32 20V21H42V28H32V49Z" fill="white"/%3E%3C/svg%3E';
-  return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183f42"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" href='${favicon}'><link rel="preload" href="${siteUrl('assets/fonts/Manrope-Variable.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${siteUrl('styles.css')}?v=${styleVersion}"></head><body id="top" class="${brand ? `brand-page ${brand.id}` : 'home-page'}">${header(brand)}<main id="main">${body}</main>${footer(brand)}</body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183f42"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" href='${favicon}'><link rel="preload" href="${siteUrl('assets/fonts/Manrope-Variable.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${assetUrl('styles.css')}">${brand ? `<link rel="stylesheet" href="${assetUrl('carousel.css')}"><script defer src="${assetUrl('carousel.js')}"></script>` : ''}</head><body id="top" class="${brand ? `brand-page ${brand.id}` : 'home-page'}">${header(brand)}<main id="main">${body}</main>${footer(brand)}</body></html>`;
 }
 function home() {
-  return shell('Flashbit · A little clarity. A brighter way forward.', 'Get to know Flashbit and our three online lending brands in the Philippines: LIVAYA, ALAGO and SULIVO.', `<section class="home-hero wrap" aria-labelledby="home-title"><div class="hero-copy"><p class="eyebrow">FLASHBIT · PHILIPPINES</p><h1 id="home-title">A little clarity.<br>A brighter way<br><em>forward.</em></h1><p class="hero-intro">Get to know Flashbit and our brands.</p><p class="hero-description">Explore LIVAYA, ALAGO and SULIVO, and find product information and contact details in one place.</p><div class="hero-signoff"><span class="small-rule"></span><p>Loan information.<br>All in one place.</p></div></div><div class="home-visual"><div class="visual-caption"><span>Made for the everyday.</span><span>01 / 03</span></div>${portrait(brands[0], 'main-portrait', 'eager')}<div class="portrait-inset">${portrait(brands[1], '', 'eager')}<span>A moment in your day.</span></div><div class="visual-footnote"><span>Work. Home. Your community.</span><span class="brand-dots" aria-hidden="true"><i></i><i></i><i></i></span></div></div></section><section id="brands" class="brands-section"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">OUR BRANDS</p><h2>Three brands.<br>For everyday needs.</h2></div><p>Discover our online lending brands.<br>Find the details that matter to you.</p></div><div class="brand-grid">${brands.map((b,i) => `<article class="brand-card ${b.id}"><div class="brand-card-top"><a class="brand-icon-link" href="${route(b)}" aria-label="Explore ${b.name}"><img src="${siteUrl(`assets/${b.id}-icon.png`)}" width="360" height="360" alt="${b.name}" loading="lazy"></a><span class="card-number">0${i+1}</span></div><h3><a href="${route(b)}">${b.name} ${arrow}</a></h3><p class="brand-card-title">${b.title}</p><p class="brand-card-desc">${b.description}</p><div class="card-rule"></div><p class="card-parent">A Flashbit brand</p></article>`).join('')}</div></div></section>`);
+  return shell('Flashbit | Online lending brands in the Philippines', 'Meet LIVAYA, ALAGO and SULIVO. Explore our online lending brands, their apps, loan information and contact details.', `
+  <section class="home-hero"><div class="wrap home-hero-grid">
+    <div class="hero-copy"><p class="product-category">Flashbit Philippines</p><h1>Online lending.<br>For everyday needs.</h1><p class="hero-intro">Meet LIVAYA, ALAGO and SULIVO.</p><p class="hero-description">Three brands for everyday financial needs. Explore the apps, learn what to check before borrowing, and find the support you need.</p><div class="home-brand-line">${brands.map(b=>`<span><img src="${siteUrl(`assets/${b.id}-icon.png`)}" width="360" height="360" alt="">${b.name}</span>`).join('')}</div></div>
+    <div class="home-visual">${portrait(brands[0], 'main-portrait', 'eager')}<div class="portrait-inset">${portrait(brands[1], '', 'eager')}</div><p class="home-photo-note">For work, home and everyday life.</p></div>
+  </div></section>
+  <section id="brands" class="brands-section"><div class="wrap"><div class="section-heading"><div><h2>Find your brand.<br>Get to know your loan.</h2></div><p>Start with the app and product information.<br>Make time to understand the details.</p></div><div class="brand-grid">${brands.map(b => `<article class="brand-card ${b.id}"><div class="brand-card-top"><img src="${siteUrl(`assets/${b.id}-icon.png`)}" width="360" height="360" alt="" loading="lazy"><div><h3>${b.name}</h3><p class="card-parent">Online lending</p></div></div><p class="brand-card-title">${b.title}</p><p class="brand-card-desc">${b.description}</p><a class="brand-card-link" href="${route(b)}">Explore ${b.name}</a></article>`).join('')}</div></div></section>`);
 }
 await mkdir(dist, { recursive: true });
 await writeFile(path.join(dist, 'index.html'), home());
 function brandPage(b) {
   const features = [
-    ['Your amount, clearly shown.', 'Review the loan amount and available options in the app.'],
-    ['A repayment plan to review.', 'Check the payment amount, first due date and loan term.'],
-    ['Look at the whole cost.', 'Read the interest, fees and total repayment before you continue.'],
-    ['Help with the next step.', 'Use the support option in the app if you need help understanding a step.'],
+    ['Loan amount & term', 'Review the amount and available term. Borrow only what you can plan to repay.'],
+    ['Interest, fees & total cost', 'Check all charges and the total repayment in your own offer before accepting.'],
+    ['Repayment schedule', 'Know the first due date and each payment amount. Plan them around your budget.'],
+    ['Questions & support', 'Use the app support option or the contact details below if you need help.'],
   ];
   const steps = [
     ['Find the app', `Look for ${b.name} in your app store and check the app name before downloading.`],
@@ -66,11 +75,13 @@ function brandPage(b) {
     ['Complete your application', 'Provide the requested information and review your loan and repayment details.'],
     ['Check the result', 'If approved, follow the instructions in the app for receiving your funds.'],
   ];
-  return shell(`${b.name} · ${b.title} | Flashbit`, `Get to know ${b.name}, a Flashbit online lending brand in the Philippines. Explore the app, loan information and application steps.`, `
-  <section class="brand-hero"><div class="wrap brand-hero-grid"><div class="brand-hero-copy"><div class="brand-identity"><img src="${siteUrl(`assets/${b.id}-icon.png`)}" width="360" height="360" alt=""><div><p class="brand-name">${b.name}</p><p class="brand-parent">A Flashbit brand</p></div></div><h1>${b.hero}</h1><p class="brand-intro">${b.body}</p><a class="primary-link" href="#features">View loan details</a><p class="hero-small-note">Simple. Clear. At your pace.</p></div><figure class="brand-hero-image">${portrait(b, '', 'eager')}<figcaption><span>${b.label}</span><span class="caption-line" aria-hidden="true"></span></figcaption></figure></div></section>
-  <section class="features-section wrap" id="features" aria-labelledby="features-title"><div class="features-copy"><p class="eyebrow">GET TO KNOW ${b.name}</p><h2 id="features-title">A clearer picture.<br>Before you borrow.</h2><p class="section-intro">Take a moment to understand the details.<br>Start with what matters to your repayments.</p><div class="feature-list">${features.map((f,i) => `<article class="feature-item"><span class="feature-number">0${i+1}</span><div><h3>${f[0]}</h3><p>${f[1]}</p></div></article>`).join('')}</div></div><figure class="product-figure"><div class="app-stage"><div class="stage-caption"><img src="${siteUrl(`assets/${b.id}-icon.png`)}" width="360" height="360" alt=""><span>Inside the ${b.name} app</span></div><div class="phone-frame"><img src="${siteUrl(`assets/${b.id}-borrow.png`)}" width="1125" height="2436" loading="lazy" alt="${b.name} Borrow screen showing a loan amount, repayment term options and a first payment due date. Amounts shown are an example."></div></div><figcaption>Illustrative app screen. Review the details of your own offer.</figcaption></figure></section>
-  <section class="steps-section" id="how-it-works"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">HOW IT WORKS</p><h2>One step at a time.</h2></div><p>Get familiar with the application process<br>in the ${b.name} app.</p></div><ol class="steps-grid">${steps.map((s,i) => `<li class="step"><div class="step-top"><span class="step-number">0${i+1}</span><span class="step-connector" aria-hidden="true"></span></div><h3>${s[0]}</h3><p>${s[1]}</p></li>`).join('')}</ol><p class="steps-note">An application is subject to review. Check the full loan details and repayment schedule before accepting an offer.</p></div></section>`, b);
+  return shell(`${b.name} | Online loans in the Philippines`, `Explore ${b.name}, a Flashbit online lending brand. See the app screens, loan information, repayment guidance and application steps.`, `
+  <section class="brand-hero"><div class="wrap brand-hero-grid"><div class="brand-hero-copy"><p class="product-category">Online lending in the Philippines</p><h1>${b.hero}</h1><p class="brand-intro">${b.body}</p><div class="hero-actions"><a class="primary-link" href="#features">View loan details</a><a class="secondary-link" href="#how-it-works">How it works</a></div><p class="hero-small-note">Check the full cost and repayment schedule before you borrow.</p></div><figure class="brand-hero-image">${portrait(b, '', 'eager')}<figcaption>${b.label}</figcaption></figure></div></section>
+  <div class="loan-basics"><div class="wrap loan-basics-grid"><p class="basics-intro">Before you decide</p><p><strong>Loan amount</strong><span>What you will borrow</span></p><p><strong>Total repayment</strong><span>What you will pay back</span></p><p><strong>Payment dates</strong><span>When each payment is due</span></p></div></div>
+  <section class="features-section wrap" id="features" aria-labelledby="features-title"><div class="features-copy"><p class="section-label">Get to know ${b.name}</p><h2 id="features-title">A clearer picture.<br>Before you borrow.</h2><p class="section-intro">See the actual app screens and get familiar with the details that matter to your loan.</p><div class="feature-list">${features.map(f => `<article class="feature-item"><h3>${f[0]}</h3><p>${f[1]}</p></article>`).join('')}</div><a class="support-link" href="#contact">Have a question? Contact us</a></div>${renderAppCarousel(b, siteUrl)}</section>
+  <section class="steps-section" id="how-it-works"><div class="wrap"><div class="section-heading"><h2>How to get started.</h2><p>Four steps to get familiar<br>with the ${b.name} app.</p></div><ol class="steps-grid">${steps.map((s,i) => `<li class="step"><span class="step-number">${i+1}</span><h3>${s[0]}</h3><p>${s[1]}</p></li>`).join('')}</ol><p class="steps-note">An application is subject to review. Check the full loan details and repayment schedule before accepting an offer.</p></div></section>`, b);
 }
+
 for (const brand of brands) {
   const folder = path.join(dist, `${brand.id}financing`);
   await mkdir(folder, { recursive: true });

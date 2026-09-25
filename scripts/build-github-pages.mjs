@@ -10,7 +10,9 @@ if (!base || !base.startsWith('/') || !base.endsWith('/')) {
 }
 const output = path.resolve(root, process.env.PAGES_OUTPUT_DIR || 'docs');
 await mkdir(output, { recursive: true });
-await copyFile(path.join(root, 'site/dist/styles.css'), path.join(output, 'styles.css'));
+for (const file of ['styles.css', 'carousel.css', 'carousel.js']) {
+  await copyFile(path.join(root, 'site/dist', file), path.join(output, file));
+}
 await cp(path.join(root, 'site/dist/assets'), path.join(output, 'assets'), { recursive: true });
 execFileSync(process.execPath, [path.join(root, 'site/render.mjs')], {
   cwd: root,

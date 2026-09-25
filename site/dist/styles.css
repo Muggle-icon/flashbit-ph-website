@@ -1,120 +1,117 @@
 @font-face{font-family:Manrope;src:url('./assets/fonts/Manrope-Variable.woff2') format('woff2');font-style:normal;font-weight:200 800;font-display:swap}
-:root{--ink:#172f3b;--body:#415868;--line:#dce4e8;--brand-ink:#16494c;--brand-button:#145362;--brand-soft:#edf6f5;--hero:#164f58;--hero-ink:#fff;--hero-body:#e5f1f2}
+:root{--ink:#172f3b;--body:#415868;--line:#dce4e8;--page:#f5f7f8;--brand-ink:#16494c;--brand-button:#145362;--brand-soft:#edf6f5;--hero:#164f58;--hero-ink:#fff;--hero-body:#e5f1f2;--module-gap:32px;--module-pad:32px;--radius:12px}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:24px}
 body{margin:0;background:#fff;color:var(--ink);font-family:Manrope,sans-serif;font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
 h1,h2,h3,p,figure{margin:0}
 h1,h2,h3{line-height:1.25;font-weight:800;letter-spacing:-.025em}
-h1{font-size:38px}h2{font-size:30px}h3{font-size:18px}
+h1{font-size:36px}h2{font-size:28px}h3{font-size:18px}
 img{display:block;max-width:100%}a{color:inherit;text-decoration:none}button{font:inherit}
 a,button{-webkit-tap-highlight-color:transparent}
 a:focus-visible,button:focus-visible{outline:3px solid currentColor;outline-offset:4px}
 ::selection{background:#b7e7ec;color:#14303d}
-.wrap{width:min(1200px,calc(100% - 80px));margin-inline:auto}
+.wrap{width:min(1120px,calc(100% - 80px));margin-inline:auto}
 .skip{position:fixed;left:16px;top:-80px;z-index:10;padding:12px 20px;background:#fff;color:#163847;border:2px solid #163847}.skip:focus{top:12px}
 .livaya{--brand-ink:#123f49;--brand-button:#145362;--brand-soft:#e5f8fb;--hero:#7ce2ef;--hero-ink:#103b45;--hero-body:#174854}
 .alago{--brand-ink:#134681;--brand-button:#1158a4;--brand-soft:#edf4ff;--hero:#075cba;--hero-ink:#fff;--hero-body:#e5f0ff}
 .sulivo{--brand-ink:#373696;--brand-button:#4844b7;--brand-soft:#f0efff;--hero:#4947c7;--hero-ink:#fff;--hero-body:#efedff}
-/* Navigation and approved, fixed-proportion brand lockups. */
+/* The header uses whitespace; dividers belong inside related content modules. */
 .site-header{position:relative;z-index:2;background:#fff}
-.header-inner{min-height:80px;display:flex;align-items:center;justify-content:space-between;gap:30px}
+.header-inner{min-height:80px;display:flex;align-items:center;justify-content:space-between;gap:32px}
 .wordmark,.brand-wordmark{display:inline-flex;align-items:center;min-height:44px;flex-shrink:0}
 .flashbit-logo{width:auto;height:38px}.brand-lockup{width:auto;height:44px;flex-shrink:0}
 .site-header nav{display:flex;align-items:center;gap:32px}
 .site-header nav a{display:flex;align-items:center;min-height:44px;color:#354e5e;font-size:14px;font-weight:700}
 .site-header nav a[aria-current]{color:var(--brand-ink);font-weight:800}.site-header nav a:hover{color:var(--brand-ink)}
-.section-label{margin-bottom:10px;font-size:13px;font-weight:800;letter-spacing:.035em;color:var(--brand-ink)}
-/* Company: introduction, community scene, then a single brand directory. */
-.company-intro{background:#fff}
-.company-intro-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:80px;padding-block:38px}
-.company-intro h1{color:#16494c;font-size:36px;letter-spacing:-.03em}
-.company-intro-grid>p{max-width:550px;color:var(--body);font-size:16px;line-height:1.8}
-.company-scene{background:#e7edeb}.company-scene img{width:100%;height:auto}
-.brands-section{display:grid;grid-template-columns:250px minmax(0,1fr);gap:64px;padding-block:44px 56px}
-.directory-intro h2{font-size:27px;color:#16494c}.directory-intro p{margin-top:14px;font-size:16px;color:var(--body)}
-.brand-directory{border-top:1px solid var(--line)}
-.brand-row{display:grid;grid-template-columns:145px minmax(0,1fr) 125px;align-items:center;gap:24px;padding:24px 10px;border-bottom:1px solid var(--line)}
-.brand-row:hover{background:#f5f8f8}.directory-logo{display:flex;align-items:center}.directory-copy{display:block}
-.directory-copy strong{display:block;font-size:15px;line-height:1.5;font-weight:800;color:var(--ink)}
-.directory-copy>span{display:block;max-width:410px;margin-top:5px;font-size:16px;color:var(--body);line-height:1.65}
-.directory-action{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:13px;font-weight:800;color:var(--brand-ink)}.directory-action>span{font-size:21px;line-height:1}
-/* Product reading order: everyday purpose → loan information → app guide. */
-.brand-page .wrap{max-width:1120px}
-.product-intro{background:var(--hero);color:var(--hero-ink)}
-.product-intro-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;align-items:center;gap:72px;padding-block:36px}
+main{padding-block:24px 56px;background:var(--page)}
+main>section+section{margin-top:var(--module-gap)}
+.section-label{margin-bottom:8px;font-size:13px;font-weight:800;letter-spacing:.025em;color:var(--brand-ink)}
+.company-intro,.brands-section,.loan-information,.app-guide{border:1px solid var(--line);border-radius:var(--radius);background:#fff}
+.section-heading h2,.directory-intro h2{font-size:28px;color:var(--brand-ink)}
+.section-heading>p,.directory-intro>p{margin-top:8px;color:var(--body);font-size:16px;line-height:1.75}
+/* Company introduction and its environment share one boundary. */
+.company-intro-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:48px;padding:var(--module-pad)}
+.company-intro h1{color:#16494c;font-size:36px}
+.company-intro-grid>p{color:var(--body);font-size:16px;line-height:1.75}
+.company-scene{overflow:hidden;border-radius:0 0 11px 11px;background:#e7edeb}.company-scene img{width:100%;height:auto}
+.brands-section{padding:var(--module-pad)}
+.brand-directory{margin-top:24px;border-top:1px solid var(--line)}
+.brand-row{display:grid;grid-template-columns:160px minmax(0,1fr) 132px;align-items:center;gap:32px;padding:24px 8px}
+.brand-row+.brand-row{border-top:1px solid var(--line)}
+.brand-row:hover{background:#f5f8f8}.brand-row:focus-visible{outline-offset:-3px}
+.directory-logo{display:flex;align-items:center}.directory-copy{display:block}
+.directory-copy strong{display:block;font-size:17px;line-height:1.5;font-weight:800;color:var(--ink)}
+.directory-copy>span{display:block;max-width:490px;margin-top:4px;font-size:16px;color:var(--body);line-height:1.65}
+.directory-action{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;font-weight:800;color:var(--brand-ink)}.directory-action>span{font-size:21px;line-height:1}
+/* Product modules: purpose, borrowing information, interactive app guide. */
+.product-intro{border-radius:var(--radius);background:var(--hero);color:var(--hero-ink)}
+.product-intro-grid{display:grid;grid-template-columns:minmax(0,1fr) 288px;align-items:center;gap:64px;padding:var(--module-pad)}
 .product-category{margin-bottom:12px;font-size:14px;line-height:1.5;font-weight:700}
-.product-intro h1{max-width:570px;font-size:36px;line-height:1.25;letter-spacing:-.025em}
-.product-description{max-width:550px;margin-top:18px;color:var(--hero-body);font-size:16px;line-height:1.75}
-.primary-link{display:inline-flex;align-items:center;justify-content:center;min-height:48px;margin-top:24px;padding:11px 23px;border-radius:6px;background:#fff;color:var(--brand-ink);font-size:15px;font-weight:800}
+.product-intro h1{max-width:540px;font-size:36px;line-height:1.25}
+.product-description{max-width:530px;margin-top:16px;color:var(--hero-body);font-size:16px;line-height:1.75}
+.primary-link{display:inline-flex;align-items:center;justify-content:center;min-height:48px;margin-top:24px;padding:11px 24px;border-radius:6px;background:#fff;color:var(--brand-ink);font-size:15px;font-weight:800}
 .primary-link:hover{background:#f1f5f8}.livaya .primary-link{background:#123f49;color:#fff}.livaya .primary-link:hover{background:#1b5360}
 .portrait{position:relative;overflow:hidden;aspect-ratio:1.1;background:#e5f1f1;border-radius:8px}
 .portrait img{position:absolute;left:0;top:0;width:100%;height:auto;max-width:none;transform:translateY(-41.05%)}
 .portrait.photo img{inset:0;width:100%;height:100%;object-fit:cover;transform:none}
-.loan-information{padding-block:52px}
-.section-heading h2{font-size:30px;color:var(--brand-ink)}
-.section-heading>p{max-width:540px;margin-top:12px;color:var(--body);font-size:16px;line-height:1.75}
-.loan-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:48px;margin:30px 0 0}
-.loan-facts dt{font-size:19px;font-weight:800;line-height:1.4;color:var(--brand-ink)}
-.loan-facts dd{margin:10px 0 0;color:var(--body);font-size:16px;line-height:1.75}
-.borrowing-note{margin-top:28px;color:var(--body);font-size:13px;line-height:1.65}
-.app-guide{padding-block:52px;background:var(--brand-soft)}
-.app-guide-grid{margin-top:32px;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:104px;align-items:center}
-.app-guide-copy{display:flex;flex-direction:column;align-self:stretch;max-width:520px;padding-block:62px 140px}
-.app-steps{flex:1;display:grid;grid-template-rows:repeat(4,1fr);gap:26px;list-style:none;padding:0;margin:0}
-.app-steps li{display:grid;grid-template-columns:32px minmax(0,1fr);gap:16px;align-items:start}
-.step-number{display:grid;place-items:center;width:32px;height:32px;flex-shrink:0;border-radius:50%;background:var(--brand-button);color:#fff;font-size:14px;font-weight:800}
-.app-steps h3{padding-top:3px;font-size:18px;line-height:1.45;letter-spacing:-.01em}
-.app-steps p{margin-top:6px;color:var(--body);font-size:16px;line-height:1.75}
-/* Contacts stay in a consistent, subordinate footer. */
+.loan-information{padding:var(--module-pad)}
+.loan-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:24px 0 0}
+.loan-facts>div{padding-inline:24px}.loan-facts>div:first-child{padding-left:0}.loan-facts>div:last-child{padding-right:0}
+.loan-facts>div+div{border-left:1px solid var(--line)}
+.loan-facts dt{font-size:18px;font-weight:800;line-height:1.45;color:var(--ink)}
+.loan-facts dd{margin:8px 0 0;color:var(--body);font-size:16px;line-height:1.75}
+.borrowing-note{margin-top:24px;padding-top:16px;border-top:1px solid var(--line);color:var(--body);font-size:14px;line-height:1.65}
+/* Contact groups and utility links stay within a single, quieter footer. */
 .site-footer{padding-top:40px;background:#16494c;color:#fff}
-.footer-grid{display:grid;grid-template-columns:1fr .8fr 1.3fr;gap:64px;padding-bottom:34px}
+.footer-grid{display:grid;grid-template-columns:1fr .85fr 1.3fr;gap:48px;padding-bottom:32px}
 .footer-company>p{margin-top:16px;color:#e0eded;font-size:14px;line-height:1.75}
-.footer-company .footer-caption{font-size:12px;color:#cddfe0;margin-top:9px}
-.footer-grid h2{font-size:15px;letter-spacing:0;line-height:1.5;margin:4px 0 13px}
-.footer-brands>a{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:220px;min-height:44px;font-size:13px;font-weight:650;color:#e0eded}
+.footer-company .footer-caption{font-size:13px;color:#cddfe0;margin-top:8px}
+.footer-grid h2{font-size:16px;letter-spacing:0;line-height:1.5;margin:4px 0 12px}
+.footer-brands>a{display:flex;align-items:center;justify-content:space-between;gap:12px;max-width:220px;min-height:44px;font-size:14px;font-weight:650;color:#e0eded}
 .footer-brands>a:hover,.company-link:hover{text-decoration:underline;text-underline-offset:4px}
-.company-link{display:inline-flex;align-items:center;gap:14px;min-height:44px;margin-top:8px;font-size:13px;font-weight:800}
+.company-link{display:inline-flex;align-items:center;gap:14px;min-height:44px;margin-top:8px;font-size:14px;font-weight:800}
 .phone-link{display:inline-flex;align-items:center;min-height:44px;font-weight:700}.footer-contact dl{margin:0}
-.footer-contact dt{font-size:12px;font-weight:700;color:#cddfe0}.footer-contact dd{margin:5px 0 16px;font-size:13px;line-height:1.8;color:#e0eded}
-.footer-bottom{display:flex;justify-content:space-between;gap:24px;border-top:1px solid #477174;padding-block:18px}.footer-bottom p{font-size:11px;color:#cddfe0}
+.footer-contact dt{font-size:13px;font-weight:700;color:#cddfe0}.footer-contact dd{margin:4px 0 16px;font-size:14px;line-height:1.8;color:#e0eded}
+.footer-bottom{display:flex;justify-content:space-between;gap:24px;border-top:1px solid #477174;padding-block:20px}.footer-bottom p{font-size:12px;color:#cddfe0}
 .brand-page .site-footer{background:#fff;color:var(--ink)}
 .brand-page .footer-company>p,.brand-page .footer-brands>a,.brand-page .footer-contact dd{color:var(--body)}
 .brand-page .footer-company .footer-caption,.brand-page .footer-contact dt,.brand-page .footer-bottom p{color:#4a6172}
 .brand-page .company-link{color:var(--brand-ink)}.brand-page .footer-bottom{border-color:var(--line)}.brand-page .site-footer .brand-lockup{height:40px}
 @media(max-width:1050px){
  .wrap{width:calc(100% - 48px)}
- .company-intro-grid{gap:40px}.brands-section{grid-template-columns:180px 1fr;gap:32px}
- .brand-row{grid-template-columns:134px 1fr;gap:16px}.directory-action{grid-column:2;justify-content:flex-start;gap:15px}
- .product-intro-grid{grid-template-columns:minmax(0,1fr) 280px;gap:40px}.product-intro h1{font-size:33px}
- .loan-facts{gap:30px}.app-guide-grid{grid-template-columns:minmax(0,1fr) 340px;gap:42px}
- .footer-grid{gap:32px}
+ .company-intro-grid{gap:32px}.company-intro h1{font-size:32px}
+ .brand-row{grid-template-columns:144px 1fr 112px;gap:24px}.directory-action{font-size:13px}
+ .product-intro-grid{grid-template-columns:minmax(0,1fr) 250px;gap:32px}.product-intro h1{font-size:32px}
+ .loan-facts>div{padding-inline:20px}.footer-grid{gap:32px}
 }
-@media(max-width:720px){
- .wrap{width:calc(100% - 40px)}
- .header-inner{min-height:76px;gap:9px;flex-wrap:wrap;padding-block:13px 6px}
+@media(max-width:760px){
+ :root{--module-gap:24px;--module-pad:24px}
+ .wrap{width:calc(100% - 32px)}
+ .header-inner{min-height:76px;gap:8px;flex-wrap:wrap;padding-block:12px 6px}
  .brand-lockup{height:40px}.flashbit-logo{height:35px}
- .site-header nav{width:100%;justify-content:space-between;gap:12px;padding-top:3px}.site-header nav a{font-size:12px}
- .company-intro-grid{grid-template-columns:1fr;gap:16px;padding-block:25px}.company-intro h1{font-size:30px}.company-intro-grid>p{line-height:1.75}
- .section-label{font-size:12px;margin-bottom:8px}.brands-section{display:block;padding-block:28px 35px}
- .directory-intro h2{font-size:25px}.directory-intro p{margin-top:9px;max-width:440px}.brand-directory{margin-top:22px}
- .brand-row{grid-template-columns:1fr auto;padding:21px 4px;gap:14px 16px}.directory-logo{grid-column:1}.directory-action{grid-column:2;grid-row:1;font-size:12px;gap:12px}
- .directory-copy{grid-column:1/-1}.directory-copy strong{font-size:14px}
- .product-intro-grid{grid-template-columns:1fr;gap:26px;padding-block:28px}
- .product-category{font-size:13px;margin-bottom:10px}.product-intro h1{font-size:30px;max-width:480px}
- .product-description{margin-top:14px}.primary-link{margin-top:20px}
- .product-intro .portrait{width:100%;max-width:340px;justify-self:center}
- .loan-information{padding-block:36px}.section-heading h2{font-size:27px}.section-heading>p{margin-top:10px}
- .loan-facts{grid-template-columns:1fr;gap:24px;margin-top:27px}.loan-facts dt{font-size:18px}.loan-facts dd{margin-top:7px}.borrowing-note{margin-top:25px}
- .app-guide{padding-block:36px}.app-guide-grid{grid-template-columns:1fr;gap:34px}.app-guide-copy{max-width:none;padding-block:0}
- .app-steps{grid-template-rows:none;gap:24px}.app-steps li{gap:14px}.app-steps h3{font-size:17px}.app-steps p{margin-top:6px}
- .app-carousel{width:100%;max-width:420px;justify-self:center}
- .site-footer{padding-top:30px}.footer-grid{grid-template-columns:1fr;gap:26px;padding-bottom:26px}
+ .site-header nav{width:100%;justify-content:space-between;gap:12px}.site-header nav a{font-size:12px}
+ main{padding-block:16px 32px}
+ .company-intro-grid{grid-template-columns:1fr;gap:16px}.company-intro h1{font-size:30px}
+ .section-heading h2,.directory-intro h2{font-size:26px}.directory-intro p{max-width:440px}
+ .brand-row{grid-template-columns:1fr auto;padding:24px 0;gap:16px}.brand-row:last-child{padding-bottom:0}
+ .directory-action{grid-column:2;grid-row:1;font-size:12px;gap:8px}.directory-copy{grid-column:1/-1}
+ .directory-copy strong{font-size:16px}
+ .product-intro-grid{grid-template-columns:1fr;gap:24px}
+ .product-category{font-size:13px}.product-intro h1{font-size:30px;max-width:480px}
+ .product-description{margin-top:16px}.primary-link{margin-top:20px}
+ .product-intro .portrait{width:100%;max-width:400px;justify-self:center}
+ .loan-facts{grid-template-columns:1fr;margin-top:24px}
+ .loan-facts>div{padding:0 0 20px}.loan-facts>div+div{padding:20px 0;border-left:0;border-top:1px solid var(--line)}.loan-facts>div:last-child{padding-bottom:0}
+ .borrowing-note{margin-top:24px;padding-top:16px}
+ .site-footer{padding-top:32px}.footer-grid{grid-template-columns:1fr;gap:24px;padding-bottom:24px}
+ .footer-grid>div+div{padding-top:24px;border-top:1px solid #477174}.brand-page .footer-grid>div+div{border-color:var(--line)}
  .footer-grid h2{margin-bottom:8px}.footer-contact dd br{display:none}.footer-contact dd{max-width:440px}
- .footer-bottom{display:block;padding-block:17px}.footer-bottom p+p{margin-top:5px}
+ .footer-bottom{display:block;padding-block:20px}.footer-bottom p+p{margin-top:4px}
 }
 @media(max-width:370px){
- .wrap{width:calc(100% - 32px)}.company-intro h1{font-size:27px}.directory-action{gap:8px;font-size:11px}
- .directory-logo .brand-lockup{height:38px}.site-header nav{gap:8px}.site-header nav a{font-size:11px}
- .product-intro h1{font-size:28px}.section-heading h2{font-size:25px}
+ :root{--module-pad:20px}
+ .company-intro h1{font-size:26px}.directory-action{font-size:12px}.directory-action>span{display:none}
+ .directory-logo .brand-lockup{height:36px}.site-header nav{gap:8px}
+ .product-intro h1{font-size:28px}.section-heading h2,.directory-intro h2{font-size:24px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}

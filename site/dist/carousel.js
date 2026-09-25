@@ -44,6 +44,7 @@
       slides.forEach((slide, i) => slide.setAttribute('aria-hidden', String(i !== index)));
       root.querySelector('[data-carousel-label]').textContent = slides[index].dataset.label;
       root.querySelector('[data-carousel-count]').textContent = `${index + 1} / ${slides.length}`;
+      root.querySelector('[data-carousel-description]').textContent = slides[index].dataset.description;
     };
     const announce = message => { status.textContent = message; };
     const schedule = () => {
@@ -159,7 +160,7 @@
     if ('ResizeObserver' in window) new ResizeObserver(resize).observe(viewport);
     else window.addEventListener('resize', resize);
 
-    root.querySelector('[data-carousel-controls]').hidden = false;
+    root.querySelectorAll('[data-carousel-controls]').forEach(controls => { controls.hidden = false; });
     root.classList.add('is-enhanced');
     updateSlide(0);
     updatePlayback();

@@ -59,11 +59,11 @@ function shell(title, description, body, brand = null) {
 }
 function home() {
   return shell('Flashbit | Online lending brands in the Philippines', 'Get to know Flashbit and our online lending brands in the Philippines. Explore product information and find support.', `
-  <section class="company-intro"><div class="wrap company-intro-grid">
+  <section class="company-intro wrap"><div class="company-intro-grid">
     <div><p class="section-label">About our company</p><h1>Flashbit Philippines</h1></div>
     <p>Flashbit brings together LIVAYA, ALAGO and SULIVO. Find information about our online lending brands, their apps and how to contact us.</p>
-  </div></section>
-  <div class="company-scene"><img src="${siteUrl('assets/flashbit-community-v1.png')}" width="2170" height="725" alt="Everyday community shop scene: a man arranges stock while a woman checks her phone." fetchpriority="high" decoding="async"></div>
+  </div>
+  <div class="company-scene"><img src="${siteUrl('assets/flashbit-community-v1.png')}" width="2170" height="725" alt="Everyday community shop scene: a man arranges stock while a woman checks her phone." fetchpriority="high" decoding="async"></div></section>
   <section id="brands" class="brands-section wrap" aria-labelledby="brands-title"><div class="directory-intro"><h2 id="brands-title">Our brands</h2><p>Visit a product website for loan information, the app guide and support.</p></div><div class="brand-directory">${brands.map(b => `<a class="brand-row ${b.id}" href="${route(b)}" aria-label="Visit ${b.name} website"><span class="directory-logo">${brandLogo(b)}</span><span class="directory-copy"><strong>${b.title}</strong><span>${b.description}</span></span><span class="directory-action">Visit ${b.name}<span aria-hidden="true">→</span></span></a>`).join('')}</div></section>`);
 }
 await mkdir(dist, { recursive: true });
@@ -74,16 +74,10 @@ function brandPage(b) {
     ['Total cost', 'Review the interest, fees and total amount you will pay back.'],
     ['Repayment schedule', 'Know your first due date and the amount of each payment.'],
   ];
-  const steps = [
-    ['Welcome', `Read the introduction to ${b.name}, then continue to the app.`],
-    ['Sign in', 'Use your phone number and follow the instructions in the app.'],
-    ['Home', 'Find loan information and explore the options shown on your home screen.'],
-    ['Loan details', 'Review the amount, term, interest, fees and repayment schedule before you decide.'],
-  ];
   return shell(`${b.name} | Online loans in the Philippines`, `Explore ${b.name}, a Flashbit online lending brand. See the app screens, loan information, repayment guidance and application steps.`, `
-  <section class="product-intro"><div class="wrap product-intro-grid"><div class="product-intro-copy"><p class="product-category">${b.name} online loans · Philippines</p><h1>${b.title}</h1><p class="product-description">${b.body}</p><a class="primary-link" href="#features">View loan details</a></div>${portrait(b, '', 'eager')}</div></section>
+  <section class="product-intro wrap"><div class="product-intro-grid"><div class="product-intro-copy"><p class="product-category">${b.name} online loans · Philippines</p><h1>${b.title}</h1><p class="product-description">${b.body}</p><a class="primary-link" href="#features">View loan details</a></div>${portrait(b, '', 'eager')}</div></section>
   <section class="loan-information wrap" id="features" aria-labelledby="features-title"><div class="section-heading"><h2 id="features-title">Before you borrow</h2><p>Review these details in your own loan offer.</p></div><dl class="loan-facts">${features.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('')}</dl><p class="borrowing-note">Borrow only what you can plan to repay.</p></section>
-  <section class="app-guide" id="how-it-works" aria-labelledby="app-guide-title"><div class="wrap"><div class="section-heading"><h2 id="app-guide-title">Inside the ${b.name} app</h2><p>From the welcome screen to reviewing your loan details.</p></div><div class="app-guide-grid"><div class="app-guide-copy"><ol class="app-steps">${steps.map((s,i) => `<li><span class="step-number" aria-hidden="true">${i+1}</span><div><h3>${s[0]}</h3><p>${s[1]}</p></div></li>`).join('')}</ol></div>${renderAppCarousel({ ...b, icon: brandLockups[b.id].icon }, siteUrl)}</div></div>
+  <section class="app-guide wrap" id="how-it-works" aria-labelledby="app-guide-title">${renderAppCarousel(b, siteUrl)}
   </section>
   `, b);
 }

@@ -7,8 +7,8 @@ Applies to the company homepage and all three product pages. User feedback on 20
 | Component | Default and hover | Selected/current | Keyboard focus |
 | --- | --- | --- | --- |
 | Carousel playback | Transparent text button; no underline, fill change, shadow or movement on hover. Visible label describes the next action: Start autoplay / Pause autoplay. | No selected appearance; its label changes with the requested playback state. | Visible focus outline. It is the first focusable control inside the carousel. |
-| Screenshot selectors | Transparent, no hover fill or underline. | Only the current screenshot has the persistent light fill and heavier text, with `aria-current`. | Visible focus outline; native button keyboard activation. |
-| Previous/next | Stable light circular buttons, no hover fill change or movement. | No selected state. | Visible focus outline. |
+| App guide step selectors | Transparent, no hover fill or underline. | The current step has a persistent light fill and colored number, with `aria-current`; its description and the screenshot stay synchronized. | Visible focus outline; native button keyboard activation. |
+| Previous/next | Transparent arrow buttons, no hover fill change or movement. | No selected state. | Visible focus outline. |
 | Page navigation | Stable layout; hover changes text color only. | The company Home link has a persistent current-page marker. Product anchor links are not marked as separate current pages. | Visible focus outline. |
 | Primary link | Filled action, restrained background change; no scale, shadow or outline on mouse hover. | Not a selection control. | Visible focus outline. |
 | Secondary/content/footer links | Text-link affordance and restrained underline feedback. | Not selection controls. | Visible focus outline. |
@@ -19,6 +19,8 @@ The project's touch target is at least 44 CSS px high for controls and navigatio
 ## Carousel behavior
 
 - Start on Welcome, then Sign in, Home, Loan details.
+- The four step buttons are the only named screenshot selector set. Desktop shows descriptions inside them; mobile uses the same buttons plus one synchronized description. Reserve mobile description height so rotation does not move the screenshot.
+- Hide the dynamic mobile description without JavaScript; it must not remain stuck on Welcome while a user swipes other screenshots.
 - Only autoplay while the screenshot viewport is sufficiently visible and the document is active.
 - Mouse hover temporarily pauses rotation; removing its visual effect must not remove this behavior.
 - Keyboard focus and manual navigation pause rotation persistently. Only an explicit Start action resumes it.

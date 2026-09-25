@@ -1,4 +1,5 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
@@ -8,6 +9,9 @@ if (baseSegments.some(segment => !/^[A-Za-z0-9._~-]+$/.test(segment) || segment 
 }
 const basePath = baseSegments.length ? `/${baseSegments.join('/')}/` : '/';
 const siteUrl = relativePath => `${basePath}${relativePath.replace(/^\/+/, '')}`;
+const styleVersion = createHash('sha256')
+  .update(await readFile(new URL('./dist/styles.css', import.meta.url)))
+  .digest('hex').slice(0, 12);
 const dist = process.env.OUTPUT_DIR
   ? path.resolve(process.env.OUTPUT_DIR)
   : fileURLToPath(new URL('./dist/', import.meta.url));
@@ -42,7 +46,7 @@ function portrait(brand, cls = '', loading = 'lazy') {
 }
 function shell(title, description, body, brand = null) {
   const favicon = brand ? siteUrl(`assets/${brand.id}-icon.png`) : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="16" fill="%23183F42"/%3E%3Cpath d="M23 49V28H17V21H23V18Q23 8 34 8H43V16H36Q32 16 32 20V21H42V28H32V49Z" fill="white"/%3E%3C/svg%3E';
-  return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183f42"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" href='${favicon}'><link rel="preload" href="${siteUrl('assets/fonts/Manrope-Variable.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${siteUrl('styles.css')}"></head><body id="top" class="${brand ? `brand-page ${brand.id}` : 'home-page'}">${header(brand)}<main id="main">${body}</main>${footer(brand)}</body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183f42"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" href='${favicon}'><link rel="preload" href="${siteUrl('assets/fonts/Manrope-Variable.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${siteUrl('styles.css')}?v=${styleVersion}"></head><body id="top" class="${brand ? `brand-page ${brand.id}` : 'home-page'}">${header(brand)}<main id="main">${body}</main>${footer(brand)}</body></html>`;
 }
 function home() {
   return shell('Flashbit · A little clarity. A brighter way forward.', 'Get to know Flashbit and our three online lending brands in the Philippines: LIVAYA, ALAGO and SULIVO.', `<section class="home-hero wrap" aria-labelledby="home-title"><div class="hero-copy"><p class="eyebrow">FLASHBIT · PHILIPPINES</p><h1 id="home-title">A little clarity.<br>A brighter way<br><em>forward.</em></h1><p class="hero-intro">Get to know Flashbit and our brands.</p><p class="hero-description">Explore LIVAYA, ALAGO and SULIVO, and find product information and contact details in one place.</p><div class="hero-signoff"><span class="small-rule"></span><p>Loan information.<br>All in one place.</p></div></div><div class="home-visual"><div class="visual-caption"><span>Made for the everyday.</span><span>01 / 03</span></div>${portrait(brands[0], 'main-portrait', 'eager')}<div class="portrait-inset">${portrait(brands[1], '', 'eager')}<span>A moment in your day.</span></div><div class="visual-footnote"><span>Work. Home. Your community.</span><span class="brand-dots" aria-hidden="true"><i></i><i></i><i></i></span></div></div></section><section id="brands" class="brands-section"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">OUR BRANDS</p><h2>Three brands.<br>For everyday needs.</h2></div><p>Discover our online lending brands.<br>Find the details that matter to you.</p></div><div class="brand-grid">${brands.map((b,i) => `<article class="brand-card ${b.id}"><div class="brand-card-top"><a class="brand-icon-link" href="${route(b)}" aria-label="Explore ${b.name}"><img src="${siteUrl(`assets/${b.id}-icon.png`)}" width="360" height="360" alt="${b.name}" loading="lazy"></a><span class="card-number">0${i+1}</span></div><h3><a href="${route(b)}">${b.name} ${arrow}</a></h3><p class="brand-card-title">${b.title}</p><p class="brand-card-desc">${b.description}</p><div class="card-rule"></div><p class="card-parent">A Flashbit brand</p></article>`).join('')}</div></div></section>`);

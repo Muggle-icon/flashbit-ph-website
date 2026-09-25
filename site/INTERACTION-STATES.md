@@ -18,6 +18,8 @@ The project's touch target is at least 44 CSS px high for controls and navigatio
 
 Visual hover rules are guarded by `@media (hover:hover)`. Pressed feedback uses `:active` and does not depend on hover capability. Browser tap feedback is retained using `-webkit-tap-highlight-color: rgba(23,47,59,.15)` on links and buttons; it is not suppressed with a transparent highlight. Static headings, loan information, photographs and section containers do not receive interactive hover effects.
 
+App screen selectors use a stable 8px gap with no row separators. Selection changes only the existing fill and colors, never margins, padding, text size or font weight. The heading and playback control belong to the guide column; the screenshot has no outer white card. Its controls and example caption align to the same 280px width as the phone.
+
 ## Carousel behavior
 
 - Start on Welcome, then Sign in, Home, Loan details.

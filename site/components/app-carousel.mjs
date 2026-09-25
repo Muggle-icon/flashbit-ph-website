@@ -16,10 +16,12 @@ export function renderAppCarousel(brand, siteUrl) {
   const id = `app-carousel-${brand.id}`;
   const name = escapeHtml(brand.name);
   return `<div class="app-carousel" data-app-carousel role="region" aria-roledescription="carousel" aria-label="${name} app screens" aria-describedby="${id}-caption">
-    <div class="app-carousel-heading"><div class="section-heading"><h2 id="app-guide-title">Inside the ${name} app</h2><p>Choose a screen to preview the app.</p></div><button class="app-carousel-playback" type="button" data-carousel-playback aria-controls="${id}-screens" hidden>Pause autoplay</button></div>
     <div class="app-carousel-layout">
+      <div class="app-carousel-copy">
+      <div class="app-carousel-heading"><div class="section-heading"><h2 id="app-guide-title">Inside the ${name} app</h2><p>Choose a screen to preview the app.</p></div><button class="app-carousel-playback" type="button" data-carousel-playback aria-controls="${id}-screens" hidden>Pause autoplay</button></div>
       <div class="app-carousel-navigation" data-carousel-controls hidden>
         <ol class="app-carousel-selectors" aria-label="Choose an app screen">${screens.map((screen, index) => `<li><button type="button" data-carousel-go="${index}" aria-controls="${id}-screens" aria-labelledby="${id}-label-${index}" aria-describedby="${id}-description-${index}"${index === 0 ? ' aria-current="true"' : ''}><span class="step-number" aria-hidden="true">${index + 1}</span><span class="step-copy"><strong id="${id}-label-${index}">${screen.label}</strong><span class="step-description" id="${id}-description-${index}">${screen.description}</span></span></button></li>`).join('')}</ol>
+      </div>
       </div>
       <figure class="app-carousel-stage">
         <div class="app-carousel-phone"><div class="app-carousel-viewport" id="${id}-screens" data-carousel-viewport tabindex="0" role="group" aria-label="App screenshots. Swipe or use the left and right arrow keys to explore.">

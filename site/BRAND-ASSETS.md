@@ -10,6 +10,17 @@ On 2026-09-25 the user supplied Alago.png, Livaya.png and Sulivo.png and request
 
 The PNG files are copied byte-for-byte. Their lettering, capitalization, colors, transparency and proportions are preserved. All three have the same export height and are scaled by that height, so the absence of a descender in Sulivo does not make its lettering disproportionately large.
 
-The original brand icon is paired with the corresponding supplied wordmark in product headers and footers, the company hero brand row, and the company product cards. Full-color artwork uses a light surface on dark backgrounds. No CSS color filter, stretching, redrawing or raster editing is applied.
+The original brand icon is paired with the corresponding supplied wordmark in product headers and footers and the company product cards. Full-color artwork uses a light surface on dark backgrounds. No CSS color filter, stretching, redrawing or raster editing is applied.
 
 Ordinary brand mentions in prose, navigation descriptions, buttons and App screenshots remain unchanged. The live website font license record does not establish the source typography license of these supplied raster assets.
+
+## Flashbit website identity
+
+The website uses an original geometric F symbol with a separated square element, paired with Manrope 750 lettering converted to SVG paths. The design is intended to make the company identity recognizable at navigation size. It does not claim a financial guarantee or a lending speed.
+
+- `dist/assets/flashbit-logo.svg`: full-color horizontal logo.
+- `dist/assets/flashbit-logo-reverse.svg`: light logo for the dark company footer.
+- `dist/assets/flashbit-symbol.svg`: standalone mark and favicon.
+- `scripts/build-flashbit-logo.py`: optional asset-generation script; requires Python `fonttools` and `brotli`. The normal website build uses the committed SVGs and does not require these packages.
+
+The three product logos now appear in the company brand section and product headers/footers. The duplicate, noninteractive company hero brand row has been removed. Product PNG artwork is unchanged. The website design record is not a trademark-availability determination.

@@ -1,8 +1,8 @@
 const screens = [
-  { id: 'borrow', label: 'Loan details', description: 'Loan details screen. Amounts and dates shown are examples.' },
-  { id: 'home', label: 'Home', description: 'Home screen.' },
-  { id: 'login', label: 'Sign in', description: 'Phone number sign-in screen.' },
   { id: 'welcome', label: 'Welcome', description: 'Welcome screen.' },
+  { id: 'login', label: 'Sign in', description: 'Phone number sign-in screen.' },
+  { id: 'home', label: 'Home', description: 'Home screen.' },
+  { id: 'borrow', label: 'Loan details', description: 'Loan details screen. Amounts and dates shown are examples.' },
 ];
 
 const escapeHtml = value => String(value).replace(/[&<>"']/g, character => ({
@@ -27,7 +27,7 @@ export function renderAppCarousel(brand, siteUrl) {
     <div class="app-carousel-controls" data-carousel-controls hidden>
       <div class="app-carousel-toolbar">
         <button class="app-carousel-arrow" type="button" data-carousel-previous aria-controls="${id}-screens" aria-label="Previous app screen"><span aria-hidden="true">←</span></button>
-        <p class="app-carousel-position"><span data-carousel-label>Loan details</span><span data-carousel-count>1 / 4</span></p>
+        <p class="app-carousel-position"><span data-carousel-label>${screens[0].label}</span><span data-carousel-count>1 / ${screens.length}</span></p>
         <button class="app-carousel-arrow" type="button" data-carousel-next aria-controls="${id}-screens" aria-label="Next app screen"><span aria-hidden="true">→</span></button>
       </div>
       <div class="app-carousel-selectors" role="group" aria-label="Choose an app screen">${screens.map((screen, index) => `<button type="button" data-carousel-go="${index}" aria-controls="${id}-screens"${index === 0 ? ' aria-current="true"' : ''}>${screen.label}</button>`).join('')}</div>

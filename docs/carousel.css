@@ -3,7 +3,7 @@
 .app-carousel-stage{padding:26px 24px 20px;border-radius:24px;background:var(--brand-soft)}
 .app-carousel-heading{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:22px;color:var(--brand-ink);font-size:14px;font-weight:700;line-height:1.5}
 .app-carousel-heading img{width:28px;height:28px;border-radius:7px;flex-shrink:0}
-.app-carousel-phone{width:min(100%,306px);margin-inline:auto;border:5px solid var(--brand-ink);border-radius:30px;background:#fff;overflow:hidden;box-shadow:0 14px 28px #142d3812}
+.app-carousel-phone{width:min(100%,306px);margin-inline:auto;border:1px solid #142d381f;border-radius:24px;background:#fff;overflow:hidden;box-shadow:0 8px 22px #142d380a}
 .app-carousel-viewport{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--brand-ink) var(--brand-soft);-webkit-overflow-scrolling:touch;outline-offset:-4px}
 .app-carousel-viewport:focus-visible{outline:3px solid var(--brand-ink);outline-offset:-4px}
 .app-carousel.is-enhanced .app-carousel-viewport{scrollbar-width:none}
@@ -15,14 +15,14 @@
 .app-carousel-toolbar{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;gap:12px;max-width:340px;margin-inline:auto}
 .app-carousel button{font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .app-carousel button:focus-visible{outline:3px solid var(--brand-ink);outline-offset:3px}
-.app-carousel-arrow{display:grid;place-items:center;min-width:44px;min-height:44px;padding:0;border:1px solid var(--brand-ink);border-radius:50%;background:#fff;color:var(--brand-ink);font-size:22px!important;line-height:1}
-.app-carousel-arrow:hover{background:var(--brand-button);border-color:var(--brand-button);color:#fff}
+.app-carousel-arrow{display:grid;place-items:center;min-width:44px;min-height:44px;padding:0;border:0;border-radius:50%;background:#ffffffa6;color:var(--brand-ink);font-size:22px!important;line-height:1}
+.app-carousel-arrow:hover{background:#fff}
 .app-carousel-position{display:flex;flex-direction:column;align-items:center;gap:2px;margin:0;text-align:center;font-size:15px;font-weight:700;line-height:1.4;color:var(--brand-ink)}
 .app-carousel-position [data-carousel-count]{font-size:12px;line-height:1.5;font-weight:600;color:var(--body);font-variant-numeric:tabular-nums}
 .app-carousel-selectors{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;margin-top:16px}
-.app-carousel-selectors button{min-height:44px;min-width:0;padding:7px 4px;border:1px solid transparent;border-radius:8px;background:transparent;color:var(--body);font-size:12px;font-weight:650;line-height:1.4}
-.app-carousel-selectors button:hover{border-color:var(--brand-ink);color:var(--brand-ink)}
-.app-carousel-selectors button[aria-current="true"]{background:var(--brand-button);border-color:var(--brand-button);color:#fff}
+.app-carousel-selectors button{min-height:44px;min-width:0;padding:7px 4px;border:0;border-radius:8px;background:transparent;color:var(--body);font-size:12px;font-weight:600;line-height:1.4}
+.app-carousel-selectors button:hover{background:#ffffff80;color:var(--brand-ink)}
+.app-carousel-selectors button[aria-current="true"]{background:#ffffffb3;color:var(--brand-ink);font-weight:800;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px}
 .app-carousel-playback{display:block;min-height:44px;margin:8px auto 0;padding:8px 12px;border:0;border-radius:6px;background:transparent;color:var(--brand-ink);font-size:13px!important;font-weight:700!important;line-height:1.5;text-decoration:underline;text-underline-offset:4px}
 .app-carousel-playback:hover{background:#fff}
 .app-carousel>figcaption{max-width:350px;margin:16px auto 0;font-size:14px;line-height:1.6;font-weight:500;color:var(--body);text-align:center}

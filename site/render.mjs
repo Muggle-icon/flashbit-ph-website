@@ -30,10 +30,13 @@ function brandLogo(brand) {
   const width = { alago: 390, livaya: 447, sulivo: 417 }[brand.id];
   return `<span class="brand-lockup"><img class="brand-symbol" src="${siteUrl(`assets/${brand.id}-icon.png`)}" width="360" height="360" alt=""><img class="brand-lettering" src="${siteUrl(`assets/${brand.id}-wordmark.png`)}" width="${width}" height="201" alt="${brand.name}"></span>`;
 }
+function flashbitLogo(reverse = false) {
+  return `<img class="flashbit-logo" src="${siteUrl(`assets/flashbit-logo${reverse ? '-reverse' : ''}.svg`)}" width="203" height="48" alt="Flashbit">`;
+}
 function header(brand = null) {
   const logo = brand
     ? `<a class="brand-wordmark" href="${route(brand)}#top" aria-label="${brand.name} home">${brandLogo(brand)}</a>`
-    : `<a class="wordmark" href="${siteUrl('#top')}" aria-label="Flashbit home">Flashbit<span class="wordmark-period">.</span></a>`;
+    : `<a class="wordmark" href="${siteUrl('#top')}" aria-label="Flashbit home">${flashbitLogo()}</a>`;
   const navigation = brand
     ? '<a href="#features">Loan details</a><a href="#how-it-works">How it works</a><a href="#contact">Contact us</a>'
     : `<a href="${siteUrl('#top')}" aria-current="page">Home</a><a href="${siteUrl('#brands')}">Our Brands</a><a href="#contact">Contact us</a>`;
@@ -43,23 +46,23 @@ function footer(brand = null) {
   if (brand) {
     return `<footer id="contact" class="site-footer"><div class="wrap"><div class="footer-grid"><div class="footer-company"><a class="brand-wordmark" href="${route(brand)}#top" aria-label="${brand.name} home">${brandLogo(brand)}</a><p>${brand.title}</p><p class="footer-caption">${brand.name} is a Flashbit brand.</p><a class="company-link" href="${siteUrl('#top')}">About Flashbit ${arrow}</a></div><div class="footer-brands"><h2>Explore ${brand.name}</h2><a href="#features">Loan details</a><a href="#how-it-works">How it works</a><a class="other-brands-link" href="${siteUrl('#brands')}">Other Flashbit brands ${arrow}</a></div><div class="footer-contact"><h2>Contact us</h2><dl><dt>Phone</dt><dd>(0945) 129-2500</dd><dt>Address</dt><dd>3/F Prestige Tower, F. Ortigas Jr. Road,<br>Ortigas Center, San Antonio, Pasig City,<br>National Capital Region, 1600</dd></dl></div></div><div class="footer-bottom"><p>© 2026 Flashbit. All rights reserved.</p><p>${brand.name} · Philippines</p></div></div></footer>`;
   }
-  return `<footer id="contact" class="site-footer"><div class="wrap"><div class="footer-grid"><div class="footer-company"><p class="wordmark">Flashbit<span class="wordmark-period">.</span></p><p>One shared vision.<br>Three distinct brands.</p><p class="footer-caption">Get to know Flashbit in the Philippines.</p></div><div class="footer-brands"><h2>Our Brands</h2>${brands.map(b => `<a href="${route(b)}">${b.name} ${arrow}</a>`).join('')}</div><div class="footer-contact"><h2>Contact us</h2><dl><dt>Phone</dt><dd>(0945) 129-2500</dd><dt>Address</dt><dd>3/F Prestige Tower, F. Ortigas Jr. Road,<br>Ortigas Center, San Antonio, Pasig City,<br>National Capital Region, 1600</dd></dl></div></div><div class="footer-bottom"><p>© 2026 Flashbit. All rights reserved.</p><p>Philippines</p></div></div></footer>`;
+  return `<footer id="contact" class="site-footer"><div class="wrap"><div class="footer-grid"><div class="footer-company"><a class="wordmark" href="${siteUrl('#top')}" aria-label="Flashbit home">${flashbitLogo(true)}</a><p>One shared vision.<br>Three distinct brands.</p><p class="footer-caption">Get to know Flashbit in the Philippines.</p></div><div class="footer-brands"><h2>Our Brands</h2>${brands.map(b => `<a href="${route(b)}">${b.name} ${arrow}</a>`).join('')}</div><div class="footer-contact"><h2>Contact us</h2><dl><dt>Phone</dt><dd>(0945) 129-2500</dd><dt>Address</dt><dd>3/F Prestige Tower, F. Ortigas Jr. Road,<br>Ortigas Center, San Antonio, Pasig City,<br>National Capital Region, 1600</dd></dl></div></div><div class="footer-bottom"><p>© 2026 Flashbit. All rights reserved.</p><p>Philippines</p></div></div></footer>`;
 }
 function portrait(brand, cls = '', loading = 'lazy') {
   if (brand.photo) return `<div class="portrait photo ${brand.id} ${cls}"><img src="${siteUrl(`assets/${brand.photo}`)}" alt="${brand.scene}" width="1254" height="1254" loading="${loading}" decoding="async"></div>`;
   return `<div class="portrait ${brand.id} ${cls}"><img src="${siteUrl(`assets/${brand.id}-welcome.png`)}" alt="${brand.scene}" width="1125" height="2436" loading="${loading}" decoding="async"></div>`;
 }
 function shell(title, description, body, brand = null) {
-  const favicon = brand ? siteUrl(`assets/${brand.id}-icon.png`) : 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="16" fill="%23183F42"/%3E%3Cpath d="M23 49V28H17V21H23V18Q23 8 34 8H43V16H36Q32 16 32 20V21H42V28H32V49Z" fill="white"/%3E%3C/svg%3E';
+  const favicon = brand ? siteUrl(`assets/${brand.id}-icon.png`) : siteUrl('assets/flashbit-symbol.svg');
   return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183f42"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" href='${favicon}'><link rel="preload" href="${siteUrl('assets/fonts/Manrope-Variable.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${assetUrl('styles.css')}">${brand ? `<link rel="stylesheet" href="${assetUrl('carousel.css')}"><script defer src="${assetUrl('carousel.js')}"></script>` : ''}</head><body id="top" class="${brand ? `brand-page ${brand.id}` : 'home-page'}">${header(brand)}<main id="main">${body}</main>${footer(brand)}</body></html>`;
 }
 function home() {
-  return shell('Flashbit | Online lending brands in the Philippines', 'Meet LIVAYA, ALAGO and SULIVO. Explore our online lending brands, their apps, loan information and contact details.', `
+  return shell('Flashbit | Online lending brands in the Philippines', 'Get to know Flashbit and our online lending brands in the Philippines. Explore product information and find support.', `
   <section class="home-hero"><div class="wrap home-hero-grid">
-    <div class="hero-copy"><p class="product-category">Flashbit Philippines</p><h1>Online lending.<br>For everyday needs.</h1><p class="hero-intro">Meet LIVAYA, ALAGO and SULIVO.</p><p class="hero-description">Three brands for everyday financial needs. Explore the apps, learn what to check before borrowing, and find the support you need.</p><div class="home-brand-line">${brands.map(b=>`<span class="home-brand-badge">${brandLogo(b)}</span>`).join('')}</div></div>
-    <div class="home-visual">${portrait(brands[0], 'main-portrait', 'eager')}<div class="portrait-inset">${portrait(brands[1], '', 'eager')}</div><p class="home-photo-note">For work, home and everyday life.</p></div>
+    <div class="hero-copy"><p class="product-category">Flashbit Philippines</p><h1>Online lending.<br>For everyday life.</h1><p class="hero-description">Get to know Flashbit and our online lending brands. Explore product information and find the support you need, all in one place.</p></div>
+    <div class="home-visual">${portrait(brands[0], 'main-portrait', 'eager')}</div>
   </div></section>
-  <section id="brands" class="brands-section"><div class="wrap"><div class="section-heading"><div><h2>Find your brand.<br>Get to know your loan.</h2></div><p>Start with the app and product information.<br>Make time to understand the details.</p></div><div class="brand-grid">${brands.map(b => `<article class="brand-card ${b.id}"><div class="brand-card-top"><h3>${brandLogo(b)}</h3><p class="card-parent">Online lending</p></div><p class="brand-card-title">${b.title}</p><p class="brand-card-desc">${b.description}</p><a class="brand-card-link" href="${route(b)}">Explore ${b.name}</a></article>`).join('')}</div></div></section>`);
+  <section id="brands" class="brands-section" aria-labelledby="brands-title"><div class="wrap"><div class="section-heading"><h2 id="brands-title">Our lending brands.</h2><p>Choose a brand to explore its app,<br>loan information and support.</p></div><div class="brand-grid">${brands.map(b => `<a class="brand-card ${b.id}" href="${route(b)}" aria-labelledby="${b.id}-card-title"><h3 id="${b.id}-card-title">${brandLogo(b)}</h3><p class="brand-card-desc">${b.description}</p><span class="brand-card-link">Visit ${b.name}</span></a>`).join('')}</div></div></section>`);
 }
 await mkdir(dist, { recursive: true });
 await writeFile(path.join(dist, 'index.html'), home());

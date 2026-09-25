@@ -9,6 +9,7 @@
     const playback = root.querySelector('[data-carousel-playback]');
     const status = root.querySelector('[data-carousel-status]');
     if (!viewport || slides.length < 2 || !playback) return;
+    playback.hidden = false;
 
     let current = 0;
     let destination = 0;
@@ -30,8 +31,8 @@
       timer = null;
     };
     const updatePlayback = () => {
-      playback.textContent = requested ? 'Pause autoplay' : 'Play autoplay';
-      playback.setAttribute('aria-label', requested ? 'Pause automatic screen changes' : 'Play automatic screen changes');
+      // Visible wording is also the accessible name, including for voice control.
+      playback.textContent = requested ? 'Pause autoplay' : 'Start autoplay';
     };
     const updateSlide = index => {
       current = index;

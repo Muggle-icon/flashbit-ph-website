@@ -18,7 +18,7 @@ export function renderAppCarousel(brand, siteUrl) {
   const name = escapeHtml(brand.name);
   return `<figure class="app-carousel" data-app-carousel role="region" aria-roledescription="carousel" aria-label="${name} app screens" aria-describedby="${id}-caption">
   <div class="app-carousel-stage">
-    <div class="app-carousel-heading"><img src="${escapeHtml(siteUrl(`assets/${brand.icon || `${brand.id}-icon.png`}`))}" width="360" height="360" alt="" loading="lazy"><span>Inside the ${name} app</span></div>
+    <div class="app-carousel-heading"><div class="app-carousel-title"><img src="${escapeHtml(siteUrl(`assets/${brand.icon || `${brand.id}-icon.png`}`))}" width="360" height="360" alt="" loading="lazy"><span>${name} app</span></div><button class="app-carousel-playback" type="button" data-carousel-playback aria-controls="${id}-screens" hidden>Pause autoplay</button></div>
     <div class="app-carousel-phone">
       <div class="app-carousel-viewport" id="${id}-screens" data-carousel-viewport tabindex="0" role="group" aria-label="App screenshots. Swipe or use the left and right arrow keys to explore.">
         ${screens.map((screen, index) => `<div class="app-carousel-slide" data-carousel-slide data-label="${screen.label}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${screens.length}: ${screen.label}"><img src="${escapeHtml(siteUrl(`assets/${brand.id}-${screen.id}.png`))}" width="1125" height="2436" loading="lazy" decoding="async" draggable="false" alt="${name} ${screen.description}"></div>`).join('\n        ')}
@@ -31,7 +31,6 @@ export function renderAppCarousel(brand, siteUrl) {
         <button class="app-carousel-arrow" type="button" data-carousel-next aria-controls="${id}-screens" aria-label="Next app screen"><span aria-hidden="true">→</span></button>
       </div>
       <div class="app-carousel-selectors" role="group" aria-label="Choose an app screen">${screens.map((screen, index) => `<button type="button" data-carousel-go="${index}" aria-controls="${id}-screens"${index === 0 ? ' aria-current="true"' : ''}>${screen.label}</button>`).join('')}</div>
-      <button class="app-carousel-playback" type="button" data-carousel-playback aria-controls="${id}-screens">Pause autoplay</button>
     </div>
     <p class="app-carousel-fallback">Swipe to explore all four app screens.</p>
   </div>

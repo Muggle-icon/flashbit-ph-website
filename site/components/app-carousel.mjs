@@ -18,7 +18,7 @@ export function renderAppCarousel(brand, siteUrl) {
   const name = escapeHtml(brand.name);
   return `<figure class="app-carousel" data-app-carousel role="region" aria-roledescription="carousel" aria-label="${name} app screens" aria-describedby="${id}-caption">
   <div class="app-carousel-stage">
-    <div class="app-carousel-heading"><div class="app-carousel-title"><img src="${escapeHtml(siteUrl(`assets/${brand.icon || `${brand.id}-icon.png`}`))}" width="360" height="360" alt="" loading="lazy"><span>${name} app</span></div><button class="app-carousel-playback" type="button" data-carousel-playback aria-controls="${id}-screens" hidden>Pause autoplay</button></div>
+    <div class="app-carousel-heading"><div class="app-carousel-title"><img src="${escapeHtml(siteUrl(`assets/${brand.icon || `${brand.id}-icon.png`}`))}" width="360" height="360" alt="" loading="lazy"><span>App preview</span></div><button class="app-carousel-playback" type="button" data-carousel-playback aria-controls="${id}-screens" hidden>Pause autoplay</button></div>
     <div class="app-carousel-phone">
       <div class="app-carousel-viewport" id="${id}-screens" data-carousel-viewport tabindex="0" role="group" aria-label="App screenshots. Swipe or use the left and right arrow keys to explore.">
         ${screens.map((screen, index) => `<div class="app-carousel-slide" data-carousel-slide data-label="${screen.label}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${screens.length}: ${screen.label}"><img src="${escapeHtml(siteUrl(`assets/${brand.id}-${screen.id}.png`))}" width="1125" height="2436" loading="lazy" decoding="async" draggable="false" alt="${name} ${screen.description}"></div>`).join('\n        ')}

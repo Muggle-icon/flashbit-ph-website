@@ -74,13 +74,68 @@ export function bpHeader(siteUrl, flashbitLogo, isHome) {
   </header>`;
 }
 
-export function bpFooter(siteUrl) {
+function bpFooterDisclosures(siteUrl) {
   return `
-  <footer class="bp-footer">
+    <section class="bp-footer-disclosures" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <h2 id="contact-title">Company and regulatory information</h2>
+        <div class="bp-disclosures">
+          <div class="bp-disclosure-group">
+            <div class="bp-disclosure">
+              <img class="bp-disclosure-mark" src="${siteUrl('assets/bp-sec.webp')}" width="128" height="209" alt="" loading="lazy" decoding="async">
+              <div><h3>Securities and Exchange Commission</h3><dl>
+                <div><dt>Date of incorporation</dt><dd>September 14, 2026</dd></div>
+                <div><dt>SEC Registration No.</dt><dd>202609066778-02</dd></div>
+                <div><dt>Certificate of Authority No.</dt><dd>F-26-0144-55</dd></div>
+              </dl></div>
+            </div>
+            <div class="bp-disclosure">
+              <img class="bp-disclosure-mark" src="${siteUrl('assets/bp-bir.webp')}" width="128" height="126" alt="" loading="lazy" decoding="async">
+              <div><h3>Bureau of Internal Revenue</h3><dl>
+                <div><dt>BIR Registration No.</dt><dd>815-972-116-000</dd></div>
+              </dl></div>
+            </div>
+          </div>
+          <div class="bp-disclosure-group">
+            <div class="bp-disclosure">
+              <img class="bp-disclosure-mark" src="${siteUrl('assets/bp-amlc.jpg')}" width="200" height="135" alt="" loading="lazy" decoding="async">
+              <div><h3>Anti-Money Laundering Council</h3><dl>
+                <div><dt>Registration No.</dt><dd>20260924204248-7</dd></div>
+              </dl></div>
+            </div>
+          </div>
+          <div class="bp-disclosure-group">
+            <div class="bp-disclosure">
+              <svg class="bp-disclosure-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.500C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              <div><h3>Principal Address</h3><address>${office}</address></div>
+            </div>
+          </div>
+          <div class="bp-disclosure-group">
+            <div class="bp-disclosure">
+              <svg class="bp-disclosure-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 6 6L15 14l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
+              <div><h3>Contact Us</h3><dl>
+                <div><dt>Customer support</dt><dd><a href="tel:+639451292500">${phone}</a><br><a href="mailto:${supportEmail}">${supportEmail.replace('@', '@<wbr>')}</a></dd></div>
+                <div><dt>Data Protection Officer (DPO)</dt><dd><a href="mailto:${dpoEmail}">${dpoEmail.replace('@', '@<wbr>')}</a></dd></div>
+              </dl></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>`;
+}
+
+export function bpFooter(siteUrl, flashbitLogo, isHome) {
+  return `
+  <footer class="bp-footer">${isHome ? bpFooterDisclosures(siteUrl) : ''}
     <div class="wrap bp-footer-inner">
-      <div><strong>${company}</strong><p>Operating under the names of ${tradeNames}.</p></div>
-      <nav aria-label="Legal and contact">${legalLinks(siteUrl)}<a href="${siteUrl('#contact')}">Contact Us</a></nav>
-      <p class="bp-copyright">© 2026 ${company} All rights reserved.</p>
+      <a class="bp-footer-brand" href="${siteUrl('#top')}" aria-label="${company} home">${flashbitLogo(true)}</a>
+      <div>
+        <nav aria-label="Footer navigation">
+          ${navigation.map(([label, id]) => `<a href="${siteUrl(`#${id}`)}">${label}</a>`).join('')}
+        </nav>
+        <nav aria-label="Legal information">${legalLinks(siteUrl)}</nav>
+      </div>
+      <p class="bp-copyright">© 2026 ${company} All rights reserved. Operating under the names of ${tradeNames}.</p>
     </div>
   </footer>`;
 }
@@ -180,28 +235,6 @@ export function renderBpHome(brands, { siteUrl, route, brandLogo }) {
   <section class="wrap bp-section bp-faq" id="faqs" aria-labelledby="faq-title">
     <div><h2 id="faq-title">Frequently Asked Questions</h2><p class="bp-section-intro">About our brands, loan terms and where to get help.</p></div>
     <div class="bp-questions">${reviewQuestions(siteUrl)}</div>
-  </section>
-
-  <section class="bp-section bp-tint" id="contact" aria-labelledby="contact-title">
-    <div class="wrap">
-      <h2 id="contact-title">Company and regulatory information</h2>
-      <div class="bp-disclosures">
-        <div><h3>Securities and Exchange Commission</h3><dl>
-          <div><dt>Date of incorporation</dt><dd>September 14, 2026</dd></div>
-          <div><dt>SEC Registration No.</dt><dd>202609066778-02</dd></div>
-          <div><dt>Certificate of Authority No.</dt><dd>F-26-0144-55</dd></div>
-        </dl></div>
-        <div><h3>Other registrations</h3><dl>
-          <div><dt>Bureau of Internal Revenue</dt><dd>815-972-116-000</dd></div>
-          <div><dt>Anti-Money Laundering Council</dt><dd>20260924204248-7</dd></div>
-        </dl></div>
-        <div><h3>Principal Address</h3><address>${office}</address></div>
-        <div><h3>Contact Us</h3><dl>
-          <div><dt>Customer support</dt><dd><a href="tel:+639451292500">${phone}</a><br><a href="mailto:${supportEmail}">${supportEmail}</a></dd></div>
-          <div><dt>Data Protection Officer (DPO)</dt><dd><a href="mailto:${dpoEmail}">${dpoEmail}</a></dd></div>
-        </dl></div>
-      </div>
-    </div>
   </section>`;
 }
 

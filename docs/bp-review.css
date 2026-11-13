@@ -47,15 +47,19 @@
 }
 
 .bp-hero {
-  background: #edf4fb;
+  --bp-hero-blue: #edf4fb;
+  position: relative;
+  background: var(--bp-hero-blue);
   color: var(--bp-navy);
 }
 
 .bp-hero-content {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 29fr) minmax(0, 45fr) minmax(0, 26fr);
+  grid-template-columns: minmax(0, clamp(266px, 21.3vw, 310px)) minmax(0, 286px);
+  justify-content: space-between;
   align-items: center;
-  min-height: 332px;
+  min-height: 370px;
 }
 
 .bp-hero-copy {
@@ -64,14 +68,26 @@
 }
 
 .bp-hero-photo {
-  align-self: stretch;
-  background: url("./assets/flashbit-community-v1.webp") 43% center / cover no-repeat;
-  /* Keep the middle of the photo opaque and soften only the edges. */
-  mask-image: linear-gradient(
+  position: absolute;
+  inset: 0;
+  background: url("./assets/flashbit-community-v1.webp") left 23% / cover no-repeat;
+}
+
+.bp-hero-photo::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  /* Use one continuous scrim, clear through the people in the center. */
+  background: linear-gradient(
     90deg,
-    transparent, rgb(0 0 0 / .18) 16px, rgb(0 0 0 / .7) 38px, black 60px,
-    black calc(100% - 46px), rgb(0 0 0 / .7) calc(100% - 29px),
-    rgb(0 0 0 / .18) calc(100% - 11px), transparent
+    rgb(237 244 251 / .92) 22%,
+    rgb(237 244 251 / .87) 25%,
+    rgb(237 244 251 / .36) 27%,
+    transparent 29%,
+    transparent 67%,
+    rgb(237 244 251 / .16) 72%,
+    rgb(237 244 251 / .48) 87%,
+    rgb(237 244 251 / .67) 100%
   );
 }
 
@@ -83,7 +99,7 @@
 
 .bp-hero h1 {
   max-width: 14ch;
-  font-size: clamp(34px, 3vw, 40px);
+  font-size: clamp(32px, 2.58vw, 37px);
   line-height: 1.12;
   text-wrap: balance;
 }
@@ -107,7 +123,7 @@
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  padding: 10px 11px;
+  padding: 10px 10px;
   border: 1px solid #a5b8d0;
   border-radius: 6px;
   background: transparent;
@@ -202,7 +218,7 @@
 }
 
 .bp-brand {
-  border-top: 3px solid var(--brand-button);
+  border-top: 1.5px solid var(--brand-button);
   background: var(--brand-soft);
 }
 
@@ -481,7 +497,17 @@
   }
 }
 
-@media (max-width: 1200px) {
+@media (min-width: 1241px) {
+  .bp-page:has(.bp-hero) .wrap {
+    width: 89%;
+  }
+
+  .bp-hero-content {
+    min-height: max(370px, 23.5vw);
+  }
+}
+
+@media (max-width: 1240px) {
   .bp-hero-content {
     grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
     gap: 0 clamp(24px, 4vw, 48px);
@@ -489,11 +515,12 @@
   }
 
   .bp-hero-photo {
-    grid-area: 1 / 1 / 2 / -1;
-    height: clamp(166px, 29vw, 330px);
+    position: relative;
+    height: clamp(172px, 29vw, 330px);
     background-position: 47% center;
-    mask-image: linear-gradient(90deg, transparent, black 14px, black calc(100% - 14px), transparent);
   }
+
+  .bp-hero-photo::after { content: none; }
 
   .bp-hero-copy { padding: 28px 0 32px; }
 

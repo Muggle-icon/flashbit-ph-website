@@ -80,14 +80,14 @@ export function bpHeader(siteUrl, flashbitLogo, isHome) {
   </header>`;
 }
 
-function bpFooterDisclosures(siteUrl) {
+function bpFooterDisclosures(assetUrl) {
   return `
       <section class="bp-footer-disclosures" id="contact" aria-labelledby="contact-title">
         <h2 id="contact-title">Company and regulatory information</h2>
         <div class="bp-disclosures">
           <div class="bp-disclosure-group">
             <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${siteUrl('assets/bp-sec.webp')}" width="128" height="209" alt="" loading="lazy" decoding="async">
+              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-sec.webp')}" width="128" height="209" alt="" loading="lazy" decoding="async">
               <div><h3>Securities and Exchange Commission</h3><dl>
                 <div><dt>Date of incorporation</dt><dd>September 14, 2026</dd></div>
                 <div><dt>SEC Registration No.</dt><dd>202609066778-02</dd></div>
@@ -95,7 +95,7 @@ function bpFooterDisclosures(siteUrl) {
               </dl></div>
             </div>
             <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${siteUrl('assets/bp-bir.webp')}" width="128" height="126" alt="" loading="lazy" decoding="async">
+              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-bir.webp')}" width="128" height="126" alt="" loading="lazy" decoding="async">
               <div><h3>Bureau of Internal Revenue</h3><dl>
                 <div><dt>BIR Registration No.</dt><dd>815-972-116-000</dd></div>
               </dl></div>
@@ -103,7 +103,7 @@ function bpFooterDisclosures(siteUrl) {
           </div>
           <div class="bp-disclosure-group">
             <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${siteUrl('assets/bp-amlc.jpg')}" width="200" height="135" alt="" loading="lazy" decoding="async">
+              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-amlc.jpg')}" width="200" height="135" alt="" loading="lazy" decoding="async">
               <div><h3>Anti-Money Laundering Council</h3><dl>
                 <div><dt>Registration No.</dt><dd>20260924204248-7</dd></div>
               </dl></div>
@@ -128,7 +128,7 @@ function bpFooterDisclosures(siteUrl) {
       </section>`;
 }
 
-export function bpFooter(siteUrl, flashbitLogo, isHome) {
+export function bpFooter(siteUrl, assetUrl, flashbitLogo, isHome) {
   return `
   <footer class="bp-footer" id="site-footer">
     <div class="wrap bp-footer-inner">
@@ -137,7 +137,7 @@ export function bpFooter(siteUrl, flashbitLogo, isHome) {
       <nav class="bp-footer-group" aria-label="${title}">
         <p class="bp-footer-group-title" aria-hidden="true">${title}</p>
         ${navigation.filter(([, id]) => ids.includes(id)).map(([label, id]) => `<a href="${siteUrl(`#${id}`)}">${label}</a>`).join('')}
-      </nav>`).join('').trimStart()}${isHome ? bpFooterDisclosures(siteUrl) : ''}
+      </nav>`).join('').trimStart()}${isHome ? bpFooterDisclosures(assetUrl) : ''}
       <div class="bp-footer-bottom">
         <p class="bp-copyright">© 2026 ${company} All rights reserved. Operating under the names of ${tradeNames}.</p>
         <nav class="bp-footer-legal" aria-label="Legal information">${legalLinks(siteUrl)}</nav>
@@ -160,10 +160,13 @@ function reviewQuestions(siteUrl) {
   ].map(([question, answer]) => `<details><summary>${question}</summary><p>${answer}</p></details>`).join('');
 }
 
-export function renderBpHome(brands, { siteUrl, route, brandLogo }) {
+export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
   return `
   <section class="bp-hero" aria-labelledby="home-title">
-    <div class="bp-hero-photo" aria-hidden="true"></div>
+    <picture class="bp-hero-photo" aria-hidden="true">
+      <source media="(max-width: 680px)" srcset="${assetUrl('assets/flashbit-community-v1-mobile.webp')}">
+      <img src="${assetUrl('assets/flashbit-community-v1.webp')}" width="2170" height="725" alt="" fetchpriority="high">
+    </picture>
     <div class="wrap bp-hero-content">
       <div class="bp-hero-copy">
         <p class="bp-eyebrow">${company}</p>

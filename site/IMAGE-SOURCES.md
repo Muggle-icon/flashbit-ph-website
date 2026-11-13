@@ -4,17 +4,20 @@ Updated: 2026-11-13
 
 These three images are AI-generated illustrative everyday-life scenes for the website. They are not photographs of identified customers, testimonials, or evidence of actual users' nationality, occupation, or borrowing history. They were made with the built-in OpenAI `image_gen` tool (not a CLI/API fallback or stock-image service).
 
-LIVAYA uses the supplied App welcome screen. ALAGO and SULIVO use the lifestyle imagery below. The twelve published App screenshots retain every decoded pixel and their original dimensions in lossless WebP. Published favicon PNGs are optimized without changing their decoded pixels. Original PNGs are available in the repository history at commit `6f2f711`.
+Livaya uses the supplied App welcome screen for its portrait. Alago and Sulivo use the lifestyle imagery below. The twelve App screenshots keep their original dimensions. The nine sign-in, home, and loan-detail screenshots use lossless WebP. The three photographic welcome screens use quality-84 WebP. Published favicon PNGs are optimized without changing their decoded pixels. The earlier original PNGs are available in the repository history at commit `6f2f711`.
+
+The four current Alago App screens come from the PNG attachments supplied on 2026-11-13. Each measures 750 × 1624 px. The published copies total 284,372 bytes, down from 2,030,037 bytes in the attachments.
 
 | Asset | Exact dimensions | Intended use | Source |
 | --- | --- | --- | --- |
-| `dist/assets/alago-worker-v2.webp` | 1254 × 1254 px | ALAGO lifestyle photo featuring a retail worker during a phone break | Built-in image_gen, 2026-09-25 |
+| `dist/assets/alago-worker-v2.webp` | 840 × 840 px | Alago lifestyle photo featuring a retail worker during a phone break | Built-in image_gen, 2026-09-25 |
 | `dist/assets/flashbit-community-v1.webp` | 2170 × 725 px | Company homepage hero background with two adults at a community shop | Built-in image_gen, 2026-09-25 |
-| `dist/assets/sulivo-seller-v2.webp` | 1254 × 1254 px | SULIVO lifestyle photo featuring an online seller packing orders | Built-in image_gen, 2026-09-25 |
+| `dist/assets/flashbit-community-v1-mobile.webp` | 1240 × 414 px | Smaller rendition of the homepage hero background for mobile | Same source as `flashbit-community-v1.webp` |
+| `dist/assets/sulivo-seller-v2.webp` | 840 × 840 px | Sulivo lifestyle photo featuring an online seller packing orders | Built-in image_gen, 2026-09-25 |
 
 ## Visual inspection
 
-Both outputs were inspected at generation. Each is a single square full photograph with complete head, visible natural phone-use hands, ordinary clothing and natural skin texture. ALAGO has a seated man in navy at the back of a small shop. SULIVO has a short-haired woman in lilac at a home packing table. Web copies are encoded as WebP at their original dimensions.
+Both product portraits were inspected at generation. Each is a single square full photograph with complete head, visible natural phone-use hands, ordinary clothing and natural skin texture. Alago has a seated man in navy at the back of a small shop. Sulivo has a short-haired woman in lilac at a home packing table. Their WebP copies are sized for the product portrait container.
 
 ## Final prompt: ALAGO
 
@@ -48,6 +51,6 @@ An ordinary man arranges stock at a community shop while a woman checks her phon
 
 ## Publishing image assets
 
-Compress new raster images before adding them to `site/dist/assets/`. Use WebP for photographs and retain lossless encoding for App screenshots and brand artwork. Verify that the published image decodes, fits its intended dimensions and weighs less than its source. Compare decoded pixels for lossless assets. Keep master files and unused images outside the Pages asset directory.
+Compress new raster images before adding them to `site/dist/assets/`. Use WebP for photographs and photographic App welcome screens. Retain lossless encoding for text-focused App screenshots and brand artwork. Verify that the published image decodes, fits its intended dimensions and weighs less than its source. Compare decoded pixels for lossless assets. Keep master files and unused images outside the Pages asset directory.
 
 Prompt direction: candid, eye-level, natural-daylight Philippine community shop; normal clothing, skin and expressions; practical stock and everyday phone use; no direct-to-camera posing, cash, loan UI, flags, Jeepneys, tourism, luxury or poverty framing.

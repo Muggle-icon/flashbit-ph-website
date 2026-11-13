@@ -70,7 +70,14 @@
 .bp-hero-photo {
   position: absolute;
   inset: 0;
-  background: url("./assets/flashbit-community-v1.webp") left 23% / cover no-repeat;
+  display: block;
+}
+
+.bp-hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: left 23%;
 }
 
 .bp-hero-photo::after {
@@ -641,8 +648,9 @@
   .bp-hero-photo {
     position: relative;
     height: clamp(172px, 29vw, 330px);
-    background-position: 47% center;
   }
+
+  .bp-hero-photo img { object-position: 47% center; }
 
   .bp-hero-photo::after { content: none; }
 

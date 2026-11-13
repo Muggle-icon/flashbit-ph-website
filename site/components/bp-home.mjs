@@ -119,6 +119,9 @@ export function renderBpHome(brands, { siteUrl, route, brandLogo }) {
         </dl>
       </aside>
     </div>
+    <div class="wrap bp-hero-scene">
+      <img src="${siteUrl('assets/flashbit-community-v1.png')}" width="2170" height="725" alt="A man arranges stock and a woman checks her phone at a community shop.">
+    </div>
   </section>
 
   <section class="wrap bp-section" id="brands" aria-labelledby="brands-title">
@@ -161,9 +164,9 @@ export function renderBpHome(brands, { siteUrl, route, brandLogo }) {
   <section class="bp-section bp-tint" id="about" aria-labelledby="about-title">
     <div class="wrap">
       <div class="bp-about">
-        <div><h2 id="about-title">About Us</h2><p>${company} is a Philippine financing company operating under the names of ${tradeNames}.</p>
-        <p class="bp-ownership"><strong>99.99% owned by Novolink PTE Ltd.</strong></p></div>
-        <img src="${siteUrl('assets/flashbit-community-v1.png')}" width="2170" height="725" loading="lazy" alt="A man arranges stock and a woman checks her phone at a community shop.">
+        <h2 id="about-title">About Us</h2>
+        <p>${company} is a Philippine financing company operating under the names of ${tradeNames}.</p>
+        <p class="bp-ownership"><strong>99.99% owned by Novolink PTE Ltd.</strong></p>
       </div>
       <dl class="bp-values">
         <div><dt>Customer-Centric</dt><dd>Financing for everyday needs.</dd></div>

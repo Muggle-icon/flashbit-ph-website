@@ -22,35 +22,25 @@ const footerNavigation = [
   ['Support', ['faqs', 'contact']],
 ];
 
-const offerings = {
+const brandDirectory = {
   livaya: {
     name: 'Livaya Financing',
     title: 'For a Brighter Everyday',
-    description: 'Personal financing for everyday needs.',
-    products: [
-      ['Personal Loan', 'For household bills and everyday expenses.'],
-      ['Salary Loan', 'Short-term financing for employed individuals.'],
-    ],
   },
   alago: {
     name: 'Alago Financing',
     title: 'Support for What Matters',
-    description: 'Financing for education expenses and personal goals.',
-    products: [
-      ['Education Loan', 'For tuition and other school expenses.'],
-      ['Personal Goals Loan', 'For planned personal and household expenses.'],
-    ],
   },
   sulivo: {
     name: 'Sulivo Financing',
     title: 'Grow Further Together',
-    description: 'Business and personal financing for everyday needs.',
-    products: [
-      ['Business Loan', 'Working capital for micro, small and medium enterprises.'],
-      ['Personal Loan', 'Personal financing for entrepreneurs and self-employed individuals.'],
-    ],
   },
 };
+
+const loanProducts = [
+  ['Salary Loan', 'Short-term financing for employed individuals.'],
+  ['General Purpose Loan', 'For everyday personal and household expenses.'],
+];
 
 const steps = [
   ['Apply Online', 'Choose a financing product and complete the application when it becomes available.'],
@@ -174,7 +164,7 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
       <div class="bp-hero-copy">
         <p class="bp-eyebrow">${company}</p>
         <h1 id="home-title">Your Partner in Financial Growth</h1>
-        <p class="bp-lede">Financing for everyday expenses, personal goals and small businesses through Livaya, Alago and Sulivo.</p>
+        <p class="bp-lede">Financing for everyday expenses through Livaya, Alago and Sulivo.</p>
         <div class="bp-actions"><a class="bp-button bp-button-primary" href="#loan-products">Explore Loan Products</a><a class="bp-button" href="#contact">Contact Us</a></div>
       </div>
       <aside class="bp-glance" aria-labelledby="glance-title">
@@ -196,11 +186,11 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
     <p class="bp-section-intro">Explore the three financing brands of ${company}</p>
     <div class="brand-directory">
       ${brands.map(brand => {
-        const info = offerings[brand.id];
-        return `<a class="brand-row bp-brand ${brand.id}" href="${route(brand)}" aria-label="Learn more about ${info.name}">
+        const info = brandDirectory[brand.id];
+        return `<a class="brand-row bp-brand ${brand.id}" href="${route(brand)}#top" aria-label="Learn more about ${info.name}">
           <span class="directory-logo">${brandLogo(brand)}</span>
           <span class="bp-trade-name">${info.name}</span>
-          <span class="directory-copy"><strong>${info.title}</strong><span>${info.description}</span></span>
+          <span class="directory-copy"><strong>${info.title}</strong></span>
           <span class="directory-action">Learn more <span aria-hidden="true">→</span></span>
         </a>`;
       }).join('')}
@@ -221,14 +211,10 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
 
   <section class="wrap bp-section" id="loan-products" aria-labelledby="loans-title">
     <h2 id="loans-title">Loan Products</h2>
-    <p class="bp-section-intro">Planned products by brand. Check the loan offer for the amount, terms and costs that apply.</p>
-    <div class="bp-products">${brands.map(brand => {
-      const info = offerings[brand.id];
-      return `<div class="bp-product-group ${brand.id}">
-        <h3><a class="bp-product-link" href="${route(brand)}#top">${info.name}<span aria-hidden="true">→</span></a></h3>
-        <dl>${info.products.map(([name, copy]) => `<div><dt>${name}</dt><dd>${copy}</dd></div>`).join('')}</dl>
-      </div>`;
-    }).join('')}</div>
+    <p class="bp-section-intro">Two planned loan types across our three brands. Check your loan offer for the amount, terms and costs.</p>
+    <div class="bp-products">
+      ${loanProducts.map(([name, description]) => `<div><h3>${name}</h3><p>${description}</p></div>`).join('\n      ')}
+    </div>
   </section>
 
   <section class="bp-section bp-tint" id="about" aria-labelledby="about-title">
@@ -242,7 +228,7 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
         <div><dt>Customer-Centric</dt><dd>Financing for everyday needs.</dd></div>
         <div><dt>Responsible Lending</dt><dd>Clear costs and repayment information.</dd></div>
         <div><dt>Data Privacy</dt><dd>A Privacy Notice and a dedicated DPO contact.</dd></div>
-        <div><dt>Financial Inclusion</dt><dd>Financing options for individuals and small businesses.</dd></div>
+        <div><dt>Financial Inclusion</dt><dd>Financing options for everyday needs.</dd></div>
       </dl>
     </div>
   </section>

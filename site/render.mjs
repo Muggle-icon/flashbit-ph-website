@@ -23,8 +23,8 @@ const dist = process.env.OUTPUT_DIR
   : fileURLToPath(new URL('./dist/', import.meta.url));
 const brands = [
   { id: 'livaya', name: 'LIVAYA', title: 'For home and your small business.', description: 'Loan information for household expenses and small-business cash flow.', label: 'Home, your shop and everyday life', needs: ['Household bills & groceries', 'Stock for your small shop', 'School-related expenses'], body: 'Groceries, household bills and supplies for your shop. Understand the cost of borrowing and plan your repayments.', scene: 'A woman checking her phone while working in a local shop.' },
-  { id: 'alago', name: 'ALAGO', title: 'For everyday working life.', description: 'Explore the app, loan details and the steps before you apply.', label: 'The expenses between paydays', needs: ['Daily household expenses', 'Transport to and from work', 'Bills between paydays'], body: 'Daily expenses do not always line up with payday. Check your loan information and what you will need to repay.', photo: 'alago-worker-v2.png', scene: 'A man in a navy polo checking his phone during a break in a neighbourhood shop.' },
-  { id: 'sulivo', name: 'SULIVO', title: 'For work and everyday expenses.', description: 'Understand borrowing costs and repayments for work and daily needs.', label: 'Work, orders and daily needs', needs: ['Supplies for your work', 'Everyday household bills', 'Small-business orders'], body: 'Work supplies, orders and everyday bills. Review your loan details and fit repayments into your budget.', photo: 'sulivo-seller-v2.png', scene: 'A short-haired woman checking her phone beside parcels on a small packing table.' },
+  { id: 'alago', name: 'ALAGO', title: 'For everyday working life.', description: 'Explore the app, loan details and the steps before you apply.', label: 'The expenses between paydays', needs: ['Daily household expenses', 'Transport to and from work', 'Bills between paydays'], body: 'Daily expenses do not always line up with payday. Check your loan information and what you will need to repay.', photo: 'alago-worker-v2.webp', scene: 'A man in a navy polo checking his phone during a break in a neighbourhood shop.' },
+  { id: 'sulivo', name: 'SULIVO', title: 'For work and everyday expenses.', description: 'Understand borrowing costs and repayments for work and daily needs.', label: 'Work, orders and daily needs', needs: ['Supplies for your work', 'Everyday household bills', 'Small-business orders'], body: 'Work supplies, orders and everyday bills. Review your loan details and fit repayments into your budget.', photo: 'sulivo-seller-v2.webp', scene: 'A short-haired woman checking her phone beside parcels on a small packing table.' },
 ];
 const route = brand => siteUrl(`${brand.id}financing/`);
 const arrow = '<span aria-hidden="true">→</span>';
@@ -43,7 +43,7 @@ function brandFooter(brand) {
 }
 function portrait(brand, cls = '', loading = 'lazy') {
   if (brand.photo) return `<div class="portrait photo ${brand.id} ${cls}"><img src="${siteUrl(`assets/${brand.photo}`)}" alt="${brand.scene}" width="1254" height="1254" loading="${loading}" decoding="async"></div>`;
-  return `<div class="portrait ${brand.id} ${cls}"><img src="${siteUrl(`assets/${brand.id}-welcome.png`)}" alt="${brand.scene}" width="1125" height="2436" loading="${loading}" decoding="async"></div>`;
+  return `<div class="portrait ${brand.id} ${cls}"><img src="${siteUrl(`assets/${brand.id}-welcome.webp`)}" alt="${brand.scene}" width="1125" height="2436" loading="${loading}" decoding="async"></div>`;
 }
 function shell(title, description, body, brand = null, policy = false) {
   const favicon = brand ? siteUrl(`assets/${brandLockups[brand.id].icon}`) : siteUrl('assets/flashbit-symbol.svg');

@@ -4,16 +4,16 @@ On 2026-09-25 the user supplied Alago.png, Livaya.png and Sulivo.png and request
 
 | Brand | Website asset | Original dimensions | SHA-256 |
 | --- | --- | --- | --- |
-| Alago | `dist/assets/alago-wordmark.png` | 390 × 201 | `cb8ec4b330ac5db4a828f97eae5b68e747135ef46a0bc3a55c387941d507c701` |
-| Livaya | `dist/assets/livaya-wordmark.png` | 447 × 201 | `c7019bb023e776bd720777c73c53a7492d6be1251353581affb3012c246475e6` |
-| Sulivo | `dist/assets/sulivo-wordmark.png` | 417 × 201 | `b2c2f3363208d11dac69451dba1bcd4c590d5ddbd41fdffa35de4edba32e8fc9` |
+| Alago | `dist/assets/alago-wordmark.png` in `6f2f711` | 390 × 201 | `cb8ec4b330ac5db4a828f97eae5b68e747135ef46a0bc3a55c387941d507c701` |
+| Livaya | `dist/assets/livaya-wordmark.png` in `6f2f711` | 447 × 201 | `c7019bb023e776bd720777c73c53a7492d6be1251353581affb3012c246475e6` |
+| Sulivo | `dist/assets/sulivo-wordmark.png` in `6f2f711` | 417 × 201 | `b2c2f3363208d11dac69451dba1bcd4c590d5ddbd41fdffa35de4edba32e8fc9` |
 
 The original PNG wordmarks are retained byte-for-byte as supplied reference artwork. On 2026-09-25, the user subsequently authorized redesigning all three website logos while keeping the established names and colors. The old independent PNG icon/wordmark layout is superseded by the fixed combinations below. App screenshot pixels are not changed.
 
 ## Current product website logos
 
 - `dist/assets/livaya-lockup.svg`, `alago-lockup.svg`, `sulivo-lockup.svg` are single, self-contained horizontal compositions. Each embeds the supplied icon PNG without pixel changes and contains Manrope 700 lettering converted to paths.
-- LIVAYA uses the new `Livaya_logo 1.png` supplied by the user, copied byte-for-byte to `dist/assets/livaya-icon-v2.png`. Its main colors remain `#76E7F6` and `#103D46`. ALAGO and SULIVO retain their existing icon assets and colors.
+- LIVAYA uses the new `Livaya_logo 1.png` supplied by the user. The published `dist/assets/livaya-icon-v2.png` retains its exact decoded pixels and main colors `#76E7F6` and `#103D46`. ALAGO and SULIVO icons also use optimized PNGs with identical decoded pixels.
 - Lettering colors are sampled from the opaque primary colors in the user-supplied wordmarks: LIVAYA `#165962`; ALAGO and SULIVO `#0151C5`. The blue SULIVO wordmark is intentional: it preserves the supplied artwork even though its app icon has a violet background.
 - Names retain the supplied spelling and title case: Livaya, Alago, Sulivo. Prose can continue using uppercase product names.
 - The local Manrope 700 outlines are licensed under SIL OFL 1.1; see `FONT-LICENSES.md`. SVGs require no installed font or external asset request. Icons remain raster images within the SVG, so these are not wholly vector redrawings.

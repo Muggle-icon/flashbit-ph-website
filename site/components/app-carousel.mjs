@@ -25,7 +25,7 @@ export function renderAppCarousel(brand, siteUrl) {
       </div>
       <figure class="app-carousel-stage">
         <div class="app-carousel-phone"><div class="app-carousel-viewport" id="${id}-screens" data-carousel-viewport tabindex="0" role="group" aria-label="App screenshots. Swipe or use the left and right arrow keys to explore.">
-          ${screens.map((screen, index) => `<div class="app-carousel-slide" data-carousel-slide data-label="${screen.label}" data-description="${screen.description}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${screens.length}: ${screen.label}"><img src="${escapeHtml(siteUrl(`assets/${brand.id}-${screen.id}.png`))}" width="1125" height="2436" loading="lazy" decoding="async" draggable="false" alt="${name} ${screen.alt}"></div>`).join('\n')}
+          ${screens.map((screen, index) => `<div class="app-carousel-slide" data-carousel-slide data-label="${screen.label}" data-description="${screen.description}" role="group" aria-roledescription="slide" aria-label="${index + 1} of ${screens.length}: ${screen.label}"><img src="${escapeHtml(siteUrl(`assets/${brand.id}-${screen.id}.webp`))}" width="1125" height="2436" loading="lazy" decoding="async" draggable="false" alt="${name} ${screen.alt}"></div>`).join('\n')}
         </div></div>
         <div class="app-carousel-toolbar" data-carousel-controls hidden>
           <button class="app-carousel-arrow" type="button" data-carousel-previous aria-controls="${id}-screens" aria-label="Previous app screen"><span aria-hidden="true">←</span></button>

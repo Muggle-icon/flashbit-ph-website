@@ -119,9 +119,6 @@ export function renderBpHome(brands, { siteUrl, route, brandLogo }) {
         </dl>
       </aside>
     </div>
-    <div class="wrap bp-hero-scene">
-      <img src="${siteUrl('assets/flashbit-community-v1.png')}" width="2170" height="725" alt="A man arranges stock and a woman checks her phone at a community shop.">
-    </div>
   </section>
 
   <section class="wrap bp-section" id="brands" aria-labelledby="brands-title">

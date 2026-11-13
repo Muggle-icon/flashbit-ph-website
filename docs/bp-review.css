@@ -47,70 +47,70 @@
 }
 
 .bp-hero {
-  background: var(--bp-navy);
-  color: white;
+  background: #edf4fb;
+  color: var(--bp-navy);
 }
 
 .bp-hero-content {
   display: grid;
-  grid-template-columns: minmax(0, 31fr) minmax(0, 43fr) minmax(0, 26fr);
+  grid-template-columns: minmax(0, 29fr) minmax(0, 45fr) minmax(0, 26fr);
   align-items: center;
-  max-width: 1560px;
-  min-height: clamp(352px, 28vw, 410px);
-  margin-inline: auto;
+  min-height: 332px;
 }
 
 .bp-hero-copy {
-  padding: 32px 0 32px clamp(26px, 3.3vw, 52px);
+  padding-block: 26px;
+  padding-inline-end: 10px;
 }
 
 .bp-hero-photo {
   align-self: stretch;
-  background: url("./assets/flashbit-community-v1.webp") 42% center / cover no-repeat;
-  /* Ease into the navy only at the edges, beyond the people and their hands. */
+  background: url("./assets/flashbit-community-v1.webp") 43% center / cover no-repeat;
+  /* Keep the middle of the photo opaque and soften only the edges. */
   mask-image: linear-gradient(
     90deg,
-    transparent, rgba(0, 0, 0, .12) 10px, rgba(0, 0, 0, .72) 28px, black 48px,
-    black calc(100% - 38px), rgba(0, 0, 0, .72) calc(100% - 22px),
-    rgba(0, 0, 0, .12) calc(100% - 8px), transparent
+    transparent, rgb(0 0 0 / .18) 16px, rgb(0 0 0 / .7) 38px, black 60px,
+    black calc(100% - 46px), rgb(0 0 0 / .7) calc(100% - 29px),
+    rgb(0 0 0 / .18) calc(100% - 11px), transparent
   );
 }
 
 .bp-eyebrow {
-  margin-bottom: 14px;
-  color: #ffd385;
+  margin-bottom: 12px;
+  color: #345271;
   font-weight: 800;
 }
 
 .bp-hero h1 {
   max-width: 14ch;
-  font-size: clamp(34px, 3.25vw, 50px);
-  line-height: 1.08;
+  font-size: clamp(34px, 3vw, 40px);
+  line-height: 1.12;
   text-wrap: balance;
 }
 
 .bp-lede {
   max-width: 48ch;
-  margin-top: 18px;
-  color: #e1e7fc;
-  font-size: 17px;
+  margin-top: 14px;
+  color: var(--body);
+  font-size: 16px;
+  line-height: 1.55;
 }
 
 .bp-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 22px;
+  margin-top: 18px;
 }
 
 .bp-button {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  padding: 10px 13px;
-  border: 1px solid #a6afce;
+  padding: 10px 11px;
+  border: 1px solid #a5b8d0;
   border-radius: 6px;
-  background: #1e2a57;
+  background: transparent;
   font-size: 14px;
   font-weight: 800;
 }
@@ -122,20 +122,21 @@
 }
 
 .bp-button:focus-visible {
-  outline-color: white;
+  outline-color: var(--bp-navy);
 }
 
 .bp-glance {
   overflow: hidden;
-  margin: 24px clamp(22px, 2.6vw, 40px) 24px 6px;
+  margin-block: 24px;
+  border: 1px solid #cfdbeb;
   border-radius: 8px;
   background: #fff;
   color: var(--bp-navy);
 }
 
 .bp-glance h2 {
-  padding: 15px 16px;
-  background: var(--bp-mist);
+  padding: 11px 12px;
+  background: #f4f7fb;
   font-size: 18px;
 }
 
@@ -148,7 +149,7 @@
 
 .bp-glance th,
 .bp-glance td {
-  padding: 10px 12px;
+  padding: 7px 10px;
   border-top: 1px solid var(--bp-line);
   vertical-align: top;
   text-align: left;
@@ -156,14 +157,12 @@
 
 .bp-glance th {
   width: 40%;
-  padding-left: 16px;
   background: #f8f9fc;
   color: var(--body);
   font-weight: 700;
 }
 
 .bp-glance td {
-  padding-right: 16px;
   border-left: 1px solid var(--bp-line);
   font-weight: 800;
 }
@@ -470,7 +469,7 @@
 
 @media (hover: hover) {
   .bp-button:hover {
-    background: #2b396f;
+    background: #dce9f7;
   }
 
   .bp-button-primary:hover {
@@ -482,20 +481,18 @@
   }
 }
 
-@media (max-width: 1140px) {
+@media (max-width: 1200px) {
   .bp-hero-content {
     grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
     gap: 0 clamp(24px, 4vw, 48px);
     min-height: 0;
-    padding-inline: clamp(20px, 4vw, 48px);
   }
 
   .bp-hero-photo {
     grid-area: 1 / 1 / 2 / -1;
     height: clamp(166px, 29vw, 330px);
-    margin-inline: calc(-1 * clamp(20px, 4vw, 48px));
     background-position: 47% center;
-    mask-image: none;
+    mask-image: linear-gradient(90deg, transparent, black 14px, black calc(100% - 14px), transparent);
   }
 
   .bp-hero-copy { padding: 28px 0 32px; }

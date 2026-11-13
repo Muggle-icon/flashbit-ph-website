@@ -102,7 +102,7 @@ function reviewQuestions(siteUrl) {
 export function renderBpHome(brands, { siteUrl, route, brandLogo }) {
   return `
   <section class="bp-hero" aria-labelledby="home-title">
-    <div class="bp-hero-content">
+    <div class="wrap bp-hero-content">
       <div class="bp-hero-copy">
         <p class="bp-eyebrow">${company}</p>
         <h1 id="home-title">Your Partner in Financial Growth</h1>

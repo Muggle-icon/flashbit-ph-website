@@ -50,27 +50,30 @@
   position: relative;
   background: var(--bp-navy);
   color: white;
-  padding-block: clamp(32px, 5vw, 72px);
 }
 
 .bp-hero::before {
   position: absolute;
-  inset: 0;
+  inset: 0 0 0 34%;
   content: "";
   background-image:
-    linear-gradient(90deg, rgba(15, 24, 56, .96) 0%, rgba(15, 24, 56, .83) 40%, rgba(15, 24, 56, .24) 73%, rgba(15, 24, 56, .32) 100%),
+    linear-gradient(90deg, var(--bp-navy), rgba(22, 32, 77, .9) 16%, transparent 29%),
     url("./assets/flashbit-community-v1.webp");
-  background-position: center;
+  background-position: center, 47% center;
   background-size: cover;
   pointer-events: none;
 }
 
-.bp-hero-grid {
+.bp-hero-content {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 380px);
   align-items: center;
-  gap: clamp(28px, 5vw, 72px);
+  min-height: clamp(390px, 32vw, 490px);
+  padding-block: 48px;
+}
+
+.bp-hero-copy {
+  max-width: min(43%, 480px);
 }
 
 .bp-eyebrow {
@@ -81,7 +84,7 @@
 
 .bp-hero h1 {
   max-width: 14ch;
-  font-size: clamp(34px, 5vw, 64px);
+  font-size: clamp(34px, 4.1vw, 60px);
   line-height: 1.08;
 }
 
@@ -120,32 +123,28 @@
   outline-color: white;
 }
 
-.bp-glance {
-  padding: clamp(20px, 3vw, 30px);
-  border-radius: 12px;
-  background: white;
-  color: var(--ink);
+.bp-hero-summary {
+  padding-block: 24px;
+  background: var(--bp-mist);
+  border-bottom: 1px solid var(--bp-line);
 }
 
 .bp-glance h2 {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   font-size: 21px;
   color: var(--bp-navy);
 }
 
-.bp-glance dl,
-.bp-products dl,
-.bp-disclosures dl {
+.bp-glance dl {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1.65fr 1fr;
+  gap: 16px 24px;
   margin: 0;
 }
 
-.bp-glance dl > div {
-  padding-block: 10px;
-  border-top: 1px solid var(--bp-line);
-}
-
-.bp-glance dl > div:last-child {
-  padding-bottom: 0;
+.bp-products dl,
+.bp-disclosures dl {
+  margin: 0;
 }
 
 .bp-glance dt,
@@ -460,6 +459,30 @@
 }
 
 @media (max-width: 920px) {
+  .bp-hero::before {
+    inset: 0 0 auto;
+    height: clamp(166px, 33vw, 300px);
+    background-image: url("./assets/flashbit-community-v1.webp");
+    background-position: 47% center;
+  }
+
+  .bp-hero-content {
+    min-height: 0;
+    padding-block: calc(clamp(166px, 33vw, 300px) + 28px) 32px;
+  }
+
+  .bp-hero-copy {
+    max-width: 600px;
+  }
+
+  .bp-hero h1 {
+    max-width: 19ch;
+  }
+
+  .bp-glance dl {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .bp-steps {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -475,24 +498,10 @@
 }
 
 @media (max-width: 680px) {
-  .bp-hero-grid,
   .bp-faq,
   .bp-products,
   .bp-policy-grid {
     grid-template-columns: 1fr;
-  }
-
-  .bp-hero::before {
-    bottom: auto;
-    height: 320px;
-    background-image:
-      linear-gradient(180deg, rgba(15, 24, 56, .24), rgba(15, 24, 56, .83) 38%, var(--bp-navy) 100%),
-      url("./assets/flashbit-community-v1.webp");
-    background-position: center, 56% center;
-  }
-
-  .bp-hero {
-    padding-top: 120px;
   }
 
   .bp-identity {

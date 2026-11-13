@@ -224,7 +224,10 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
     <p class="bp-section-intro">Planned products by brand. Check the loan offer for the amount, terms and costs that apply.</p>
     <div class="bp-products">${brands.map(brand => {
       const info = offerings[brand.id];
-      return `<div class="bp-product-group ${brand.id}"><h3>${info.name}</h3><dl>${info.products.map(([name, copy]) => `<div><dt>${name}</dt><dd>${copy}</dd></div>`).join('')}</dl></div>`;
+      return `<div class="bp-product-group ${brand.id}">
+        <h3><a class="bp-product-link" href="${route(brand)}#top">${info.name}<span aria-hidden="true">→</span></a></h3>
+        <dl>${info.products.map(([name, copy]) => `<div><dt>${name}</dt><dd>${copy}</dd></div>`).join('')}</dl>
+      </div>`;
     }).join('')}</div>
   </section>
 

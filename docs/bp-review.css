@@ -145,15 +145,29 @@
   overflow: hidden;
   margin-block: 24px;
   border: 1px solid #cfdbeb;
-  border-radius: 8px;
+  border-radius: 12px;
   background: #fff;
   color: var(--bp-navy);
+  box-shadow: 0 4px 14px rgb(22 32 77 / .09);
 }
 
 .bp-glance h2 {
-  padding: 11px 12px;
-  background: #f4f7fb;
-  font-size: 18px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 14px;
+  background: var(--bp-navy);
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.bp-glance h2::before {
+  content: "";
+  flex: 0 0 3px;
+  height: 15px;
+  border-radius: 2px;
+  background: var(--bp-amber);
 }
 
 .bp-glance table {
@@ -165,22 +179,44 @@
 
 .bp-glance th,
 .bp-glance td {
-  padding: 7px 10px;
-  border-top: 1px solid var(--bp-line);
+  padding-block: 8px;
   vertical-align: top;
   text-align: left;
 }
 
+.bp-glance tr + tr > * {
+  border-top: 1px solid var(--bp-line);
+}
+
 .bp-glance th {
   width: 40%;
-  background: #f8f9fc;
+  padding-inline: 14px 4px;
   color: var(--body);
+  font-size: 13px;
   font-weight: 700;
 }
 
 .bp-glance td {
-  border-left: 1px solid var(--bp-line);
+  padding-inline: 8px 14px;
+  font-weight: 750;
+}
+
+.bp-glance .bp-glance-amount > * {
+  background: var(--bp-hero-blue);
+  vertical-align: middle;
+}
+
+.bp-glance-amount td,
+.bp-glance-disclosure td {
+  font-weight: 600;
+}
+
+.bp-glance-amount strong {
+  font-size: 23px;
   font-weight: 800;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .bp-products dl,

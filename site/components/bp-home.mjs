@@ -114,9 +114,9 @@ export function renderBpHome(brands, { siteUrl, route, brandLogo }) {
         <h2 id="glance-title">Loan terms at a glance</h2>
         <table aria-labelledby="glance-title">
           <tbody>
-            <tr><th scope="row">Loan amount</th><td>Up to ₱50,000</td></tr>
+            <tr class="bp-glance-amount"><th scope="row">Loan amount</th><td>Up to <strong>₱50,000</strong></td></tr>
             <tr><th scope="row">Repayment</th><td>4, 6 or 8 installments</td></tr>
-            <tr><th scope="row">Interest, fees and charges</th><td>Review the Disclosure Statement before accepting.</td></tr>
+            <tr class="bp-glance-disclosure"><th scope="row">Interest, fees and charges</th><td>Review the <strong>Disclosure Statement</strong> before accepting.</td></tr>
             <tr><th scope="row">Planned launch</th><td>${launch}</td></tr>
           </tbody>
         </table>

@@ -76,8 +76,7 @@ export function bpHeader(siteUrl, flashbitLogo, isHome) {
 
 function bpFooterDisclosures(siteUrl) {
   return `
-    <section class="bp-footer-disclosures" id="contact" aria-labelledby="contact-title">
-      <div class="wrap">
+      <section class="bp-footer-disclosures" id="contact" aria-labelledby="contact-title">
         <h2 id="contact-title">Company and regulatory information</h2>
         <div class="bp-disclosures">
           <div class="bp-disclosure-group">
@@ -120,13 +119,12 @@ function bpFooterDisclosures(siteUrl) {
             </div>
           </div>
         </div>
-      </div>
-    </section>`;
+      </section>`;
 }
 
 export function bpFooter(siteUrl, flashbitLogo, isHome) {
   return `
-  <footer class="bp-footer">${isHome ? bpFooterDisclosures(siteUrl) : ''}
+  <footer class="bp-footer">
     <div class="wrap bp-footer-inner">
       <a class="bp-footer-brand" href="${siteUrl('#top')}" aria-label="${company} home">${flashbitLogo(true)}</a>
       <div>
@@ -134,7 +132,7 @@ export function bpFooter(siteUrl, flashbitLogo, isHome) {
           ${navigation.map(([label, id]) => `<a href="${siteUrl(`#${id}`)}">${label}</a>`).join('')}
         </nav>
         <nav aria-label="Legal information">${legalLinks(siteUrl)}</nav>
-      </div>
+      </div>${isHome ? bpFooterDisclosures(siteUrl) : ''}
       <p class="bp-copyright">© 2026 ${company} All rights reserved. Operating under the names of ${tradeNames}.</p>
     </div>
   </footer>`;

@@ -213,7 +213,10 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
     <h2 id="loans-title">Loan Products</h2>
     <p class="bp-section-intro">Two planned loan types across our three brands. Check your loan offer for the amount, terms and costs.</p>
     <div class="bp-products">
-      ${loanProducts.map(([name, description]) => `<div><h3>${name}</h3><p>${description}</p></div>`).join('\n      ')}
+      ${brands.map(brand => `<div class="bp-product-group ${brand.id}">
+        <h3><a class="bp-product-link" href="${route(brand)}#top">${brandDirectory[brand.id].name}<span aria-hidden="true">→</span></a></h3>
+        <dl>${loanProducts.map(([name, description]) => `<div><dt>${name}</dt><dd>${description}</dd></div>`).join('')}</dl>
+      </div>`).join('\n      ')}
     </div>
   </section>
 

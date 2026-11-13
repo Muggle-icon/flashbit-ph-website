@@ -16,6 +16,12 @@ const navigation = [
   ['Contact Us', 'contact'],
 ];
 
+const footerNavigation = [
+  ['Company', ['about', 'brands']],
+  ['Loans', ['loan-products', 'how-it-works']],
+  ['Support', ['faqs', 'contact']],
+];
+
 const offerings = {
   livaya: {
     name: 'Livaya Financing',
@@ -124,16 +130,18 @@ function bpFooterDisclosures(siteUrl) {
 
 export function bpFooter(siteUrl, flashbitLogo, isHome) {
   return `
-  <footer class="bp-footer">
+  <footer class="bp-footer" id="site-footer">
     <div class="wrap bp-footer-inner">
       <a class="bp-footer-brand" href="${siteUrl('#top')}" aria-label="${company} home">${flashbitLogo(true)}</a>
-      <div>
-        <nav aria-label="Footer navigation">
-          ${navigation.map(([label, id]) => `<a href="${siteUrl(`#${id}`)}">${label}</a>`).join('')}
-        </nav>
-        <nav aria-label="Legal information">${legalLinks(siteUrl)}</nav>
-      </div>${isHome ? bpFooterDisclosures(siteUrl) : ''}
-      <p class="bp-copyright">© 2026 ${company} All rights reserved. Operating under the names of ${tradeNames}.</p>
+      ${footerNavigation.map(([title, ids]) => `
+      <nav class="bp-footer-group" aria-label="${title}">
+        <p class="bp-footer-group-title" aria-hidden="true">${title}</p>
+        ${navigation.filter(([, id]) => ids.includes(id)).map(([label, id]) => `<a href="${siteUrl(`#${id}`)}">${label}</a>`).join('')}
+      </nav>`).join('').trimStart()}${isHome ? bpFooterDisclosures(siteUrl) : ''}
+      <div class="bp-footer-bottom">
+        <p class="bp-copyright">© 2026 ${company} All rights reserved. Operating under the names of ${tradeNames}.</p>
+        <nav class="bp-footer-legal" aria-label="Legal information">${legalLinks(siteUrl)}</nav>
+      </div>
     </div>
   </footer>`;
 }

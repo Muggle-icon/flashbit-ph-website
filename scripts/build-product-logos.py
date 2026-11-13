@@ -12,6 +12,13 @@ from fontTools.pens.svgPathPen import SVGPathPen
 from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
 
+
+def format_coordinate(value):
+    # At the lockup's scale, thousandths of a font unit are subpixel.
+    rounded = f'{value:.3f}'.rstrip('0').rstrip('.')
+    return '0' if rounded == '-0' else rounded
+
+
 root = Path(__file__).resolve().parents[1]
 assets = root / 'site/dist/assets'
 font = instantiateVariableFont(TTFont(assets / 'fonts/Manrope-Variable.woff2'), {'wght': 700}, inplace=False)
@@ -39,7 +46,7 @@ for brand, name, ink, icon in [
     bounds = []
     for letter in name:
         glyph = glyphs[cmap[ord(letter)]]
-        pen = SVGPathPen(glyphs)
+        pen = SVGPathPen(glyphs, ntos=format_coordinate)
         glyph.draw(pen)
         box = BoundsPen(glyphs)
         glyph.draw(box)

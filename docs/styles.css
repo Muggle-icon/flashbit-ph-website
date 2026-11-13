@@ -13,7 +13,7 @@ a:focus-visible,button:focus-visible{outline:3px solid currentColor;outline-offs
 .wrap{width:min(1120px,calc(100% - 80px));margin-inline:auto}
 .skip{position:fixed;left:16px;top:-80px;z-index:10;padding:12px 20px;background:#fff;color:#163847;border:2px solid #163847}.skip:focus{top:12px}
 .livaya{--brand-ink:#123f49;--brand-button:#145362;--brand-soft:#e5f8fb;--hero:#7ce2ef;--hero-ink:#103b45;--hero-body:#174854}
-.alago{--brand-ink:#134681;--brand-button:#1158a4;--brand-soft:#edf4ff;--hero:#075cba;--hero-ink:#fff;--hero-body:#e5f0ff}
+.alago{--brand-primary:#0095ff;--brand-deep:#0077cc;--brand-ink:#005b9f;--brand-button:var(--brand-deep);--brand-soft:color-mix(in srgb,var(--brand-primary) 8%,#fff);--hero:var(--brand-deep);--hero-ink:#fff;--hero-body:#fff}
 .sulivo{--brand-ink:#373696;--brand-button:#4844b7;--brand-soft:#f0efff;--hero:#4947c7;--hero-ink:#fff;--hero-body:#efedff}
 /* Stable navigation. A section is not automatically a visible panel. */
 .site-header{position:relative;z-index:2;background:#fff}

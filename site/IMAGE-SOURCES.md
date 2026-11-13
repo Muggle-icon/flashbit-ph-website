@@ -2,36 +2,26 @@
 
 Updated: 2026-11-13
 
-These three images are AI-generated illustrative everyday-life scenes for the website. They are not photographs of identified customers, testimonials, or evidence of actual users' nationality, occupation, or borrowing history. They were made with the built-in OpenAI `image_gen` tool (not a CLI/API fallback or stock-image service).
+The homepage and Sulivo photographs are AI-generated everyday-life scenes created with OpenAI ImageGen. They are illustrative scenes.
 
-Livaya uses the supplied App welcome screen for its portrait. Alago and Sulivo use the lifestyle imagery below. The twelve App screenshots keep their original dimensions. The nine sign-in, home, and loan-detail screenshots use lossless WebP. The three photographic welcome screens use quality-84 WebP. Published favicon PNGs are optimized without changing their decoded pixels. The earlier original PNGs are available in the repository history at commit `6f2f711`.
+The Livaya portrait uses the same crop as before, exported from the supplied App welcome image as a separate lightweight asset. The Alago portrait uses the user-supplied market photo. Sulivo uses the generated lifestyle photo below. The twelve App screenshots keep their original dimensions. The nine sign-in, home, and loan-detail screenshots use lossless WebP. The three photographic welcome screens use quality-78 WebP. Published favicon PNGs are optimized without changing their decoded pixels. The earlier original PNGs are available in the repository history at commit `6f2f711`.
 
-The four current Alago App screens come from the PNG attachments supplied on 2026-11-13. Each measures 750 × 1624 px. The published copies total 284,372 bytes, down from 2,030,037 bytes in the attachments.
+The four current Alago App screens come from the PNG attachments supplied on 2026-11-13. Each measures 750 × 1624 px. The published copies total 255,852 bytes, down from 2,030,037 bytes in the attachments.
 
 | Asset | Exact dimensions | Intended use | Source |
 | --- | --- | --- | --- |
-| `dist/assets/alago-worker-v2.webp` | 840 × 840 px | Alago lifestyle photo featuring a retail worker during a phone break | Built-in image_gen, 2026-09-25 |
+| `dist/assets/alago-market-portrait.webp` | 840 × 840 px | Alago hero photo of a woman holding fruit at a market stall | User attachment, 2026-11-13 |
+| `dist/assets/livaya-shop-portrait.webp` | 840 × 764 px | Livaya hero portrait | User-supplied Livaya App welcome PNG |
 | `dist/assets/flashbit-community-v1.webp` | 2170 × 725 px | Company homepage hero background with two adults at a community shop | Built-in image_gen, 2026-09-25 |
-| `dist/assets/flashbit-community-v1-mobile.webp` | 1240 × 414 px | Smaller rendition of the homepage hero background for mobile | Same source as `flashbit-community-v1.webp` |
+| `dist/assets/flashbit-community-v1-mobile.webp` | 1240 × 414 px | Medium rendition of the homepage hero photo | Same source as `flashbit-community-v1.webp` |
+| `dist/assets/flashbit-community-v1-small.webp` | 800 × 267 px | Small rendition of the homepage hero photo | Same source as `flashbit-community-v1.webp` |
 | `dist/assets/sulivo-seller-v2.webp` | 840 × 840 px | Sulivo lifestyle photo featuring an online seller packing orders | Built-in image_gen, 2026-09-25 |
 
 ## Visual inspection
 
-Both product portraits were inspected at generation. Each is a single square full photograph with complete head, visible natural phone-use hands, ordinary clothing and natural skin texture. Alago has a seated man in navy at the back of a small shop. Sulivo has a short-haired woman in lilac at a home packing table. Their WebP copies are sized for the product portrait container.
+Each product portrait has a 420px-wide variant. The homepage chooses between 800px, 1240px and 2170px images based on viewport width and pixel density. The regulatory marks from the BP prototype are published as lossless WebP at their display sizes.
 
-## Final prompt: ALAGO
-
-```text
-Use case: photorealistic-natural.
-Asset type: a single square website lifestyle photograph, 1024 x 1024. No collage, no page layout.
-Primary request: candid documentary photograph of an ordinary Filipino male community retail employee, about 29 years old, quietly checking a smartphone during a normal work break.
-Scene: the modest tidy back area of a neighborhood retail shop in an ordinary Philippine city. Practical shelves of plain supplies and one work table, realistic lived-in density, neither luxurious nor run-down. Soft neutral blue-gray tones and daylight. No tourist symbols.
-Subject: one man, natural medium brown skin and visible normal skin texture, short simple black hair, ordinary build, understated navy blue polo without a logo, plain trousers. Everyday face and normal proportions, not a fashion model or executive. He is seated and angled slightly three-quarter, naturally holding his phone with one hand and interacting with the other, looking at its screen. Relaxed focused expression, mouth closed with only a slight natural smile. Phone screen faces him.
-Composition: one coherent eye-level medium environmental portrait, head to lap visible, complete head and both hands comfortably inside the frame. Subject occupies around two-thirds of the image. Natural believable fingers. Gentle background detail with moderate depth of field, authentic ambient daylight, natural color rendition, restrained photographic finish.
-No typography, logos, visible company badges, watermark, user interface overlay, cash, coins, thumbs-up, confetti, flags, landmark, beach, palm tree, exaggerated grin, slick advertising pose, studio lighting, beauty retouching or poverty narrative. This is a generated everyday life illustration, not a real customer endorsement.
-```
-
-## Final prompt: SULIVO
+## Final prompt: Sulivo
 
 ```text
 Use case: photorealistic-natural.

@@ -14,16 +14,17 @@ The original PNG wordmarks are retained byte-for-byte as supplied reference artw
 
 - `dist/assets/livaya-lockup.svg`, `alago-lockup.svg`, `sulivo-lockup.svg` are single, self-contained horizontal compositions. Each embeds the supplied icon PNG without pixel changes and contains Manrope 700 lettering converted to paths.
 - On 2026-11-13 the user supplied replacement marks for ALAGO, LIVAYA and SULIVO. The published PNGs retain the supplied 240 × 240 dimensions, decoded RGBA pixels and sRGB color space. Each lockup embeds the same optimized PNG used for its favicon.
+- The three PNGs use indexed palettes with exact RGBA values. The five SVG wordmarks round outline coordinates to one thousandth of a font unit.
 - Lettering colors are sampled from the opaque primary colors in the user-supplied wordmarks: LIVAYA `#165962`; ALAGO and SULIVO `#0151C5`. The blue SULIVO wordmark is intentional: it preserves the supplied artwork even though its app icon has a violet background.
-- Names retain the supplied spelling and title case: Livaya, Alago, Sulivo. Prose can continue using uppercase product names.
+- Website names use the supplied spelling and title case for Livaya, Alago and Sulivo.
 - The local Manrope 700 outlines are licensed under SIL OFL 1.1; see `FONT-LICENSES.md`. SVGs require no installed font or external asset request. Icons remain raster images within the SVG, so these are not wholly vector redrawings.
 - `scripts/build-product-logos.py` creates the committed assets and `brand-lockups.json`. Requires Python fonttools and brotli only when regenerating; the regular website build does not need them.
 
 | Brand | Published PNG under `dist/assets/` | Supplied PNG SHA-256 | Published PNG SHA-256 |
 | --- | --- | --- | --- |
-| ALAGO | `alago-icon.png` | `c430a3ba58b35dea9c43cd9d4a8a0a3becd687cab6d8fb14d9f6000468857cfa` | `6b50e8299cbcd25976d695910da89c89698df934e445d76e3f4927bc476095e1` |
-| LIVAYA | `livaya-icon-v2.png` | `3dc8c74d26885a2432ab2bf04ef2123abef1093e640721c9ca735aac9e63a5b9` | `9c81ec3cd86cb1f131a44d6c196443f1857a6b1de55c495fe4a9cd4476513655` |
-| SULIVO | `sulivo-icon.png` | `89d0b2f65e0fa7e9f43881963fa37ec8750b5b29cdff41bb5c285142ba13153e` | `1abbc3494cf5c318e7298529a0603b37c82673a46eb8ae8c7913e14858e366bc` |
+| Alago | `alago-icon.png` | `c430a3ba58b35dea9c43cd9d4a8a0a3becd687cab6d8fb14d9f6000468857cfa` | `ccca24b9fde11b2c80139c958c85d722b335f694ddbee8d04267160c36de5653` |
+| Livaya | `livaya-icon-v2.png` | `3dc8c74d26885a2432ab2bf04ef2123abef1093e640721c9ca735aac9e63a5b9` | `edccaa6e5135ecdcd8d5739185d40fa75608b1db0151c8a5e8c16788c4569f88` |
+| Sulivo | `sulivo-icon.png` | `89d0b2f65e0fa7e9f43881963fa37ec8750b5b29cdff41bb5c285142ba13153e` | `7f699841fc33f22874ae0cce269c89a3d2f7af55b97198a47daa521706398fb6` |
 
 ### Fixed geometry and usage
 

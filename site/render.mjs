@@ -12,12 +12,11 @@ if (baseSegments.some(segment => !/^[A-Za-z0-9._~-]+$/.test(segment) || segment 
 const basePath = baseSegments.length ? `/${baseSegments.join('/')}/` : '/';
 const siteUrl = relativePath => `${basePath}${relativePath.replace(/^\/+/, '')}`;
 const brandLockups = JSON.parse(await readFile(new URL('./brand-lockups.json', import.meta.url), 'utf8'));
-const rasterAssets = (await readdir(new URL('./dist/assets/', import.meta.url)))
-  .filter(file => /\.(webp|png|jpg)$/.test(file))
+const imageAssets = (await readdir(new URL('./dist/assets/', import.meta.url)))
+  .filter(file => /\.(webp|png|jpg|svg)$/.test(file))
   .map(file => `assets/${file}`);
 const assetVersions = Object.fromEntries(await Promise.all(
-  ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', ...rasterAssets,
-    ...Object.keys(brandLockups).map(id => `assets/${id}-lockup.svg`)].map(async file => [file,
+  ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', ...imageAssets].map(async file => [file,
     createHash('sha256').update(await readFile(new URL(`./dist/${file}`, import.meta.url))).digest('hex').slice(0, 12),
   ])
 ));
@@ -26,8 +25,8 @@ const dist = process.env.OUTPUT_DIR
   ? path.resolve(process.env.OUTPUT_DIR)
   : fileURLToPath(new URL('./dist/', import.meta.url));
 const brands = [
-  { id: 'livaya', name: 'Livaya', screenWidth: 1125, screenHeight: 2436, title: 'For home and your small business.', description: 'Loan information for household expenses and small-business cash flow.', label: 'Home, your shop and everyday life', needs: ['Household bills & groceries', 'Stock for your small shop', 'School-related expenses'], body: 'Groceries, household bills and supplies for your shop. Understand the cost of borrowing and plan your repayments.', scene: 'A woman checking her phone while working in a local shop.' },
-  { id: 'alago', name: 'Alago', screenWidth: 750, screenHeight: 1624, title: 'For everyday working life.', description: 'Explore the app, loan details and the steps before you apply.', label: 'The expenses between paydays', needs: ['Daily household expenses', 'Transport to and from work', 'Bills between paydays'], body: 'Daily expenses do not always line up with payday. Check your loan information and what you will need to repay.', photo: 'alago-worker-v2.webp', scene: 'A man in a navy polo checking his phone during a break in a neighbourhood shop.' },
+  { id: 'livaya', name: 'Livaya', screenWidth: 1125, screenHeight: 2436, title: 'For home and your small business.', description: 'Loan information for household expenses and small-business cash flow.', label: 'Home, your shop and everyday life', needs: ['Household bills & groceries', 'Stock for your small shop', 'School-related expenses'], body: 'Groceries, household bills and supplies for your shop. Understand the cost of borrowing and plan your repayments.', photo: 'livaya-shop-portrait.webp', photoHeight: 764, scene: 'A woman checking her phone while working in a local shop.' },
+  { id: 'alago', name: 'Alago', screenWidth: 750, screenHeight: 1624, title: 'For everyday working life.', description: 'Explore the app, loan details and the steps before you apply.', label: 'The expenses between paydays', needs: ['Daily household expenses', 'Transport to and from work', 'Bills between paydays'], body: 'Daily expenses do not always line up with payday. Check your loan information and what you will need to repay.', photo: 'alago-market-portrait.webp', scene: 'A woman holding fruit at a market stall.' },
   { id: 'sulivo', name: 'Sulivo', screenWidth: 1125, screenHeight: 2436, title: 'For work and everyday expenses.', description: 'Understand borrowing costs and repayments for work and daily needs.', label: 'Work, orders and daily needs', needs: ['Supplies for your work', 'Everyday household bills', 'Small-business orders'], body: 'Work supplies, orders and everyday bills. Review your loan details and fit repayments into your budget.', photo: 'sulivo-seller-v2.webp', scene: 'A short-haired woman checking her phone beside parcels on a small packing table.' },
 ];
 const route = brand => siteUrl(`${brand.id}financing/`);
@@ -37,7 +36,7 @@ function brandLogo(brand) {
   return `<img class="brand-lockup" src="${assetUrl(`assets/${brand.id}-lockup.svg`)}" width="${width}" height="${height}" alt="${brand.name}">`;
 }
 function flashbitLogo(reverse = false) {
-  return `<img class="flashbit-logo" src="${siteUrl(`assets/flashbit-logo${reverse ? '-reverse' : ''}.svg`)}" width="203" height="48" alt="Flashbit">`;
+  return `<img class="flashbit-logo" src="${assetUrl(`assets/flashbit-logo${reverse ? '-reverse' : ''}.svg`)}" width="203" height="48" alt="Flashbit">`;
 }
 function brandHeader(brand) {
   return `<a class="skip" href="#main">Skip to content</a><header class="site-header"><div class="wrap header-inner"><a class="brand-wordmark" href="${route(brand)}#top" aria-label="${brand.name} home">${brandLogo(brand)}</a><nav aria-label="${brand.name} navigation"><a href="#features">Loan details</a><a href="#how-it-works">How it works</a><a href="#contact">Contact us</a></nav></div></header>`;
@@ -45,13 +44,13 @@ function brandHeader(brand) {
 function brandFooter(brand) {
   return `<footer id="contact" class="site-footer"><div class="wrap"><div class="footer-grid"><div class="footer-company"><a class="brand-wordmark" href="${route(brand)}#top" aria-label="${brand.name} home">${brandLogo(brand)}</a><p>${brand.title}</p><p class="footer-caption">${brand.name} is a Flashbit brand.</p><a class="company-link" href="${siteUrl('#top')}">About Flashbit ${arrow}</a></div><div class="footer-brands"><h2>Explore ${brand.name}</h2><a href="#features">Loan details</a><a href="#how-it-works">How it works</a><a class="other-brands-link" href="${siteUrl('#brands')}">Other Flashbit brands ${arrow}</a></div><div class="footer-contact"><h2>Contact us</h2><dl><dt>Phone</dt><dd><a class="phone-link" href="tel:+639451292500">(0945) 129-2500</a></dd><dt>Address</dt><dd>3/F Prestige Tower, F. Ortigas Jr. Road,<br> Ortigas Center, San Antonio, Pasig City,<br> National Capital Region, 1600</dd></dl></div></div><div class="footer-bottom"><p>© 2026 Flashbit. All rights reserved.</p><p>${brand.name} · Philippines</p></div></div></footer>`;
 }
-function portrait(brand, cls = '', loading = 'lazy') {
-  const priority = loading === 'eager' ? ' fetchpriority="high"' : '';
-  if (brand.photo) return `<div class="portrait photo ${brand.id} ${cls}"><img src="${assetUrl(`assets/${brand.photo}`)}" alt="${brand.scene}" width="840" height="840" loading="${loading}"${priority} decoding="async"></div>`;
-  return `<div class="portrait ${brand.id} ${cls}"><img src="${assetUrl(`assets/${brand.id}-welcome.webp`)}" alt="${brand.scene}" width="${brand.screenWidth}" height="${brand.screenHeight}" loading="${loading}"${priority} decoding="async"></div>`;
+function portrait(brand) {
+  const full = assetUrl(`assets/${brand.photo}`);
+  const small = assetUrl(`assets/${brand.photo.replace('.webp', '-small.webp')}`);
+  return `<div class="portrait photo ${brand.id}"><img src="${full}" srcset="${small} 420w, ${full} 840w" sizes="(max-width: 420px) calc(100vw - 40px), (max-width: 760px) 380px, (max-width: 1050px) 280px, 340px" alt="${brand.scene}" width="840" height="${brand.photoHeight ?? 840}" fetchpriority="high" decoding="async"></div>`;
 }
 function shell(title, description, body, brand = null, policy = false) {
-  const favicon = brand ? assetUrl(`assets/${brandLockups[brand.id].icon}`) : siteUrl('assets/flashbit-symbol.svg');
+  const favicon = brand ? assetUrl(`assets/${brandLockups[brand.id].icon}`) : assetUrl('assets/flashbit-symbol.svg');
   const review = !brand;
   const head = review ? `<meta name="robots" content="noindex"><link rel="stylesheet" href="${assetUrl('bp-review.css')}">` : '';
   const masthead = review ? `<a class="skip" href="#main">Skip to content</a>${bpHeader(siteUrl, flashbitLogo, !policy)}` : brandHeader(brand);
@@ -82,7 +81,7 @@ function brandPage(b) {
     ['Repayment schedule', 'Know your first due date and the amount of each payment.'],
   ];
   return shell(`${b.name} | Online loans in the Philippines`, `Explore ${b.name}, a Flashbit online lending brand. See the app screens, loan information, repayment guidance and application steps.`, `
-  <section class="product-intro"><div class="wrap product-intro-grid"><div class="product-intro-copy"><p class="product-category">${b.name} online loans · Philippines</p><h1>${b.title}</h1><p class="product-description">${b.body}</p><a class="primary-link" href="#features">View loan details</a></div>${portrait(b, '', 'eager')}</div></section>
+  <section class="product-intro"><div class="wrap product-intro-grid"><div class="product-intro-copy"><p class="product-category">${b.name} online loans · Philippines</p><h1>${b.title}</h1><p class="product-description">${b.body}</p><a class="primary-link" href="#features">View loan details</a></div>${portrait(b)}</div></section>
   <section class="loan-information wrap" id="features" aria-labelledby="features-title"><div class="loan-information-intro"><div class="section-heading"><h2 id="features-title">Before you borrow</h2><p>Review these details in your own loan offer.</p></div><p class="borrowing-note">Borrow only what you can plan to repay.</p></div><dl class="loan-facts">${features.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('')}</dl></section>
   <section class="app-guide" id="how-it-works" aria-labelledby="app-guide-title"><div class="wrap">${renderAppCarousel(b, assetUrl)}</div>
   </section>

@@ -4,6 +4,13 @@ from fontTools.ttLib import TTFont
 from fontTools.varLib.instancer import instantiateVariableFont
 from fontTools.pens.svgPathPen import SVGPathPen
 
+
+def format_coordinate(value):
+    # At the lockup's scale, thousandths of a font unit are subpixel.
+    rounded = f'{value:.3f}'.rstrip('0').rstrip('.')
+    return '0' if rounded == '-0' else rounded
+
+
 root = Path(__file__).resolve().parents[1]
 font = instantiateVariableFont(TTFont(root / 'site/dist/assets/fonts/Manrope-Variable.woff2'), {'wght': 750}, inplace=False)
 glyphs = font.getGlyphSet()
@@ -13,7 +20,7 @@ cursor = 0
 letters = []
 for letter in 'Flashbit':
     name = cmap[ord(letter)]
-    pen = SVGPathPen(glyphs)
+    pen = SVGPathPen(glyphs, ntos=format_coordinate)
     glyphs[name].draw(pen)
     letters.append(f'<path d="{pen.getCommands()}" transform="translate({cursor:.3f} 0)"/>')
     cursor += glyphs[name].width - 10 / scale / 37

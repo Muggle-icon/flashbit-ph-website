@@ -87,7 +87,7 @@ function bpFooterDisclosures(assetUrl) {
         <div class="bp-disclosures">
           <div class="bp-disclosure-group">
             <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-sec.webp')}" width="128" height="209" alt="" loading="lazy" decoding="async">
+              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-sec.webp')}" width="49" height="80" alt="" loading="lazy" decoding="async">
               <div><h3>Securities and Exchange Commission</h3><dl>
                 <div><dt>Date of incorporation</dt><dd>September 14, 2026</dd></div>
                 <div><dt>SEC Registration No.</dt><dd>202609066778-02</dd></div>
@@ -95,7 +95,7 @@ function bpFooterDisclosures(assetUrl) {
               </dl></div>
             </div>
             <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-bir.webp')}" width="128" height="126" alt="" loading="lazy" decoding="async">
+              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-bir.webp')}" width="72" height="71" alt="" loading="lazy" decoding="async">
               <div><h3>Bureau of Internal Revenue</h3><dl>
                 <div><dt>BIR Registration No.</dt><dd>815-972-116-000</dd></div>
               </dl></div>
@@ -103,7 +103,7 @@ function bpFooterDisclosures(assetUrl) {
           </div>
           <div class="bp-disclosure-group">
             <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-amlc.jpg')}" width="200" height="135" alt="" loading="lazy" decoding="async">
+              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-amlc.webp')}" width="72" height="49" alt="" loading="lazy" decoding="async">
               <div><h3>Anti-Money Laundering Council</h3><dl>
                 <div><dt>Registration No.</dt><dd>20260924204248-7</dd></div>
               </dl></div>
@@ -161,11 +161,14 @@ function reviewQuestions(siteUrl) {
 }
 
 export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
+  const heroFull = assetUrl('assets/flashbit-community-v1.webp');
+  const heroMedium = assetUrl('assets/flashbit-community-v1-mobile.webp');
+  const heroSmall = assetUrl('assets/flashbit-community-v1-small.webp');
   return `
   <section class="bp-hero" aria-labelledby="home-title">
     <picture class="bp-hero-photo" aria-hidden="true">
-      <source media="(max-width: 680px)" srcset="${assetUrl('assets/flashbit-community-v1-mobile.webp')}">
-      <img src="${assetUrl('assets/flashbit-community-v1.webp')}" width="2170" height="725" alt="" fetchpriority="high">
+      <source media="(max-width: 680px)" srcset="${heroSmall} 800w, ${heroMedium} 1240w" sizes="(max-width: 515px) 515px, 100vw">
+      <img src="${heroFull}" srcset="${heroMedium} 1240w, ${heroFull} 2170w" sizes="100vw" width="2170" height="725" alt="" fetchpriority="high">
     </picture>
     <div class="wrap bp-hero-content">
       <div class="bp-hero-copy">

@@ -13,11 +13,17 @@ The original PNG wordmarks are retained byte-for-byte as supplied reference artw
 ## Current product website logos
 
 - `dist/assets/livaya-lockup.svg`, `alago-lockup.svg`, `sulivo-lockup.svg` are single, self-contained horizontal compositions. Each embeds the supplied icon PNG without pixel changes and contains Manrope 700 lettering converted to paths.
-- LIVAYA uses the new `Livaya_logo 1.png` supplied by the user. The published `dist/assets/livaya-icon-v2.png` retains its exact decoded pixels and main colors `#76E7F6` and `#103D46`. ALAGO and SULIVO icons also use optimized PNGs with identical decoded pixels.
+- On 2026-11-13 the user supplied replacement marks for ALAGO, LIVAYA and SULIVO. The published PNGs retain the supplied 240 × 240 dimensions, decoded RGBA pixels and sRGB color space. Each lockup embeds the same optimized PNG used for its favicon.
 - Lettering colors are sampled from the opaque primary colors in the user-supplied wordmarks: LIVAYA `#165962`; ALAGO and SULIVO `#0151C5`. The blue SULIVO wordmark is intentional: it preserves the supplied artwork even though its app icon has a violet background.
 - Names retain the supplied spelling and title case: Livaya, Alago, Sulivo. Prose can continue using uppercase product names.
 - The local Manrope 700 outlines are licensed under SIL OFL 1.1; see `FONT-LICENSES.md`. SVGs require no installed font or external asset request. Icons remain raster images within the SVG, so these are not wholly vector redrawings.
 - `scripts/build-product-logos.py` creates the committed assets and `brand-lockups.json`. Requires Python fonttools and brotli only when regenerating; the regular website build does not need them.
+
+| Brand | Published PNG under `dist/assets/` | Supplied PNG SHA-256 | Published PNG SHA-256 |
+| --- | --- | --- | --- |
+| ALAGO | `alago-icon.png` | `c430a3ba58b35dea9c43cd9d4a8a0a3becd687cab6d8fb14d9f6000468857cfa` | `6b50e8299cbcd25976d695910da89c89698df934e445d76e3f4927bc476095e1` |
+| LIVAYA | `livaya-icon-v2.png` | `3dc8c74d26885a2432ab2bf04ef2123abef1093e640721c9ca735aac9e63a5b9` | `9c81ec3cd86cb1f131a44d6c196443f1857a6b1de55c495fe4a9cd4476513655` |
+| SULIVO | `sulivo-icon.png` | `89d0b2f65e0fa7e9f43881963fa37ec8750b5b29cdff41bb5c285142ba13153e` | `1abbc3494cf5c318e7298529a0603b37c82673a46eb8ae8c7913e14858e366bc` |
 
 ### Fixed geometry and usage
 
@@ -25,7 +31,7 @@ The master icon is 44 units tall; actual capital height is 20 units; icon-to-let
 
 Scale the complete asset, never its components separately. Desktop headers use 44px height; mobile headers and product footers use 40px; cards use 48px, or 40px in the narrower three-column layout. At the smallest deployed size, cap height is about 18.2px. Keep at least 11/44 of the rendered icon height clear around the composition; current website containers exceed this. Do not distort, recolor with CSS, stretch to a shared width, or introduce a different icon/text ratio at a breakpoint.
 
-All nine formal combinations use the same master asset per brand: three company cards, three product headers, three product footers. LIVAYA's favicon and the carousel heading also use the new icon. Raw App screenshots preserve their original artwork; updating an App screenshot requires a new real screenshot from the product team.
+The same master per brand appears on its company card, product header and product footer. Each product favicon uses the standalone mark. App screenshots preserve the artwork in the original captures.
 
 Product footers now use a light neutral surface so the established full-color logos display without white badge containers or recoloring. The Flashbit company footer keeps its existing dark treatment. Product logo links continue returning to their own product; company return links remain separate.
 
@@ -44,5 +50,3 @@ The website uses an original geometric F symbol with a separated square element,
 - `dist/assets/flashbit-logo-reverse.svg`: light logo for the dark company footer.
 - `dist/assets/flashbit-symbol.svg`: standalone mark and favicon.
 - `scripts/build-flashbit-logo.py`: optional asset-generation script; requires Python `fonttools` and `brotli`. The normal website build uses the committed SVGs and does not require these packages.
-
-The three product logos now appear in the company brand section and product headers/footers. The duplicate, noninteractive company hero brand row has been removed. Original reference PNGs and App screenshots remain unchanged; the current LIVAYA icon and fixed website lockups follow the later user revision above. The website design record is not a trademark-availability determination.

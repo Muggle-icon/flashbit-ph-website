@@ -13,7 +13,8 @@ const basePath = baseSegments.length ? `/${baseSegments.join('/')}/` : '/';
 const siteUrl = relativePath => `${basePath}${relativePath.replace(/^\/+/, '')}`;
 const brandLockups = JSON.parse(await readFile(new URL('./brand-lockups.json', import.meta.url), 'utf8'));
 const assetVersions = Object.fromEntries(await Promise.all(
-  ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', ...Object.keys(brandLockups).map(id => `assets/${id}-lockup.svg`)].map(async file => [file,
+  ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', ...Object.entries(brandLockups)
+    .flatMap(([id, lockup]) => [`assets/${id}-lockup.svg`, `assets/${lockup.icon}`])].map(async file => [file,
     createHash('sha256').update(await readFile(new URL(`./dist/${file}`, import.meta.url))).digest('hex').slice(0, 12),
   ])
 ));
@@ -46,7 +47,7 @@ function portrait(brand, cls = '', loading = 'lazy') {
   return `<div class="portrait ${brand.id} ${cls}"><img src="${siteUrl(`assets/${brand.id}-welcome.webp`)}" alt="${brand.scene}" width="1125" height="2436" loading="${loading}" decoding="async"></div>`;
 }
 function shell(title, description, body, brand = null, policy = false) {
-  const favicon = brand ? siteUrl(`assets/${brandLockups[brand.id].icon}`) : siteUrl('assets/flashbit-symbol.svg');
+  const favicon = brand ? assetUrl(`assets/${brandLockups[brand.id].icon}`) : siteUrl('assets/flashbit-symbol.svg');
   const review = !brand;
   const head = review ? `<meta name="robots" content="noindex"><link rel="stylesheet" href="${assetUrl('bp-review.css')}">` : '';
   const masthead = review ? `<a class="skip" href="#main">Skip to content</a>${bpHeader(siteUrl, flashbitLogo, !policy)}` : brandHeader(brand);

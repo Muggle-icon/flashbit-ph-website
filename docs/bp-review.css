@@ -47,33 +47,33 @@
 }
 
 .bp-hero {
-  position: relative;
   background: var(--bp-navy);
   color: white;
 }
 
-.bp-hero::before {
-  position: absolute;
-  inset: 0 0 0 34%;
-  content: "";
-  background-image:
-    linear-gradient(90deg, var(--bp-navy), rgba(22, 32, 77, .9) 16%, transparent 29%),
-    url("./assets/flashbit-community-v1.webp");
-  background-position: center, 47% center;
-  background-size: cover;
-  pointer-events: none;
-}
-
 .bp-hero-content {
-  position: relative;
   display: grid;
+  grid-template-columns: minmax(0, 31fr) minmax(0, 43fr) minmax(0, 26fr);
   align-items: center;
-  min-height: clamp(390px, 32vw, 490px);
-  padding-block: 48px;
+  max-width: 1560px;
+  min-height: clamp(352px, 28vw, 410px);
+  margin-inline: auto;
 }
 
 .bp-hero-copy {
-  max-width: min(43%, 480px);
+  padding: 32px 0 32px clamp(26px, 3.3vw, 52px);
+}
+
+.bp-hero-photo {
+  align-self: stretch;
+  background: url("./assets/flashbit-community-v1.webp") 42% center / cover no-repeat;
+  /* Ease into the navy only at the edges, beyond the people and their hands. */
+  mask-image: linear-gradient(
+    90deg,
+    transparent, rgba(0, 0, 0, .12) 10px, rgba(0, 0, 0, .72) 28px, black 48px,
+    black calc(100% - 38px), rgba(0, 0, 0, .72) calc(100% - 22px),
+    rgba(0, 0, 0, .12) calc(100% - 8px), transparent
+  );
 }
 
 .bp-eyebrow {
@@ -84,8 +84,9 @@
 
 .bp-hero h1 {
   max-width: 14ch;
-  font-size: clamp(34px, 4.1vw, 60px);
+  font-size: clamp(34px, 3.25vw, 50px);
   line-height: 1.08;
+  text-wrap: balance;
 }
 
 .bp-lede {
@@ -98,18 +99,19 @@
 .bp-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 26px;
+  gap: 10px;
+  margin-top: 22px;
 }
 
 .bp-button {
   display: inline-flex;
   align-items: center;
   min-height: 48px;
-  padding: 10px 18px;
+  padding: 10px 13px;
   border: 1px solid #a6afce;
   border-radius: 6px;
   background: #1e2a57;
+  font-size: 14px;
   font-weight: 800;
 }
 
@@ -123,23 +125,47 @@
   outline-color: white;
 }
 
-.bp-hero-summary {
-  padding-block: 24px;
-  background: var(--bp-mist);
-  border-bottom: 1px solid var(--bp-line);
-}
-
-.bp-glance h2 {
-  margin-bottom: 16px;
-  font-size: 21px;
+.bp-glance {
+  overflow: hidden;
+  margin: 24px clamp(22px, 2.6vw, 40px) 24px 6px;
+  border-radius: 8px;
+  background: #fff;
   color: var(--bp-navy);
 }
 
-.bp-glance dl {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1.65fr 1fr;
-  gap: 16px 24px;
-  margin: 0;
+.bp-glance h2 {
+  padding: 15px 16px;
+  background: var(--bp-mist);
+  font-size: 18px;
+}
+
+.bp-glance table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.bp-glance th,
+.bp-glance td {
+  padding: 10px 12px;
+  border-top: 1px solid var(--bp-line);
+  vertical-align: top;
+  text-align: left;
+}
+
+.bp-glance th {
+  width: 40%;
+  padding-left: 16px;
+  background: #f8f9fc;
+  color: var(--body);
+  font-weight: 700;
+}
+
+.bp-glance td {
+  padding-right: 16px;
+  border-left: 1px solid var(--bp-line);
+  font-weight: 800;
 }
 
 .bp-products dl,
@@ -147,13 +173,11 @@
   margin: 0;
 }
 
-.bp-glance dt,
 .bp-disclosures dt {
   color: var(--body);
   font-size: 14px;
 }
 
-.bp-glance dd,
 .bp-disclosures dd {
   margin: 3px 0 0;
   color: var(--bp-navy);
@@ -458,31 +482,34 @@
   }
 }
 
-@media (max-width: 920px) {
-  .bp-hero::before {
-    inset: 0 0 auto;
-    height: clamp(166px, 33vw, 300px);
-    background-image: url("./assets/flashbit-community-v1.webp");
-    background-position: 47% center;
-  }
-
+@media (max-width: 1140px) {
   .bp-hero-content {
+    grid-template-columns: minmax(0, 1fr) minmax(0, .8fr);
+    gap: 0 clamp(24px, 4vw, 48px);
     min-height: 0;
-    padding-block: calc(clamp(166px, 33vw, 300px) + 28px) 32px;
+    padding-inline: clamp(20px, 4vw, 48px);
   }
 
-  .bp-hero-copy {
-    max-width: 600px;
+  .bp-hero-photo {
+    grid-area: 1 / 1 / 2 / -1;
+    height: clamp(166px, 29vw, 330px);
+    margin-inline: calc(-1 * clamp(20px, 4vw, 48px));
+    background-position: 47% center;
+    mask-image: none;
   }
+
+  .bp-hero-copy { padding: 28px 0 32px; }
 
   .bp-hero h1 {
     max-width: 19ch;
   }
 
-  .bp-glance dl {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .bp-glance {
+    margin: 24px 0;
   }
+}
 
+@media (max-width: 920px) {
   .bp-steps {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -498,6 +525,15 @@
 }
 
 @media (max-width: 680px) {
+  .bp-hero-content {
+    grid-template-columns: 1fr;
+    padding-bottom: 28px;
+  }
+
+  .bp-hero-copy { padding-bottom: 24px; }
+
+  .bp-glance { margin: 0; }
+
   .bp-faq,
   .bp-products,
   .bp-policy-grid {

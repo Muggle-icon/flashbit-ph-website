@@ -102,28 +102,27 @@ function reviewQuestions(siteUrl) {
 export function renderBpHome(brands, { siteUrl, route, brandLogo }) {
   return `
   <section class="bp-hero" aria-labelledby="home-title">
-    <div class="wrap bp-hero-content">
+    <div class="bp-hero-content">
       <div class="bp-hero-copy">
         <p class="bp-eyebrow">${company}</p>
         <h1 id="home-title">Your Partner in Financial Growth</h1>
         <p class="bp-lede">Financing for everyday expenses, personal goals and small businesses through Livaya, Alago and Sulivo.</p>
         <div class="bp-actions"><a class="bp-button bp-button-primary" href="#loan-products">Explore Loan Products</a><a class="bp-button" href="#contact">Contact Us</a></div>
       </div>
-    </div>
-  </section>
-  <div class="bp-hero-summary">
-    <div class="wrap">
+      <div class="bp-hero-photo" aria-hidden="true"></div>
       <aside class="bp-glance" aria-labelledby="glance-title">
         <h2 id="glance-title">Loan terms at a glance</h2>
-        <dl>
-          <div><dt>Loan amount</dt><dd>Up to ₱50,000</dd></div>
-          <div><dt>Repayment</dt><dd>4, 6 or 8 installments</dd></div>
-          <div><dt>Interest, fees and charges</dt><dd>Review the Disclosure Statement before accepting.</dd></div>
-          <div><dt>Planned launch</dt><dd>${launch}</dd></div>
-        </dl>
+        <table aria-labelledby="glance-title">
+          <tbody>
+            <tr><th scope="row">Loan amount</th><td>Up to ₱50,000</td></tr>
+            <tr><th scope="row">Repayment</th><td>4, 6 or 8 installments</td></tr>
+            <tr><th scope="row">Interest, fees and charges</th><td>Review the Disclosure Statement before accepting.</td></tr>
+            <tr><th scope="row">Planned launch</th><td>${launch}</td></tr>
+          </tbody>
+        </table>
       </aside>
     </div>
-  </div>
+  </section>
 
   <section class="wrap bp-section" id="brands" aria-labelledby="brands-title">
     <h2 id="brands-title">Our Brands</h2>

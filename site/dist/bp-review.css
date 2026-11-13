@@ -218,7 +218,7 @@
 }
 
 .bp-brand {
-  border-top: 1.5px solid var(--brand-button);
+  border-top: 1.5px solid color-mix(in srgb, var(--brand-soft) 66%, var(--brand-button));
   background: var(--brand-soft);
 }
 

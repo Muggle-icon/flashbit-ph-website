@@ -1,12 +1,14 @@
 # Lifestyle image sources
 
-Updated: 2026-11-13
+Updated: 2026-11-16
 
 The homepage and Sulivo photographs are AI-generated everyday-life scenes created with OpenAI ImageGen. They are illustrative scenes.
 
 The Livaya portrait uses the same crop as before, exported from the supplied App welcome image as a separate lightweight asset. The Alago portrait uses the user-supplied market photo. Sulivo uses the generated lifestyle photo below. The twelve App screenshots keep their original dimensions. The nine sign-in, home, and loan-detail screenshots use lossless WebP. The three photographic welcome screens use quality-78 WebP. Published favicon PNGs are optimized without changing their decoded pixels. The earlier original PNGs are available in the repository history at commit `6f2f711`.
 
 The four current Alago App screens come from the PNG attachments supplied on 2026-11-13. Each measures 750 × 1624 px. The published copies total 255,852 bytes, down from 2,030,037 bytes in the attachments.
+
+The Livaya App Home screenshot comes from the PNG supplied on 2026-11-16. The 750 × 1624 px image is published as a 31,942-byte lossless WebP.
 
 | Asset | Exact dimensions | Intended use | Source |
 | --- | --- | --- | --- |

@@ -3,7 +3,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import { renderAppCarousel } from './components/app-carousel.mjs';
-import { bpFooter, bpHeader, renderBpHome, renderBpPolicy, renderBpSection, borrowingNotice, loanProducts } from './components/bp-home.mjs';
+import { bpFooter, bpHeader, renderBpHome, renderBpPolicy, renderBpSection, borrowingNotice, renderBpLoanList } from './components/bp-home.mjs';
 import { renderBpContact } from './components/bp-contact.mjs';
 
 const baseSegments = (process.env.BASE_PATH || '/').split('/').filter(Boolean);
@@ -65,8 +65,8 @@ function shell(title, description, body, { brand, slug = '' } = {}) {
 }
 await mkdir(dist, { recursive: true });
 await writeFile(path.join(dist, 'index.html'), shell(
-  'FlashBit Financing Corp. | BP Review Draft',
-  'FlashBit Financing Corp. homepage draft for BP review.',
+  'FlashBit Financing Corp. | Online Financing in the Philippines',
+  'Explore Livaya Financing, Alago Financing and Sulivo Financing, and find loan information and customer support.',
   renderBpHome(bpSite),
 ));
 for (const [slug, title, description] of [
@@ -104,7 +104,7 @@ for (const [slug, title] of [['terms', 'Terms and Conditions'], ['privacy', 'Pri
   await mkdir(folder, { recursive: true });
   await writeFile(path.join(folder, 'index.html'), shell(
     `${title} | FlashBit Financing Corp.`,
-    `${title} draft for BP review.`,
+    `${title} for FlashBit Financing Corp.`,
     renderBpPolicy(title, content, siteUrl),
     { slug },
   ));
@@ -115,10 +115,35 @@ function brandPage(b) {
     ['Total cost', 'Review the interest, fees and total amount you will pay back.'],
     ['Repayment schedule', 'Know your first due date and the amount of each payment.'],
   ];
+  const useCases = new Intl.ListFormat('en').format(b.needs.map(need => need.toLowerCase()));
   return shell(`${b.name} | Online loans in the Philippines`, `Explore ${b.name}, a Flashbit online lending brand. See the app screens, loan information, repayment guidance and application steps.`, `
   <div class="wrap bp-brand-tools"><a href="${siteUrl('brands/')}">← All brands</a>${brandLogo(b)}</div>
-  <section class="product-intro"><div class="wrap product-intro-grid"><div class="product-intro-copy"><p class="product-category">${b.name} online loans · Philippines</p><h1>${b.title}</h1><p class="product-description">${b.body}</p><a class="primary-link" href="#brand-products-title">View Loan Products</a></div>${portrait(b)}</div></section>
-  <section class="wrap bp-section bp-brand-products" aria-labelledby="brand-products-title"><h2 id="brand-products-title">Loan Products</h2><dl>${loanProducts.map(([title, copy]) => `<div><dt>${title}</dt><dd>${copy}</dd></div>`).join('')}</dl>${borrowingNotice(siteUrl)}</section>
+  <section class="product-intro">
+    <div class="wrap product-intro-grid">
+      <div class="product-intro-copy">
+        <p class="product-category">${b.name} online loans · Philippines</p>
+        <h1>${b.title}</h1>
+        <p class="product-description">${b.body}</p>
+        <p class="bp-brand-use-cases"><strong>Designed for</strong> ${useCases}.</p>
+        <div class="bp-brand-actions">
+          <a class="primary-link" href="#brand-products-title">View Loan Products</a>
+          <a class="bp-brand-process-link" href="${siteUrl('how-it-works/')}">How It Works</a>
+        </div>
+        <ul class="bp-brand-highlights" aria-label="Loan information" role="list">
+          <li>Apply in-app when available</li>
+          <li>Upfront cost disclosure</li>
+          <li>Repayment schedule in your offer</li>
+        </ul>
+      </div>
+      ${portrait(b)}
+    </div>
+  </section>
+  <section class="wrap bp-section bp-brand-products" aria-labelledby="brand-products-title">
+    <h2 id="brand-products-title">${b.name} Loan Products</h2>
+    ${renderBpLoanList()}
+    <a class="bp-content-link" href="${siteUrl('how-it-works/#what-you-need')}">Check application requirements <span aria-hidden="true">→</span></a>
+    ${borrowingNotice(siteUrl)}
+  </section>
   <section class="loan-information wrap" id="features" aria-labelledby="features-title"><div class="loan-information-intro"><div class="section-heading"><h2 id="features-title">Before you borrow</h2><p>Review these details in your own loan offer.</p></div><p class="borrowing-note">Borrow only what you can plan to repay.</p></div><dl class="loan-facts">${features.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('')}</dl></section>
   <section class="app-guide" id="how-it-works" aria-labelledby="app-guide-title"><div class="wrap">${renderAppCarousel(b, assetUrl)}</div>
   </section>

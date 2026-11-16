@@ -7,15 +7,15 @@ const topics = [
 
 export function renderBpFaq(siteUrl, heading, { phone, phoneHref, dpoEmail, secNumber, authorityNumber, amlcNumber, company, tradeNames, launch }) {
   const questions = [
-    ['general', 'What is FlashBit Financing Corp.?', `${company} operates under the names of ${tradeNames}.`],
+    ['general', 'What is FlashBit Financing Corp.?', `${company} is a Philippine financing company operating under the names of ${tradeNames}.`],
     ['general', 'Is FlashBit registered with the SEC?', `Yes. ${company} is registered with the SEC (Registration No. ${secNumber}) and holds Certificate of Authority No. ${authorityNumber}. We are also registered with the Anti-Money Laundering Council (Registration No. ${amlcNumber}).`],
     ['general', 'When will loan products be available?', `The planned launch date is ${launch}, subject to confirmation.`],
-    ['application', 'Who can apply for a loan?', 'The proposed general requirements include being a Filipino citizen, at least 21 years old, with a valid government-issued ID and a regular source of income. Requirements may vary by product.'],
-    ['application', 'What documents should I prepare?', 'You may be asked for a government-issued ID, proof of income and proof of address. Check the requirements for your chosen product before applying.'],
-    ['application', 'How long does the review take?', 'Review timing depends on verification and the information needed for your application.'],
-    ['payments', 'How will I receive the loan proceeds?', 'Check your loan offer for the available disbursement method and account requirements.'],
-    ['payments', 'Where can I see the total cost?', 'Review the interest, fees, charges and total repayment in the Disclosure Statement before accepting a loan offer.'],
-    ['privacy', 'Who can I contact about personal data?', `Read the <a href="${siteUrl('privacy/')}">Privacy Notice</a> or contact the Data Protection Officer at <a href="mailto:${dpoEmail}">${dpoEmail}</a>.`],
+    ['application', 'Who can apply for a loan?', 'The proposed general requirements include Filipino citizenship, residence in the Philippines, age 21 or older, a valid government-issued ID and a regular source of income. Requirements may vary by product.'],
+    ['application', 'What documents should I prepare?', `You may need a government-issued ID, proof of address and proof of income, such as payslips, a certificate of employment or business documents. Additional documents may be requested depending on the product. See <a href="${siteUrl('how-it-works/#what-you-need')}">What you’ll need</a>.`],
+    ['application', 'How long does the review take?', 'Review timing depends on verification and the information needed for your application. If approved, you will receive an offer with the loan amount, costs and repayment schedule.'],
+    ['payments', 'How will I receive the loan proceeds?', 'After you accept a loan offer, proceeds can be sent to a bank account or supported e-wallet in your name. Check your offer for the available disbursement method.'],
+    ['payments', 'Where can I see the total cost?', `Before accepting, review the interest, fees, charges and total amount to repay in your offer and Disclosure Statement. See <a href="${siteUrl('terms/#terms-3')}">Interest, Fees and Charges</a> in the Terms and Conditions.`],
+    ['privacy', 'How is my personal information protected?', `FlashBit limits the personal data it collects to what is needed for the stated purposes and uses safeguards to protect it. Read the <a href="${siteUrl('privacy/')}">Privacy Notice</a> or contact the Data Protection Officer at <a href="mailto:${dpoEmail}">${dpoEmail}</a>.`],
   ];
   const filters = [['all', 'All'], ...topics];
 

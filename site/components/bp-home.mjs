@@ -43,10 +43,31 @@ const brandDirectory = {
   },
 };
 
-export const loanProducts = [
-  ['Salary Loan', 'Short-term financing for employed individuals.'],
-  ['General Purpose Loan', 'For everyday personal and household expenses.'],
+const loanProducts = [
+  {
+    name: 'Salary Loan',
+    description: 'Short-term financing for employed individuals.',
+    details: ['Prepare proof of income, such as a payslip.', 'Review the payment dates in your loan offer.'],
+    eligibility: 'Employed applicants with a regular, verifiable source of income.',
+  },
+  {
+    name: 'General Purpose Loan',
+    description: 'For everyday personal and household expenses.',
+    details: ['Check the amount and repayment schedule in your loan offer.', 'Review the fees and total cost before accepting.'],
+    eligibility: 'Applicants with a regular, verifiable source of income.',
+  },
 ];
+
+export function renderBpLoanList() {
+  return `<dl class="bp-loan-list">${loanProducts.map(({ name, description, details, eligibility }) => `<div>
+          <dt>${name}</dt>
+          <dd>
+            <p>${description}</p>
+            <ul>${details.map(detail => `<li>${detail}</li>`).join('')}</ul>
+            <p class="bp-loan-eligibility"><strong>Who can apply:</strong> ${eligibility}</p>
+          </dd>
+        </div>`).join('')}</dl>`;
+}
 
 const steps = [
   ['Apply Online', 'Choose a financing product and complete the application when it becomes available.'],
@@ -87,7 +108,6 @@ export function bpHeader({ siteUrl, route, brands, brandIconUrl, flashbitLogo },
             <div class="bp-brand-menu-overview">${navLink('View all brands', 'brands', legacy)}</div>`;
 
   return `
-  <p class="bp-review">BP review draft · Content and product details subject to confirmation</p>
   <header class="site-header bp-header">
     <div class="wrap bp-header-inner">
       <a class="bp-identity" href="${siteUrl('')}" aria-label="${company} home">
@@ -279,11 +299,18 @@ function renderBpHomeValues() {
 
 const sections = {
   brands: {
-    title: 'Our Brands',
-    className: 'wrap',
-    body: ({ brands, siteUrl, route, brandLogo }, heading) => `
-    ${heading}
-    <p class="bp-section-intro">Explore the three financing brands of ${company}</p>
+    title: 'Three Brands. One Commitment.',
+    homeTitle: 'Our Brands',
+    className: 'bp-directory-page',
+    body: ({ brands, siteUrl, route, brandLogo }, heading, standalone) => {
+      const introduction = `<p class="bp-section-intro">Explore the three financing brands of ${company}</p>`;
+      const title = `${heading}\n    ${introduction}`;
+      return `${standalone ? `
+    <header class="bp-process-head bp-tint"><div class="wrap">
+      <p class="bp-eyebrow">Our Brands</p>
+      ${title}
+    </div></header>` : ''}
+    <div class="wrap bp-section">${standalone ? '' : `\n    ${title}`}
     <div class="brand-directory">
       ${brands.map(brand => {
         const info = brandDirectory[brand.id];
@@ -296,7 +323,8 @@ const sections = {
       }).join('')}
     </div>
     ${borrowingNotice(siteUrl)}
-  `,
+    </div>`;
+    },
   },
   'how-it-works': {
     title: 'How It Works',
@@ -334,18 +362,31 @@ const sections = {
   },
   'loan-products': {
     title: 'Loan Products',
-    className: 'wrap',
-    body: ({ siteUrl, brands, route }, heading) => `
-    ${heading}
-    <p class="bp-section-intro">Two planned loan types across our three brands. Check your loan offer for the amount, terms and costs.</p>
+    className: 'bp-catalog-page',
+    body: ({ siteUrl, brands, route, brandIconUrl }, heading) => `
+    <header class="bp-process-head bp-tint"><div class="wrap bp-catalog-head">
+      <div>
+        ${heading}
+        <p class="bp-section-intro">Two planned loan types across our three brands.</p>
+        <a class="bp-content-link" href="${siteUrl('how-it-works/#what-you-need')}">View application requirements <span aria-hidden="true">→</span></a>
+      </div>
+      <dl class="bp-catalog-launch"><dt>Planned launch</dt><dd>${launch}<span>Subject to confirmation.</span></dd></dl>
+    </div></header>
+    <div class="wrap bp-section">
     <div class="bp-products">
       ${brands.map(brand => `<div class="bp-product-group ${brand.id}">
-        <h2><a class="bp-product-link" href="${route(brand)}">${brandDirectory[brand.id].name}<span aria-hidden="true">→</span></a></h2>
-        <dl>${loanProducts.map(([name, description]) => `<div><dt>${name}</dt><dd>${description}</dd></div>`).join('')}</dl>
+        <h2><a class="bp-product-link" href="${route(brand)}"><img src="${brandIconUrl(brand)}" width="30" height="30" alt="" decoding="async"><span>${brandDirectory[brand.id].name}</span><span class="bp-product-arrow" aria-hidden="true">→</span></a></h2>
+        <div class="bp-product-summary"><strong>${brandDirectory[brand.id].title}</strong><p>${brandDirectory[brand.id].description}</p></div>
+        ${renderBpLoanList()}
       </div>`).join('\n      ')}
     </div>
+    <aside class="bp-catalog-disclosure" aria-labelledby="catalog-disclosure-title">
+      <h2 id="catalog-disclosure-title">Loan costs and terms</h2>
+      <p>The Disclosure Statement provided with each loan offer sets out the loan amount, interest, fees, charges and total amount payable.</p>
+      <a href="${siteUrl('terms/#terms-3')}">Read about interest, fees and charges</a>
+    </aside>
     ${borrowingNotice(siteUrl)}
-    <a class="bp-content-link" href="${siteUrl('how-it-works/')}">How It Works <span aria-hidden="true">→</span></a>
+    </div>
   `,
   },
   about: {

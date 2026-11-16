@@ -5,10 +5,10 @@ const iconPaths = {
   address: '<path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/>',
 };
 
-export function renderBpContact(siteUrl, { phone, supportEmail, dpoEmail, office }) {
+export function renderBpContact(siteUrl, { phone, phoneHref, supportEmail, dpoEmail, office }) {
   const mapUrl = 'https://www.google.com/maps/search/?api=1&amp;query=Prestige+Tower+F.+Ortigas+Jr.+Road+Pasig+City';
   const contactMethods = [
-    ['phone', 'Call us', phone, 'tel:+639451292500'],
+    ['phone', 'Call us', phone, phoneHref],
     ['email', 'Email us', supportEmail.replace('@', '@<wbr>'), `mailto:${supportEmail}`],
     ['privacy', 'Data Protection Officer', dpoEmail, `mailto:${dpoEmail}`],
   ];

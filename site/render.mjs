@@ -34,6 +34,7 @@ const brandPath = brand => `brands/${brand.id}/`;
 const route = brand => siteUrl(brandPath(brand));
 const contactInfo = {
   phone: '0945-129-2500',
+  phoneHref: 'tel:+639451292500',
   supportEmail: 'flashbitfinancing@gmail.com',
   dpoEmail: 'dpoflashbit@gmail.com',
   office: '3/F Prestige Tower, F. Ortigas Jr. Road, Ortigas Center, Pasig City 1605, Metro Manila, Philippines',

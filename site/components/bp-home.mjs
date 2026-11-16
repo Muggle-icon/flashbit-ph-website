@@ -111,7 +111,7 @@ export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage, 
   </dialog>`;
 }
 
-function bpFooterDisclosures(assetUrl, { phone, supportEmail, dpoEmail, office }) {
+function bpFooterDisclosures(assetUrl, { phone, phoneHref, supportEmail, dpoEmail, office }) {
   return `
       <section class="bp-footer-disclosures" id="contact" aria-labelledby="contact-title">
         <h2 id="contact-title">Company and regulatory information</h2>
@@ -150,7 +150,7 @@ function bpFooterDisclosures(assetUrl, { phone, supportEmail, dpoEmail, office }
             <div class="bp-disclosure">
               <svg class="bp-disclosure-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3l2 5-2.5 1.5a11 11 0 0 0 6 6L15 14l5 2v3a2 2 0 0 1-2 2A15 15 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg>
               <div><h3>Contact Us</h3><dl>
-                <div><dt>Customer support</dt><dd><a href="tel:+639451292500">${phone}</a><br><a href="mailto:${supportEmail}">${supportEmail.replace('@', '@<wbr>')}</a></dd></div>
+                <div><dt>Customer support</dt><dd><a href="${phoneHref}">${phone}</a><br><a href="mailto:${supportEmail}">${supportEmail.replace('@', '@<wbr>')}</a></dd></div>
                 <div><dt>Data Protection Officer (DPO)</dt><dd><a href="mailto:${dpoEmail}">${dpoEmail.replace('@', '@<wbr>')}</a></dd></div>
               </dl></div>
             </div>
@@ -290,9 +290,9 @@ const sections = {
   },
   faqs: {
     title: 'Frequently Asked Questions',
-    className: 'wrap',
-    body: ({ siteUrl, contactInfo }, heading) => renderBpFaq(siteUrl, heading, {
-      company, tradeNames, launch, secNumber, authorityNumber, amlcNumber, dpoEmail: contactInfo.dpoEmail,
+    className: 'bp-faq-page',
+    body: ({ siteUrl, contactInfo: { phone, phoneHref, dpoEmail } }, heading) => renderBpFaq(siteUrl, heading, {
+      company, tradeNames, launch, secNumber, authorityNumber, amlcNumber, phone, phoneHref, dpoEmail,
     }),
   },
 };

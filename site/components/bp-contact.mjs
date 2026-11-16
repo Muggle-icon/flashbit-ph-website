@@ -8,22 +8,25 @@ const iconPaths = {
 export function renderBpContact(siteUrl, { phone, supportEmail, dpoEmail, office }) {
   const mapUrl = 'https://www.google.com/maps/search/?api=1&amp;query=Prestige+Tower+F.+Ortigas+Jr.+Road+Pasig+City';
   const contactMethods = [
-    ['phone', 'Call us', `<a href="tel:+639451292500">${phone}</a>`],
-    ['email', 'Email us', `<a href="mailto:${supportEmail}">${supportEmail.replace('@', '@<wbr>')}</a>`],
-    ['privacy', 'Data Protection Officer', `<a href="mailto:${dpoEmail}">${dpoEmail}</a>`],
-    ['address', 'Principal Address', `<address>${office}</address><a href="${mapUrl}">View on map</a>`],
+    ['phone', 'Call us', phone, 'tel:+639451292500'],
+    ['email', 'Email us', supportEmail.replace('@', '@<wbr>'), `mailto:${supportEmail}`],
+    ['privacy', 'Data Protection Officer', dpoEmail, `mailto:${dpoEmail}`],
   ];
+  const contactIcon = icon => `<span class="bp-contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[icon]}</svg></span>`;
 
   return `
-  <header class="bp-contact-head bp-tint">
+  <header class="bp-contact-head">
     <div class="wrap"><h1>Contact Us</h1><p class="bp-section-intro">For questions about loans, repayments or your personal data.</p></div>
   </header>
   <div class="wrap bp-section bp-contact">
     <ul class="bp-contact-methods" aria-label="Contact details">
-      ${contactMethods.map(([icon, title, content]) => `<li class="bp-contact-method">
-        <span class="bp-contact-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${iconPaths[icon]}</svg></span>
-        <div><h2>${title}</h2>${content}</div>
-      </li>`).join('\n      ')}
+      ${contactMethods.map(([icon, title, value, href]) => `<li><a class="bp-contact-method" href="${href}">
+        ${contactIcon(icon)}<div><h2>${title}</h2><span class="bp-contact-value">${value}</span></div>
+      </a></li>`).join('\n      ')}
+      <li class="bp-contact-method bp-contact-address">
+        ${contactIcon('address')}<div><h2>Principal Address</h2><address>${office}</address>
+        <a href="${mapUrl}" target="_blank" rel="noopener noreferrer">View on map</a></div>
+      </li>
     </ul>
     <form class="bp-contact-form" data-contact-form data-recipient="${supportEmail}" method="post" aria-labelledby="contact-form-title" hidden>
       <div>

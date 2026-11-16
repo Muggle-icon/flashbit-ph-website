@@ -68,12 +68,18 @@ export function borrowingNotice(siteUrl) {
 const pagePath = slug => slug ? `${slug}/` : '';
 const currentPageAttribute = active => active ? ' aria-current="page"' : '';
 
-export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage, activeBrand) {
+export function bpHeader({ siteUrl, route, brands, brandIconUrl, flashbitLogo }, currentPage, activeBrand) {
   const navLink = (label, slug, legacy = false) => {
     const legacyHash = legacy && currentPage === '' && slug ? ` data-legacy-anchor="${slug}"` : '';
     return `<a href="${siteUrl(pagePath(slug))}"${currentPageAttribute(currentPage === slug)}${legacyHash}>${label}</a>`;
   };
-  const brandLinks = brands.map(brand => `<a href="${route(brand)}"${currentPageAttribute(activeBrand?.id === brand.id)}>${brandDirectory[brand.id].name}</a>`).join('');
+  const brandLinks = brands.map(brand => `<a class="bp-brand-menu-link ${brand.id}" href="${route(brand)}"${currentPageAttribute(activeBrand?.id === brand.id)}>
+              <img src="${brandIconUrl(brand)}" width="28" height="28" alt="" decoding="async">
+              <span>${brandDirectory[brand.id].name}</span>
+            </a>`).join('\n            ');
+  const brandMenuItems = legacy => `
+            <div class="bp-brand-menu-items">${brandLinks}</div>
+            <div class="bp-brand-menu-overview">${navLink('View all brands', 'brands', legacy)}</div>`;
 
   return `
   <p class="bp-review">BP review draft · Content and product details subject to confirmation</p>
@@ -90,10 +96,7 @@ export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage, 
         ${navigation.map(([label, slug]) => slug === 'brands' ? `
         <details class="bp-brand-menu${currentPage === 'brands' || activeBrand ? ' bp-brand-menu-current' : ''}">
           <summary>${label}</summary>
-          <div class="bp-brand-menu-links">
-            ${brandLinks}
-            ${navLink('View all brands', slug, true)}
-          </div>
+          <div class="bp-brand-menu-links">${brandMenuItems(true)}</div>
         </details>` : navLink(label, slug, true)).join('')}
       </nav>
     </div>
@@ -105,7 +108,11 @@ export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage, 
         <button type="button" class="bp-menu-close" aria-label="Close menu">×</button>
       </div>
       <nav class="bp-mobile-links" aria-label="Main navigation">
-        ${navigation.map(([label, slug]) => navLink(label, slug) + (slug === 'brands' ? `<div class="bp-mobile-brand-links">${brandLinks}</div>` : '')).join('')}
+        ${navigation.map(([label, slug]) => slug === 'brands' ? `
+        <div class="bp-mobile-brand-group" role="group" aria-labelledby="bp-mobile-brands-title">
+          <p id="bp-mobile-brands-title">${label}</p>
+          <div class="bp-mobile-brand-links">${brandMenuItems(false)}</div>
+        </div>` : navLink(label, slug)).join('')}
       </nav>
     </div>
   </dialog>`;

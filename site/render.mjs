@@ -39,7 +39,8 @@ const contactInfo = {
   dpoEmail: 'dpoflashbit@gmail.com',
   office: '3/F Prestige Tower, F. Ortigas Jr. Road, Ortigas Center, Pasig City 1605, Metro Manila, Philippines',
 };
-const bpSite = { siteUrl, assetUrl, route, brandLogo, flashbitLogo, brands, contactInfo };
+const brandIconUrl = brand => assetUrl(`assets/${brandLockups[brand.id].icon}`);
+const bpSite = { siteUrl, assetUrl, route, brandIconUrl, brandLogo, flashbitLogo, brands, contactInfo };
 function brandLogo(brand) {
   const { width, height } = brandLockups[brand.id];
   return `<img class="brand-lockup" src="${assetUrl(`assets/${brand.id}-lockup.svg`)}" width="${width}" height="${height}" alt="${brand.name}">`;
@@ -53,7 +54,7 @@ function portrait(brand) {
   return `<div class="portrait photo ${brand.id}"><img src="${full}" srcset="${small} 420w, ${full} 840w" sizes="(max-width: 420px) calc(100vw - 40px), (max-width: 760px) 380px, (max-width: 1050px) 280px, 340px" alt="${brand.scene}" width="840" height="${brand.photoHeight ?? 840}" fetchpriority="high" decoding="async"></div>`;
 }
 function shell(title, description, body, { brand, slug = '' } = {}) {
-  const favicon = brand ? assetUrl(`assets/${brandLockups[brand.id].icon}`) : assetUrl('assets/flashbit-symbol.svg');
+  const favicon = brand ? brandIconUrl(brand) : assetUrl('assets/flashbit-symbol.svg');
   const head = `<meta name="robots" content="noindex"><link rel="stylesheet" href="${assetUrl('bp-review.css')}"><script defer src="${assetUrl('bp-nav.js')}"></script>`;
   const pageScript = { contact: 'contact.js', faqs: 'bp-faq.js' }[slug];
   const scripts = pageScript ? `<script defer src="${assetUrl(pageScript)}"></script>` : '';

@@ -1,3 +1,5 @@
+import { renderBpAbout } from './bp-about.mjs';
+import { renderBpRequirements } from './bp-requirements.mjs';
 import { renderBpFaq } from './bp-faq.mjs';
 
 const company = 'FlashBit Financing Corp.';
@@ -27,14 +29,17 @@ const brandDirectory = {
   livaya: {
     name: 'Livaya Financing',
     title: 'For a Brighter Everyday',
+    description: 'Personal financing solutions for your everyday needs.',
   },
   alago: {
     name: 'Alago Financing',
     title: 'Support for What Matters',
+    description: 'Financing solutions for your goals and everyday expenses.',
   },
   sulivo: {
     name: 'Sulivo Financing',
     title: 'Grow Further Together',
+    description: 'Personal financing for work and everyday expenses.',
   },
 };
 
@@ -118,40 +123,58 @@ export function bpHeader({ siteUrl, route, brands, brandIconUrl, flashbitLogo },
   </dialog>`;
 }
 
+function bpAgencyDisclosures(assetUrl) {
+  const agencies = [
+    ['Securities and Exchange Commission', 'bp-sec.webp', 49, 80, [
+      ['Date of incorporation', 'September 14, 2026'],
+      ['SEC Registration No.', secNumber],
+      ['Certificate of Authority No.', authorityNumber],
+    ]],
+    ['Bureau of Internal Revenue', 'bp-bir.webp', 72, 71, [
+      ['BIR Registration No.', '815-972-116-000'],
+    ]],
+    ['Anti-Money Laundering Council', 'bp-amlc.webp', 72, 49, [
+      ['Registration No.', amlcNumber],
+    ]],
+  ];
+  return agencies.map(([name, mark, width, height, fields]) => `<div class="bp-disclosure">
+              <img class="bp-disclosure-mark" src="${assetUrl(`assets/${mark}`)}" width="${width}" height="${height}" alt="" loading="lazy" decoding="async">
+              <div><h3>${name}</h3><dl>${fields.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join('')}</dl></div>
+            </div>`);
+}
+
+function bpOfficeDisclosure(office) {
+  return `<div class="bp-disclosure">
+              <svg class="bp-disclosure-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.500C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              <div><h3>Principal Address</h3><address>${office}</address></div>
+            </div>`;
+}
+
+function bpAboutRegistration(assetUrl, office) {
+  return `<section class="bp-about-registration" id="registration" aria-labelledby="about-registration-title">
+    <h2 id="about-registration-title">Our Registration and Regulatory Information</h2>
+    <div class="bp-disclosures">
+      ${bpAgencyDisclosures(assetUrl).join('\n      ')}
+      ${bpOfficeDisclosure(office)}
+    </div>
+  </section>`;
+}
+
 function bpFooterDisclosures(assetUrl, { phone, phoneHref, supportEmail, dpoEmail, office }) {
+  const [sec, bir, amlc] = bpAgencyDisclosures(assetUrl);
   return `
       <section class="bp-footer-disclosures" id="contact" aria-labelledby="contact-title">
         <h2 id="contact-title">Company and regulatory information</h2>
         <div class="bp-disclosures">
           <div class="bp-disclosure-group">
-            <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-sec.webp')}" width="49" height="80" alt="" loading="lazy" decoding="async">
-              <div><h3>Securities and Exchange Commission</h3><dl>
-                <div><dt>Date of incorporation</dt><dd>September 14, 2026</dd></div>
-                <div><dt>SEC Registration No.</dt><dd>${secNumber}</dd></div>
-                <div><dt>Certificate of Authority No.</dt><dd>${authorityNumber}</dd></div>
-              </dl></div>
-            </div>
-            <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-bir.webp')}" width="72" height="71" alt="" loading="lazy" decoding="async">
-              <div><h3>Bureau of Internal Revenue</h3><dl>
-                <div><dt>BIR Registration No.</dt><dd>815-972-116-000</dd></div>
-              </dl></div>
-            </div>
+            ${sec}
+            ${bir}
           </div>
           <div class="bp-disclosure-group">
-            <div class="bp-disclosure">
-              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-amlc.webp')}" width="72" height="49" alt="" loading="lazy" decoding="async">
-              <div><h3>Anti-Money Laundering Council</h3><dl>
-                <div><dt>Registration No.</dt><dd>${amlcNumber}</dd></div>
-              </dl></div>
-            </div>
+            ${amlc}
           </div>
           <div class="bp-disclosure-group">
-            <div class="bp-disclosure">
-              <svg class="bp-disclosure-mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.500C5 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
-              <div><h3>Principal Address</h3><address>${office}</address></div>
-            </div>
+            ${bpOfficeDisclosure(office)}
           </div>
           <div class="bp-disclosure-group">
             <div class="bp-disclosure">
@@ -220,7 +243,38 @@ export function renderBpHome(site) {
   </section>
 
   ${renderBpSection('brands', site)}
-  ${renderBpSection('how-it-works', site)}`;
+  ${renderBpHomeValues()}
+  ${renderBpSection('how-it-works', site)}
+  <section class="bp-home-support" aria-labelledby="home-support-title">
+    <div class="wrap">
+      <div>
+        <h2 id="home-support-title">Ready to build brighter possibilities?</h2>
+        <p>Compare our planned loan products or reach our customer support team.</p>
+      </div>
+      <div class="bp-actions">
+        <a class="bp-button bp-button-primary" href="${siteUrl('loan-products/')}">Explore Loan Products</a>
+        <a class="bp-button bp-home-support-contact" href="${siteUrl('contact/')}">Talk to Us</a>
+      </div>
+    </div>
+  </section>`;
+}
+
+const values = [
+  ['Customer-Centric', 'Solutions for real needs', '<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2m20 0v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/><circle cx="9" cy="7" r="4"/>'],
+  ['Responsible Lending', 'Promoting financial well-being', '<path d="m11 17 2 2a2 2 0 1 0 2.8-2.8m-1.8-2.2 3 3a2 2 0 1 0 2.8-2.8l-4.7-4.7a2.5 2.5 0 0 0-3.5 0l-1 1a2 2 0 0 1-2.8-2.8l2.3-2.3a5.4 5.4 0 0 1 6.2-1l1.2.6a2 2 0 0 0 1.4.2L22 4l1 10-2 1M2 4l-1 10 7 7a2 2 0 1 0 2.8-2.8M2 5h7"/>'],
+  ['Data Privacy', 'Your information is protected', '<path d="M20 13c0 5-3.5 7.5-7.7 9a1 1 0 0 1-.6 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.2-2.6a1.2 1.2 0 0 1 1.6 0C14.5 3.8 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/>'],
+  ['Financial Inclusion', 'Opportunities for more Filipinos', '<path d="M3 3v16a2 2 0 0 0 2 2h16M8 16v-4m5 4V8m5 8V5"/>'],
+];
+
+function renderBpHomeValues() {
+  return `<section class="bp-tint" aria-label="Our commitments">
+    <ul class="wrap bp-home-values">
+      ${values.map(([title, copy, icon]) => `<li>
+        <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon}</svg>
+        <div><strong>${title}</strong><p>${copy}</p></div>
+      </li>`).join('\n      ')}
+    </ul>
+  </section>`;
 }
 
 const sections = {
@@ -236,7 +290,7 @@ const sections = {
         return `<a class="brand-row bp-brand ${brand.id}" href="${route(brand)}" aria-label="Learn more about ${info.name}">
           <span class="directory-logo">${brandLogo(brand)}</span>
           <span class="bp-trade-name">${info.name}</span>
-          <span class="directory-copy"><strong>${info.title}</strong></span>
+          <span class="directory-copy"><strong>${info.title}</strong><span>${info.description}</span></span>
           <span class="directory-action">Learn more <span aria-hidden="true">→</span></span>
         </a>`;
       }).join('')}
@@ -247,17 +301,35 @@ const sections = {
   'how-it-works': {
     title: 'How It Works',
     homeTitle: 'Get financing in five simple steps',
-    className: 'bp-tint',
+    className: 'bp-process-section',
     body: ({ siteUrl }, heading, standalone) => {
       const stepHeading = standalone ? 'h2' : 'h3';
+      const stepCards = `<ol class="bp-steps">${steps.map(([title, copy], index) => `<li>
+        <span class="bp-step-number" aria-hidden="true">${index + 1}</span>
+        <div><${stepHeading}>${title}</${stepHeading}><p>${copy}</p></div>
+      </li>`).join('')}</ol>`;
+      if (standalone) return `
+      <header class="bp-process-head bp-tint"><div class="wrap">
+        ${heading}
+        <p class="bp-section-intro">See each step from application to the release of funds. Applications are planned through the financing apps.</p>
+      </div></header>
+      <div class="wrap bp-process-body">
+        ${stepCards}
+        ${borrowingNotice(siteUrl)}
+      </div>
+      ${renderBpRequirements(siteUrl).trimStart()}`;
       return `
-    <div class="wrap">
-      ${heading}${standalone ? '\n      <p class="bp-section-intro">Applications are planned through the financing apps.</p>' : ''}
-      <ol class="bp-steps">${steps.map(([title, copy], index) => `<li><span aria-hidden="true">${index + 1}</span><${stepHeading}>${title}</${stepHeading}><p>${copy}</p></li>`).join('')}</ol>
-      ${standalone ? `${borrowingNotice(siteUrl)}
-      <div class="bp-process-prep"><h2>What you may need</h2><p>Have a government-issued ID, proof of income and proof of address ready. Check your chosen product for its requirements.</p></div>` : `<a class="bp-content-link" href="${siteUrl('how-it-works/')}">See the full process <span aria-hidden="true">→</span></a>`}
-    </div>
-  `;
+      <div class="wrap bp-section">
+        <div class="bp-home-process-heading">
+          <div>
+            <p class="bp-eyebrow">How It Works</p>
+            ${heading}
+            <p class="bp-section-intro">See what happens from application to the release of funds.</p>
+          </div>
+          <a class="bp-content-link" href="${siteUrl('how-it-works/')}">See the full process <span aria-hidden="true">→</span></a>
+        </div>
+        ${stepCards}
+      </div>`;
     },
   },
   'loan-products': {
@@ -278,22 +350,8 @@ const sections = {
   },
   about: {
     title: 'About Us',
-    className: 'bp-tint',
-    body: (_, heading) => `
-    <div class="wrap">
-      <div class="bp-about">
-        ${heading}
-        <p>${company} is a Philippine financing company operating under the names of ${tradeNames}.</p>
-        <p class="bp-ownership"><strong>99.99% owned by Novolink PTE Ltd.</strong></p>
-      </div>
-      <dl class="bp-values">
-        <div><dt>Customer-Centric</dt><dd>Financing for everyday needs.</dd></div>
-        <div><dt>Responsible Lending</dt><dd>Clear costs and repayment information.</dd></div>
-        <div><dt>Data Privacy</dt><dd>A Privacy Notice and a dedicated DPO contact.</dd></div>
-        <div><dt>Financial Inclusion</dt><dd>Financing options for everyday needs.</dd></div>
-      </dl>
-    </div>
-  `,
+    className: 'bp-about-page',
+    body: ({ siteUrl, assetUrl, contactInfo }) => renderBpAbout(siteUrl, () => bpAboutRegistration(assetUrl, contactInfo.office)),
   },
   faqs: {
     title: 'Frequently Asked Questions',

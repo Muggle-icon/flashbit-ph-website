@@ -1,0 +1,247 @@
+.bp-section.bp-about-page {
+  --bp-about-accent: #305bb3;
+  padding-block: 0;
+}
+
+.bp-about-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-block: clamp(44px, 6vw, 84px);
+  background: radial-gradient(ellipse at 76% 16%, #f6e8d2, transparent 58%), linear-gradient(130deg, #e1ebfa, #f7fafe 72%, #fff);
+}
+
+.bp-about-hero-inner {
+  display: grid;
+  align-items: center;
+  gap: clamp(32px, 6vw, 80px);
+}
+
+.bp-about-hero h1 {
+  font-size: clamp(34px, 4.6vw, 60px);
+  line-height: 1.12;
+  text-wrap: balance;
+}
+
+.bp-about-hero h1 span {
+  display: block;
+}
+
+.bp-about-eyebrow {
+  margin-bottom: 12px;
+  color: var(--bp-navy);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+.bp-about-lead {
+  max-width: 58ch;
+  margin-top: 18px;
+  color: var(--body);
+  font-size: clamp(16px, 1.6vw, 20px);
+}
+
+.bp-about-hero-note {
+  display: none;
+  justify-self: end;
+  color: var(--bp-navy);
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+.bp-about-bars {
+  position: absolute;
+  z-index: -1;
+  inset: auto 0 0;
+  display: flex;
+  align-items: end;
+  gap: clamp(3px, .55vw, 10px);
+  height: clamp(75px, 12vw, 178px);
+  opacity: .75;
+}
+
+.bp-about-bars span {
+  flex: 1 1 0;
+  height: var(--bar-height);
+  background: linear-gradient(#cddaef, #e8f0fb60);
+}
+
+.bp-about-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(28px, 3vw, 40px);
+}
+
+.bp-about-company p {
+  max-width: 68ch;
+  margin-top: 16px;
+  color: var(--body);
+}
+
+.bp-about-company h2::after,
+.bp-about-purpose h2::after {
+  display: block;
+  width: 42px;
+  height: 3px;
+  margin-top: 12px;
+  border-radius: 2px;
+  background: var(--bp-about-accent);
+  content: "";
+}
+
+.bp-about-ownership,
+.bp-about-registration {
+  min-width: 0;
+  padding: clamp(18px, 2vw, 26px);
+  border: 1px solid var(--bp-line);
+  border-radius: 14px;
+}
+
+.bp-about-ownership {
+  background: var(--bp-mist);
+}
+
+.bp-about-ownership h2,
+.bp-about-registration h2 {
+  font-size: 20px;
+}
+
+.bp-about-ownership-lead {
+  margin-top: 12px;
+  color: var(--bp-about-accent);
+  font-weight: 800;
+}
+
+.bp-about-ownership-lead strong {
+  display: block;
+  color: var(--bp-navy);
+  font-size: 36px;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.bp-about-ownership-figure {
+  max-width: 230px;
+  margin: 20px auto;
+}
+
+.bp-about-ownership-ring {
+  display: grid;
+  width: min(148px, 100%);
+  aspect-ratio: 1;
+  margin-inline: auto;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(var(--bp-about-accent) 0 99.99%, var(--bp-line) 99.99% 100%);
+}
+
+.bp-about-ownership-ring span {
+  display: grid;
+  width: 72%;
+  aspect-ratio: 1;
+  place-items: center;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--bp-navy);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.bp-about-ownership-key {
+  display: grid;
+  gap: 4px;
+  margin: 12px 0 0;
+  color: var(--body);
+  font-size: 13px;
+}
+
+.bp-about-ownership-key div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 8px;
+}
+
+.bp-about-ownership-key dt::before {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-inline-end: 6px;
+  border-radius: 50%;
+  background: var(--bp-about-accent);
+  content: "";
+}
+
+.bp-about-ownership-key div + div dt::before {
+  background: var(--bp-line);
+}
+
+.bp-about-ownership-key dd {
+  margin: 0;
+  color: var(--bp-navy);
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+
+.bp-about-ownership-note {
+  color: var(--body);
+}
+
+.bp-about-value-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.bp-about-value-list li {
+  padding: 18px;
+  border: 1px solid var(--bp-line);
+  border-radius: 12px;
+  background: #fff;
+}
+
+.bp-about-value-list h3 {
+  margin-top: 12px;
+  color: var(--bp-navy);
+  font-size: 16px;
+}
+
+.bp-about-value-list p {
+  margin-top: 6px;
+  color: var(--body);
+}
+
+.bp-about-value-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 8px;
+  background: var(--bp-mist);
+  color: var(--bp-about-accent);
+}
+
+@media (min-width: 1100px) {
+  .bp-about-hero-inner {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+  }
+
+  .bp-about-hero-note { display: block; }
+
+  .bp-about-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 3fr) minmax(0, 4fr);
+  }
+
+  .bp-about-value-list { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+}
+
+@media (max-width: 520px) {
+  .bp-about-value-list { grid-template-columns: minmax(0, 1fr); }
+}

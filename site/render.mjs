@@ -17,7 +17,7 @@ const imageAssets = (await readdir(new URL('./dist/assets/', import.meta.url)))
   .filter(file => /\.(webp|png|jpg|svg)$/.test(file))
   .map(file => `assets/${file}`);
 const assetVersions = Object.fromEntries(await Promise.all(
-  ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', 'bp-nav.js', 'bp-faq.js', 'contact.js', ...imageAssets].map(async file => [file,
+  ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', 'bp-about.css', 'bp-requirements.css', 'bp-nav.js', 'bp-faq.js', 'contact.js', ...imageAssets].map(async file => [file,
     createHash('sha256').update(await readFile(new URL(`./dist/${file}`, import.meta.url))).digest('hex').slice(0, 12),
   ])
 ));
@@ -56,10 +56,12 @@ function portrait(brand) {
 function shell(title, description, body, { brand, slug = '' } = {}) {
   const favicon = brand ? brandIconUrl(brand) : assetUrl('assets/flashbit-symbol.svg');
   const head = `<meta name="robots" content="noindex"><link rel="stylesheet" href="${assetUrl('bp-review.css')}"><script defer src="${assetUrl('bp-nav.js')}"></script>`;
+  const pageStyle = { about: 'bp-about.css', 'how-it-works': 'bp-requirements.css' }[slug];
+  const style = pageStyle ? `<link rel="stylesheet" href="${assetUrl(pageStyle)}">` : '';
   const pageScript = { contact: 'contact.js', faqs: 'bp-faq.js' }[slug];
   const scripts = pageScript ? `<script defer src="${assetUrl(pageScript)}"></script>` : '';
   const brandHead = brand ? `<link rel="canonical" href="${route(brand)}"><link rel="stylesheet" href="${assetUrl('carousel.css')}"><script defer src="${assetUrl('carousel.js')}"></script>` : '';
-  return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183f42"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" href='${favicon}'><link rel="preload" href="${siteUrl('assets/fonts/Manrope-Variable.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${assetUrl('styles.css')}">${head}${scripts}${brandHead}</head><body id="top" class="bp-page"><a class="skip" href="#main">Skip to content</a>${bpHeader(bpSite, slug, brand)}<main id="main" tabindex="-1"${brand ? ` class="${brand.id}"` : ''}>${body}</main>${bpFooter(bpSite, slug)}</body></html>`;
+  return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183f42"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" href='${favicon}'><link rel="preload" href="${siteUrl('assets/fonts/Manrope-Variable.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${assetUrl('styles.css')}">${head}${style}${scripts}${brandHead}</head><body id="top" class="bp-page"><a class="skip" href="#main">Skip to content</a>${bpHeader(bpSite, slug, brand)}<main id="main" tabindex="-1"${brand ? ` class="${brand.id}"` : ''}>${body}</main>${bpFooter(bpSite, slug)}</body></html>`;
 }
 await mkdir(dist, { recursive: true });
 await writeFile(path.join(dist, 'index.html'), shell(

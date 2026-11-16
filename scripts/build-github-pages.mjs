@@ -12,7 +12,7 @@ const output = path.resolve(root, process.env.PAGES_OUTPUT_DIR || 'docs');
 await mkdir(output, { recursive: true });
 const source = path.join(root, 'site/dist');
 if (output !== source) {
-  for (const file of ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', 'bp-nav.js', 'bp-faq.js', 'contact.js']) {
+  for (const file of ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', 'bp-about.css', 'bp-requirements.css', 'bp-nav.js', 'bp-faq.js', 'contact.js']) {
     await copyFile(path.join(source, file), path.join(output, file));
   }
   await cp(path.join(source, 'assets'), path.join(output, 'assets'), { recursive: true });

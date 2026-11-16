@@ -5,7 +5,6 @@ import path from 'node:path';
 import { renderAppCarousel } from './components/app-carousel.mjs';
 import { bpFooter, bpHeader, renderBpHome, renderBpPolicy, renderBpSection, borrowingNotice, loanProducts } from './components/bp-home.mjs';
 import { renderBpContact } from './components/bp-contact.mjs';
-import { renderBpApply } from './components/bp-apply.mjs';
 
 const baseSegments = (process.env.BASE_PATH || '/').split('/').filter(Boolean);
 if (baseSegments.some(segment => !/^[A-Za-z0-9._~-]+$/.test(segment) || segment === '.' || segment === '..')) {
@@ -18,7 +17,7 @@ const imageAssets = (await readdir(new URL('./dist/assets/', import.meta.url)))
   .filter(file => /\.(webp|png|jpg|svg)$/.test(file))
   .map(file => `assets/${file}`);
 const assetVersions = Object.fromEntries(await Promise.all(
-  ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', 'bp-nav.js', 'bp-faq.js', 'bp-apply.js', 'contact.js', ...imageAssets].map(async file => [file,
+  ['styles.css', 'carousel.css', 'carousel.js', 'bp-review.css', 'bp-nav.js', 'bp-faq.js', 'contact.js', ...imageAssets].map(async file => [file,
     createHash('sha256').update(await readFile(new URL(`./dist/${file}`, import.meta.url))).digest('hex').slice(0, 12),
   ])
 ));
@@ -40,7 +39,6 @@ const contactInfo = {
   office: '3/F Prestige Tower, F. Ortigas Jr. Road, Ortigas Center, Pasig City 1605, Metro Manila, Philippines',
 };
 const bpSite = { siteUrl, assetUrl, route, brandLogo, flashbitLogo, brands, contactInfo };
-const arrow = '<span aria-hidden="true">→</span>';
 function brandLogo(brand) {
   const { width, height } = brandLockups[brand.id];
   return `<img class="brand-lockup" src="${assetUrl(`assets/${brand.id}-lockup.svg`)}" width="${width}" height="${height}" alt="${brand.name}">`;
@@ -56,7 +54,7 @@ function portrait(brand) {
 function shell(title, description, body, { brand, slug = '' } = {}) {
   const favicon = brand ? assetUrl(`assets/${brandLockups[brand.id].icon}`) : assetUrl('assets/flashbit-symbol.svg');
   const head = `<meta name="robots" content="noindex"><link rel="stylesheet" href="${assetUrl('bp-review.css')}"><script defer src="${assetUrl('bp-nav.js')}"></script>`;
-  const pageScript = { contact: 'contact.js', faqs: 'bp-faq.js', apply: 'bp-apply.js' }[slug];
+  const pageScript = { contact: 'contact.js', faqs: 'bp-faq.js' }[slug];
   const scripts = pageScript ? `<script defer src="${assetUrl(pageScript)}"></script>` : '';
   const brandHead = brand ? `<link rel="canonical" href="${route(brand)}"><link rel="stylesheet" href="${assetUrl('carousel.css')}"><script defer src="${assetUrl('carousel.js')}"></script>` : '';
   return `<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#183f42"><title>${title}</title><meta name="description" content="${description}"><link rel="icon" href='${favicon}'><link rel="preload" href="${siteUrl('assets/fonts/Manrope-Variable.woff2')}" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="${assetUrl('styles.css')}">${head}${scripts}${brandHead}</head><body id="top" class="bp-page"><a class="skip" href="#main">Skip to content</a>${bpHeader(bpSite, slug, brand)}<main id="main" tabindex="-1"${brand ? ` class="${brand.id}"` : ''}>${body}</main>${bpFooter(bpSite, slug)}</body></html>`;
@@ -67,10 +65,6 @@ await writeFile(path.join(dist, 'index.html'), shell(
   'FlashBit Financing Corp. homepage draft for BP review.',
   renderBpHome(bpSite),
 ));
-const specialPages = {
-  contact: () => renderBpContact(siteUrl, contactInfo),
-  apply: () => renderBpApply(bpSite),
-};
 for (const [slug, title, description] of [
   ['about', 'About Us', 'About FlashBit Financing Corp. and its financing brands.'],
   ['brands', 'Our Brands', 'Explore Livaya Financing, Alago Financing and Sulivo Financing.'],
@@ -78,13 +72,28 @@ for (const [slug, title, description] of [
   ['how-it-works', 'How It Works', 'See the steps from applying for financing to reviewing an offer and receiving funds.'],
   ['faqs', 'Frequently Asked Questions', 'Answers about FlashBit Financing Corp., its loan products and customer support.'],
   ['contact', 'Contact Us', 'Find FlashBit customer support, the Data Protection Officer and the principal office address.'],
-  ['apply', 'How to Apply', 'Find application information for Livaya, Alago and Sulivo.'],
 ]) {
   const folder = path.join(dist, slug);
   await mkdir(folder, { recursive: true });
-  const body = specialPages[slug] ? specialPages[slug]() : renderBpSection(slug, bpSite, true);
+  const body = slug === 'contact' ? renderBpContact(siteUrl, contactInfo) : renderBpSection(slug, bpSite, true);
   await writeFile(path.join(folder, 'index.html'), shell(`${title} | FlashBit Financing Corp.`, description, body, { slug }));
 }
+const applyFolder = path.join(dist, 'apply');
+const processUrl = siteUrl('how-it-works/');
+await mkdir(applyFolder, { recursive: true });
+await writeFile(path.join(applyFolder, 'index.html'), `<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <meta http-equiv="refresh" content="0; url=${processUrl}">
+  <link rel="canonical" href="${processUrl}">
+  <title>How It Works | FlashBit Financing Corp.</title>
+</head>
+<body><main><h1>How It Works</h1><p><a href="${processUrl}">Continue to the loan process</a></p></main></body>
+</html>
+`);
 for (const [slug, title] of [['terms', 'Terms and Conditions'], ['privacy', 'Privacy Notice']]) {
   const content = await readFile(new URL(`./content/bp-${slug}.html`, import.meta.url), 'utf8');
   const folder = path.join(dist, slug);
@@ -104,7 +113,7 @@ function brandPage(b) {
   ];
   return shell(`${b.name} | Online loans in the Philippines`, `Explore ${b.name}, a Flashbit online lending brand. See the app screens, loan information, repayment guidance and application steps.`, `
   <div class="wrap bp-brand-tools"><a href="${siteUrl('brands/')}">← All brands</a>${brandLogo(b)}</div>
-  <section class="product-intro"><div class="wrap product-intro-grid"><div class="product-intro-copy"><p class="product-category">${b.name} online loans · Philippines</p><h1>${b.title}</h1><p class="product-description">${b.body}</p><div class="bp-brand-actions"><a class="primary-link" href="${siteUrl(`apply/?brand=${b.id}`)}">How to Apply</a><a class="bp-brand-process" href="${siteUrl('how-it-works/')}">How It Works ${arrow}</a></div></div>${portrait(b)}</div></section>
+  <section class="product-intro"><div class="wrap product-intro-grid"><div class="product-intro-copy"><p class="product-category">${b.name} online loans · Philippines</p><h1>${b.title}</h1><p class="product-description">${b.body}</p><a class="primary-link" href="#brand-products-title">View Loan Products</a></div>${portrait(b)}</div></section>
   <section class="wrap bp-section bp-brand-products" aria-labelledby="brand-products-title"><h2 id="brand-products-title">Loan Products</h2><dl>${loanProducts.map(([title, copy]) => `<div><dt>${title}</dt><dd>${copy}</dd></div>`).join('')}</dl>${borrowingNotice(siteUrl)}</section>
   <section class="loan-information wrap" id="features" aria-labelledby="features-title"><div class="loan-information-intro"><div class="section-heading"><h2 id="features-title">Before you borrow</h2><p>Review these details in your own loan offer.</p></div><p class="borrowing-note">Borrow only what you can plan to repay.</p></div><dl class="loan-facts">${features.map(f => `<div><dt>${f[0]}</dt><dd>${f[1]}</dd></div>`).join('')}</dl></section>
   <section class="app-guide" id="how-it-works" aria-labelledby="app-guide-title"><div class="wrap">${renderAppCarousel(b, assetUrl)}</div>

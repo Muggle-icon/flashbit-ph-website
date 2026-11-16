@@ -74,7 +74,6 @@ export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage, 
     return `<a href="${siteUrl(pagePath(slug))}"${currentPageAttribute(currentPage === slug)}${legacyHash}>${label}</a>`;
   };
   const brandLinks = brands.map(brand => `<a href="${route(brand)}"${currentPageAttribute(activeBrand?.id === brand.id)}>${brandDirectory[brand.id].name}</a>`).join('');
-  const applyLink = `<a class="bp-header-apply bp-button bp-button-primary" href="${siteUrl('apply/')}"${currentPageAttribute(currentPage === 'apply')}>How to Apply</a>`;
 
   return `
   <p class="bp-review">BP review draft · Content and product details subject to confirmation</p>
@@ -84,12 +83,9 @@ export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage, 
         ${flashbitLogo()}
         <span><strong>${company}</strong><small>Operating under the names of ${tradeNames}</small></span>
       </a>
-      <div class="bp-mobile-actions">
-        ${applyLink}
-        <button class="bp-menu-trigger" type="button" aria-controls="bp-mobile-menu" aria-expanded="false" aria-label="Open menu" hidden>
-          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
-        </button>
-      </div>
+      <button class="bp-menu-trigger" type="button" aria-controls="bp-mobile-menu" aria-expanded="false" aria-label="Open menu" hidden>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
       <nav class="bp-desktop-nav" aria-label="Main navigation">
         ${navigation.map(([label, slug]) => slug === 'brands' ? `
         <details class="bp-brand-menu${currentPage === 'brands' || activeBrand ? ' bp-brand-menu-current' : ''}">
@@ -99,7 +95,6 @@ export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage, 
             ${navLink('View all brands', slug, true)}
           </div>
         </details>` : navLink(label, slug, true)).join('')}
-        ${applyLink}
       </nav>
     </div>
   </header>
@@ -112,7 +107,6 @@ export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage, 
       <nav class="bp-mobile-links" aria-label="Main navigation">
         ${navigation.map(([label, slug]) => navLink(label, slug) + (slug === 'brands' ? `<div class="bp-mobile-brand-links">${brandLinks}</div>` : '')).join('')}
       </nav>
-      <div class="bp-mobile-menu-action">${applyLink}</div>
     </div>
   </dialog>`;
 }
@@ -202,7 +196,7 @@ export function renderBpHome(site) {
         <p class="bp-eyebrow">${company}</p>
         <h1 id="home-title">Your Partner in Financial Growth</h1>
         <p class="bp-lede">Financing for everyday expenses through Livaya, Alago and Sulivo.</p>
-        <div class="bp-actions"><a class="bp-button bp-button-primary" href="${siteUrl('apply/')}">How to Apply</a><a class="bp-button" id="loan-products" href="${siteUrl('loan-products/')}">Explore Loan Products</a></div>
+        <div class="bp-actions"><a class="bp-button bp-button-primary" id="loan-products" href="${siteUrl('loan-products/')}">Explore Loan Products</a></div>
       </div>
       <aside class="bp-glance" aria-labelledby="glance-title">
         <h2 id="glance-title">Loan terms at a glance</h2>
@@ -219,11 +213,7 @@ export function renderBpHome(site) {
   </section>
 
   ${renderBpSection('brands', site)}
-  ${renderBpSection('how-it-works', site)}
-  <section class="wrap bp-section bp-help" aria-labelledby="home-help-title">
-    <h2 id="home-help-title">Questions about applying?</h2>
-    <div class="bp-actions"><a class="bp-button bp-button-primary" href="${siteUrl('apply/')}">How to Apply</a><a class="bp-button" href="${siteUrl('contact/')}">Contact Us</a></div>
-  </section>`;
+  ${renderBpSection('how-it-works', site)}`;
 }
 
 const sections = {
@@ -255,11 +245,10 @@ const sections = {
       const stepHeading = standalone ? 'h2' : 'h3';
       return `
     <div class="wrap">
-      ${heading}
+      ${heading}${standalone ? '\n      <p class="bp-section-intro">Applications are planned through the financing apps.</p>' : ''}
       <ol class="bp-steps">${steps.map(([title, copy], index) => `<li><span aria-hidden="true">${index + 1}</span><${stepHeading}>${title}</${stepHeading}><p>${copy}</p></li>`).join('')}</ol>
       ${standalone ? `${borrowingNotice(siteUrl)}
-      <div class="bp-process-prep"><h2>What you may need</h2><p>Have a government-issued ID, proof of income and proof of address ready. Check your chosen product for its requirements.</p></div>
-      <a class="bp-content-link" href="${siteUrl('apply/')}">How to Apply <span aria-hidden="true">→</span></a>` : `<a class="bp-content-link" href="${siteUrl('how-it-works/')}">See the full process <span aria-hidden="true">→</span></a>`}
+      <div class="bp-process-prep"><h2>What you may need</h2><p>Have a government-issued ID, proof of income and proof of address ready. Check your chosen product for its requirements.</p></div>` : `<a class="bp-content-link" href="${siteUrl('how-it-works/')}">See the full process <span aria-hidden="true">→</span></a>`}
     </div>
   `;
     },
@@ -277,7 +266,7 @@ const sections = {
       </div>`).join('\n      ')}
     </div>
     ${borrowingNotice(siteUrl)}
-    <a class="bp-content-link" href="${siteUrl('apply/')}">How to Apply <span aria-hidden="true">→</span></a>
+    <a class="bp-content-link" href="${siteUrl('how-it-works/')}">How It Works <span aria-hidden="true">→</span></a>
   `,
   },
   about: {

@@ -6,7 +6,7 @@ Asset provenance: [font licenses and official sources](site/FONT-LICENSES.md), [
 
 The homepage displays the BP review draft based on Rosh's HTML prototype. Its three brand cards link to their product pages. Flashbit uses an SVG symbol and outlined wordmark. See [brand asset provenance](site/BRAND-ASSETS.md).
 
-The site contains the BP review homepage, Terms and Conditions and Privacy Notice drafts, and three brand pages for LIVAYA, ALAGO and SULIVO.
+The BP review site has standalone About Us, Our Brands, Loan Products, How It Works, FAQs and Contact Us pages, along with Terms and Conditions and Privacy Notice drafts. The Contact Us form opens a draft in the visitor's email app. No server is required to handle inquiries.
 
 ## GitHub Pages
 
@@ -37,4 +37,4 @@ python3 -m http.server 4173 --bind 127.0.0.1 --directory site/dist
 - `scripts/build-github-pages.mjs`: copies assets and generates project-relative Pages URLs.
 - `docs/`: generated GitHub Pages website.
 
-The routes are the homepage, `terms/`, `privacy/`, `livayafinancing/`, `alagofinancing/` and `sulivofinancing/`. The site provides company and product information. App screenshots show example loan offers.
+Company routes are the homepage, `about/`, `brands/`, `loan-products/`, `how-it-works/`, `faqs/`, `contact/`, `terms/` and `privacy/`. Brand routes are `livayafinancing/`, `alagofinancing/` and `sulivofinancing/`. App screenshots show example loan offers.

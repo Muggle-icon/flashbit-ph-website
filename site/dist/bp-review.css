@@ -15,6 +15,11 @@
   font-weight: 700;
 }
 
+.bp-page .skip:not(:focus) {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .bp-identity {
   display: flex;
   width: fit-content;
@@ -42,8 +47,72 @@
   border-top: 1px solid var(--bp-line);
 }
 
-.bp-header nav a[aria-current] {
+.bp-header nav > a[aria-current],
+.bp-brand-menu-current > summary {
   box-shadow: inset 0 -3px var(--bp-amber);
+}
+
+.bp-brand-menu {
+  position: relative;
+}
+
+.bp-brand-menu > summary {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  list-style: none;
+  color: #354e5e;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bp-brand-menu > summary::-webkit-details-marker {
+  display: none;
+}
+
+.bp-brand-menu > summary:focus-visible {
+  outline: 3px solid var(--bp-navy);
+  outline-offset: 3px;
+}
+
+.bp-brand-menu > summary::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border: solid currentColor;
+  border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-2px) rotate(45deg);
+}
+
+.bp-brand-menu[open] > summary::after {
+  transform: translateY(2px) rotate(225deg);
+}
+
+.bp-brand-menu-current > summary {
+  color: var(--bp-navy);
+  font-weight: 800;
+}
+
+.bp-brand-menu-links {
+  position: absolute;
+  inset: 100% auto auto 0;
+  min-width: 204px;
+  padding: 6px;
+  border: 1px solid var(--bp-line);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgb(22 32 77 / 12%);
+}
+
+.bp-brand-menu-links a {
+  padding-inline: 12px;
+  border-radius: 4px;
+}
+
+.bp-brand-menu-links a[aria-current] {
+  background: var(--bp-mist);
 }
 
 .bp-hero {
@@ -246,6 +315,7 @@
 }
 
 .bp-section h2,
+.bp-standalone h1,
 .bp-policy-head h1 {
   color: var(--bp-navy);
 }
@@ -253,6 +323,18 @@
 .bp-section-intro {
   margin-top: 10px;
   color: var(--body);
+}
+
+.bp-content-link {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
+  color: var(--bp-navy);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .bp-tint {
@@ -332,9 +414,10 @@
   font-weight: 800;
 }
 
-.bp-steps h3 {
+.bp-steps :is(h2, h3) {
   color: var(--bp-navy);
   margin-bottom: 8px;
+  font-size: 18px;
 }
 
 .bp-steps p,
@@ -351,7 +434,7 @@
   margin-top: 32px;
 }
 
-.bp-product-group h3 {
+.bp-product-group h2 {
   color: var(--brand-ink);
   font-size: 21px;
 }
@@ -397,6 +480,12 @@
   grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr);
   align-items: start;
   gap: 32px;
+}
+
+.bp-faq.bp-standalone {
+  max-width: 800px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
 }
 
 .bp-about p {
@@ -640,6 +729,10 @@
 }
 
 @media (hover: hover) {
+  .bp-brand-menu > summary:hover { color: var(--bp-navy); }
+
+  .bp-brand-menu-links a:hover { background: var(--bp-mist); }
+
   .bp-product-link:hover {
     background: color-mix(in srgb, var(--brand-soft), var(--brand-button) 7%);
   }
@@ -741,9 +834,16 @@
     gap: 8px;
   }
 
-  .bp-header nav a {
+  .bp-header nav a,
+  .bp-brand-menu > summary {
     font-size: 13px;
   }
+
+  .bp-header nav { position: relative; }
+
+  .bp-brand-menu { position: static; }
+
+  .bp-brand-menu-links { inset-inline: 0; }
 
   .bp-notice {
     align-items: flex-start;
@@ -778,5 +878,165 @@
 
   .bp-values {
     grid-template-columns: 1fr;
+  }
+}
+
+.bp-contact-head {
+  padding-block: clamp(28px, 5vw, 56px);
+  color: var(--bp-navy);
+}
+
+.bp-contact-head h1 {
+  font-size: clamp(32px, 5vw, 40px);
+}
+
+.bp-contact {
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.3fr);
+  align-items: start;
+  gap: clamp(20px, 4vw, 40px);
+}
+
+.bp-contact-methods {
+  display: grid;
+  gap: 12px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.bp-contact-method {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--bp-line);
+  border-radius: 10px;
+}
+
+.bp-contact-method:last-child {
+  background: var(--bp-mist);
+}
+
+.bp-contact-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 8px;
+  background: #e8eef9;
+  color: var(--bp-navy);
+}
+
+.bp-contact-icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.bp-contact-method h2 {
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+.bp-contact-method address {
+  max-width: 34ch;
+  color: var(--body);
+  font-style: normal;
+}
+
+.bp-contact-method a,
+.bp-contact-consent a {
+  color: var(--bp-navy);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+
+.bp-contact-form:not([hidden]) {
+  display: grid;
+  gap: 18px;
+  padding: clamp(16px, 3.5vw, 32px);
+  border: 1px solid var(--bp-line);
+  border-radius: 12px;
+}
+
+.bp-contact-form h2 {
+  margin-bottom: 6px;
+  font-size: clamp(23px, 3vw, 28px);
+}
+
+.bp-contact-form p,
+.bp-contact-form small {
+  color: var(--body);
+}
+
+.bp-contact-field-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: 18px;
+}
+
+.bp-contact-field {
+  display: grid;
+  gap: 5px;
+}
+
+.bp-contact-field label {
+  color: var(--bp-navy);
+  font-weight: 700;
+}
+
+.bp-contact-field label span {
+  color: #a32535;
+}
+
+.bp-contact-field :is(input, select, textarea) {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 8px 10px;
+  border: 1px solid #8b9bb0;
+  border-radius: 6px;
+  color: var(--ink);
+  background: #fff;
+  font: inherit;
+}
+
+.bp-contact-field textarea {
+  resize: vertical;
+}
+
+.bp-contact-consent {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  align-items: start;
+  gap: 10px;
+}
+
+.bp-contact-consent input {
+  width: 20px;
+  height: 20px;
+  margin: 4px 0 0;
+  accent-color: var(--bp-navy);
+}
+
+.bp-contact-form :is(input, select, textarea):focus-visible {
+  outline: 2px solid var(--bp-navy);
+  outline-offset: 2px;
+}
+
+.bp-contact-submit .bp-button {
+  justify-content: center;
+  margin-top: 10px;
+  padding-inline: 16px;
+  cursor: pointer;
+}
+
+@media (max-width: 760px) {
+  .bp-contact,
+  .bp-contact-field-row {
+    grid-template-columns: minmax(0, 1fr);
   }
 }

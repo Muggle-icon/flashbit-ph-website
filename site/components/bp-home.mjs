@@ -1,13 +1,12 @@
 const company = 'FlashBit Financing Corp.';
 const tradeNames = 'Livaya Financing, Alago Financing and Sulivo Financing';
-const phone = '0945-129-2500';
-const supportEmail = 'flashbitfinancing@gmail.com';
-const dpoEmail = 'dpoflashbit@gmail.com';
-const office = '3/F Prestige Tower, F. Ortigas Jr. Road, Ortigas Center, Pasig City 1605, Metro Manila, Philippines';
 const launch = 'December 1, 2026';
+const secNumber = '202609066778-02';
+const authorityNumber = 'F-26-0144-55';
+const amlcNumber = '20260924204248-7';
 
 const navigation = [
-  ['Home', 'top'],
+  ['Home', ''],
   ['About Us', 'about'],
   ['Our Brands', 'brands'],
   ['Loan Products', 'loan-products'],
@@ -54,7 +53,18 @@ function legalLinks(siteUrl) {
   return `<a href="${siteUrl('terms/')}">Terms and Conditions</a><a href="${siteUrl('privacy/')}">Privacy Notice</a>`;
 }
 
-export function bpHeader(siteUrl, flashbitLogo, isHome) {
+function borrowingNotice(siteUrl) {
+  return `<aside class="bp-notice" aria-label="Borrowing reminder">
+    <div><strong>Always read the Terms and Conditions before proceeding in the loan transaction.</strong>
+    <p>Review the disclosures, costs and repayment responsibilities before accepting a loan.</p></div>
+    <a href="${siteUrl('terms/')}">Read Terms and Conditions</a>
+  </aside>`;
+}
+
+const pagePath = slug => slug ? `${slug}/` : '';
+const currentPageAttribute = active => active ? ' aria-current="page"' : '';
+
+export function bpHeader({ siteUrl, route, brands, flashbitLogo }, currentPage) {
   return `
   <p class="bp-review">BP review draft · Content and product details subject to confirmation</p>
   <header class="site-header bp-header">
@@ -64,13 +74,20 @@ export function bpHeader(siteUrl, flashbitLogo, isHome) {
         <span><strong>${company}</strong><small>Operating under the names of ${tradeNames}</small></span>
       </a>
       <nav aria-label="Main navigation">
-        ${navigation.map(([label, id]) => `<a href="${siteUrl(`#${id}`)}"${isHome && id === 'top' ? ' aria-current="page"' : ''}>${label}</a>`).join('')}
+        ${navigation.map(([label, slug]) => slug === 'brands' ? `
+        <details class="bp-brand-menu${currentPage === slug ? ' bp-brand-menu-current' : ''}">
+          <summary>${label}</summary>
+          <div class="bp-brand-menu-links">
+            <a href="${siteUrl(pagePath(slug))}"${currentPageAttribute(currentPage === slug)}>All brands</a>
+            ${brands.map(brand => `<a href="${route(brand)}#top">${brandDirectory[brand.id].name}</a>`).join('')}
+          </div>
+        </details>` : `<a href="${siteUrl(pagePath(slug))}"${currentPageAttribute(currentPage === slug)}>${label}</a>`).join('')}
       </nav>
     </div>
   </header>`;
 }
 
-function bpFooterDisclosures(assetUrl) {
+function bpFooterDisclosures(assetUrl, { phone, supportEmail, dpoEmail, office }) {
   return `
       <section class="bp-footer-disclosures" id="contact" aria-labelledby="contact-title">
         <h2 id="contact-title">Company and regulatory information</h2>
@@ -80,8 +97,8 @@ function bpFooterDisclosures(assetUrl) {
               <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-sec.webp')}" width="49" height="80" alt="" loading="lazy" decoding="async">
               <div><h3>Securities and Exchange Commission</h3><dl>
                 <div><dt>Date of incorporation</dt><dd>September 14, 2026</dd></div>
-                <div><dt>SEC Registration No.</dt><dd>202609066778-02</dd></div>
-                <div><dt>Certificate of Authority No.</dt><dd>F-26-0144-55</dd></div>
+                <div><dt>SEC Registration No.</dt><dd>${secNumber}</dd></div>
+                <div><dt>Certificate of Authority No.</dt><dd>${authorityNumber}</dd></div>
               </dl></div>
             </div>
             <div class="bp-disclosure">
@@ -95,7 +112,7 @@ function bpFooterDisclosures(assetUrl) {
             <div class="bp-disclosure">
               <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-amlc.webp')}" width="72" height="49" alt="" loading="lazy" decoding="async">
               <div><h3>Anti-Money Laundering Council</h3><dl>
-                <div><dt>Registration No.</dt><dd>20260924204248-7</dd></div>
+                <div><dt>Registration No.</dt><dd>${amlcNumber}</dd></div>
               </dl></div>
             </div>
           </div>
@@ -118,7 +135,7 @@ function bpFooterDisclosures(assetUrl) {
       </section>`;
 }
 
-export function bpFooter(siteUrl, assetUrl, flashbitLogo, isHome) {
+export function bpFooter({ siteUrl, assetUrl, flashbitLogo, contactInfo }, currentPage) {
   return `
   <footer class="bp-footer" id="site-footer">
     <div class="wrap bp-footer-inner">
@@ -126,8 +143,11 @@ export function bpFooter(siteUrl, assetUrl, flashbitLogo, isHome) {
       ${footerNavigation.map(([title, ids]) => `
       <nav class="bp-footer-group" aria-label="${title}">
         <p class="bp-footer-group-title" aria-hidden="true">${title}</p>
-        ${navigation.filter(([, id]) => ids.includes(id)).map(([label, id]) => `<a href="${siteUrl(`#${id}`)}">${label}</a>`).join('')}
-      </nav>`).join('').trimStart()}${isHome ? bpFooterDisclosures(assetUrl) : ''}
+        ${navigation.filter(([, id]) => ids.includes(id)).map(([label, slug]) => {
+          const legacyAnchor = currentPage === '' && ['about', 'faqs'].includes(slug) ? ` id="${slug}" data-legacy-section` : '';
+          return `<a href="${siteUrl(pagePath(slug))}"${currentPageAttribute(currentPage === slug)}${legacyAnchor}>${label}</a>`;
+        }).join('')}
+      </nav>`).join('').trimStart()}${['', 'about'].includes(currentPage) ? bpFooterDisclosures(assetUrl, contactInfo) : ''}
       <div class="bp-footer-bottom">
         <p class="bp-copyright">© 2026 ${company} All rights reserved. Operating under the names of ${tradeNames}.</p>
         <nav class="bp-footer-legal" aria-label="Legal information">${legalLinks(siteUrl)}</nav>
@@ -136,10 +156,10 @@ export function bpFooter(siteUrl, assetUrl, flashbitLogo, isHome) {
   </footer>`;
 }
 
-function reviewQuestions(siteUrl) {
+function reviewQuestions(siteUrl, dpoEmail) {
   return [
     ['What is FlashBit Financing Corp.?', `${company} operates under the names of ${tradeNames}.`],
-    ['Where can I find registration details?', 'See Company and regulatory information below for the SEC registration and Certificate of Authority details.'],
+    ['Is FlashBit registered with the SEC?', `Yes. ${company} is registered with the SEC (Registration No. ${secNumber}) and holds Certificate of Authority No. ${authorityNumber}. We are also registered with the Anti-Money Laundering Council (Registration No. ${amlcNumber}).`],
     ['When will loan products be available?', `The planned launch date is ${launch}, subject to confirmation.`],
     ['Who can apply for a loan?', 'The proposed general requirements include being a Filipino citizen, at least 21 years old, with a valid government-issued ID and a regular source of income. Requirements may vary by product.'],
     ['What documents should I prepare?', 'You may be asked for a government-issued ID, proof of income and proof of address. Check the requirements for your chosen product before applying.'],
@@ -150,7 +170,8 @@ function reviewQuestions(siteUrl) {
   ].map(([question, answer]) => `<details><summary>${question}</summary><p>${answer}</p></details>`).join('');
 }
 
-export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
+export function renderBpHome(site) {
+  const { siteUrl, assetUrl } = site;
   const heroFull = assetUrl('assets/flashbit-community-v1.webp');
   const heroMedium = assetUrl('assets/flashbit-community-v1-mobile.webp');
   const heroSmall = assetUrl('assets/flashbit-community-v1-small.webp');
@@ -165,7 +186,7 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
         <p class="bp-eyebrow">${company}</p>
         <h1 id="home-title">Your Partner in Financial Growth</h1>
         <p class="bp-lede">Financing for everyday expenses through Livaya, Alago and Sulivo.</p>
-        <div class="bp-actions"><a class="bp-button bp-button-primary" href="#loan-products">Explore Loan Products</a><a class="bp-button" href="#contact">Contact Us</a></div>
+        <div class="bp-actions"><a class="bp-button bp-button-primary" id="loan-products" data-legacy-section href="${siteUrl('loan-products/')}">Explore Loan Products</a><a class="bp-button" href="${siteUrl('contact/')}">Contact Us</a></div>
       </div>
       <aside class="bp-glance" aria-labelledby="glance-title">
         <h2 id="glance-title">Loan terms at a glance</h2>
@@ -181,8 +202,16 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
     </div>
   </section>
 
-  <section class="wrap bp-section" id="brands" aria-labelledby="brands-title">
-    <h2 id="brands-title">Our Brands</h2>
+  ${renderBpSection('brands', site)}
+  ${renderBpSection('how-it-works', site)}`;
+}
+
+const sections = {
+  brands: {
+    title: 'Our Brands',
+    className: 'wrap',
+    body: ({ brands, siteUrl, route, brandLogo }, heading) => `
+    ${heading}
     <p class="bp-section-intro">Explore the three financing brands of ${company}</p>
     <div class="brand-directory">
       ${brands.map(brand => {
@@ -195,35 +224,46 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
         </a>`;
       }).join('')}
     </div>
-    <aside class="bp-notice" aria-label="Borrowing reminder">
-      <div><strong>Always read the Terms and Conditions before proceeding in the loan transaction.</strong>
-      <p>Review the disclosures, costs and repayment responsibilities before accepting a loan.</p></div>
-      <a href="${siteUrl('terms/')}">Read Terms and Conditions</a>
-    </aside>
-  </section>
-
-  <section class="bp-section bp-tint" id="how-it-works" aria-labelledby="process-title">
+    ${borrowingNotice(siteUrl)}
+  `,
+  },
+  'how-it-works': {
+    title: 'How It Works',
+    homeTitle: 'Get financing in five simple steps',
+    className: 'bp-tint',
+    body: ({ siteUrl }, heading, standalone) => {
+      const stepHeading = standalone ? 'h2' : 'h3';
+      return `
     <div class="wrap">
-      <h2 id="process-title">Get financing in five simple steps</h2>
-      <ol class="bp-steps">${steps.map(([title, copy], index) => `<li><span aria-hidden="true">${index + 1}</span><h3>${title}</h3><p>${copy}</p></li>`).join('')}</ol>
+      ${heading}
+      <ol class="bp-steps">${steps.map(([title, copy], index) => `<li><span aria-hidden="true">${index + 1}</span><${stepHeading}>${title}</${stepHeading}><p>${copy}</p></li>`).join('')}</ol>
+      ${standalone ? borrowingNotice(siteUrl) : `<a class="bp-content-link" href="${siteUrl('how-it-works/')}">See the full process <span aria-hidden="true">→</span></a>`}
     </div>
-  </section>
-
-  <section class="wrap bp-section" id="loan-products" aria-labelledby="loans-title">
-    <h2 id="loans-title">Loan Products</h2>
+  `;
+    },
+  },
+  'loan-products': {
+    title: 'Loan Products',
+    className: 'wrap',
+    body: ({ siteUrl, brands, route }, heading) => `
+    ${heading}
     <p class="bp-section-intro">Two planned loan types across our three brands. Check your loan offer for the amount, terms and costs.</p>
     <div class="bp-products">
       ${brands.map(brand => `<div class="bp-product-group ${brand.id}">
-        <h3><a class="bp-product-link" href="${route(brand)}#top">${brandDirectory[brand.id].name}<span aria-hidden="true">→</span></a></h3>
+        <h2><a class="bp-product-link" href="${route(brand)}#top">${brandDirectory[brand.id].name}<span aria-hidden="true">→</span></a></h2>
         <dl>${loanProducts.map(([name, description]) => `<div><dt>${name}</dt><dd>${description}</dd></div>`).join('')}</dl>
       </div>`).join('\n      ')}
     </div>
-  </section>
-
-  <section class="bp-section bp-tint" id="about" aria-labelledby="about-title">
+    ${borrowingNotice(siteUrl)}
+  `,
+  },
+  about: {
+    title: 'About Us',
+    className: 'bp-tint',
+    body: (_, heading) => `
     <div class="wrap">
       <div class="bp-about">
-        <h2 id="about-title">About Us</h2>
+        ${heading}
         <p>${company} is a Philippine financing company operating under the names of ${tradeNames}.</p>
         <p class="bp-ownership"><strong>99.99% owned by Novolink PTE Ltd.</strong></p>
       </div>
@@ -234,12 +274,24 @@ export function renderBpHome(brands, { siteUrl, assetUrl, route, brandLogo }) {
         <div><dt>Financial Inclusion</dt><dd>Financing options for everyday needs.</dd></div>
       </dl>
     </div>
-  </section>
+  `,
+  },
+  faqs: {
+    title: 'Frequently Asked Questions',
+    className: 'wrap bp-faq',
+    body: ({ siteUrl, contactInfo }, heading) => `
+    <div>${heading}<p class="bp-section-intro">About our brands, loan terms and where to get help.</p></div>
+    <div class="bp-questions">${reviewQuestions(siteUrl, contactInfo.dpoEmail)}</div>
+  `,
+  },
+};
 
-  <section class="wrap bp-section bp-faq" id="faqs" aria-labelledby="faq-title">
-    <div><h2 id="faq-title">Frequently Asked Questions</h2><p class="bp-section-intro">About our brands, loan terms and where to get help.</p></div>
-    <div class="bp-questions">${reviewQuestions(siteUrl)}</div>
-  </section>`;
+export function renderBpSection(slug, site, standalone = false) {
+  const { title, homeTitle, className, body } = sections[slug];
+  const headingTag = standalone ? 'h1' : 'h2';
+  const titleId = `${slug}-title`;
+  const heading = `<${headingTag} id="${titleId}">${standalone ? title : homeTitle ?? title}</${headingTag}>`;
+  return `<section class="bp-section ${className}${standalone ? ' bp-standalone' : ''}" id="${slug}" aria-labelledby="${titleId}">${body(site, heading, standalone)}</section>`;
 }
 
 export function renderBpPolicy(title, content, siteUrl) {

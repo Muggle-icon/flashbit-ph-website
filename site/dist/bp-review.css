@@ -822,6 +822,13 @@ html:has(.bp-mobile-menu[open]) { overflow: hidden; }
   gap: 16px;
 }
 
+@media (min-width: 681px) {
+  .bp-disclosure-group--agencies {
+    grid-row: span 2;
+    grid-template-rows: subgrid;
+  }
+}
+
 .bp-disclosure {
   display: grid;
   grid-template-columns: 40px minmax(0, 1fr);
@@ -851,6 +858,18 @@ html:has(.bp-mobile-menu[open]) { overflow: hidden; }
 .bp-disclosure h3 {
   margin-bottom: 8px;
   font-size: 16px;
+}
+
+.bp-disclosure-status {
+  display: inline-block;
+  margin: 0;
+  padding: 2px 9px;
+  border: 1px solid #f3cc5a;
+  border-radius: 999px;
+  background: #fff4d1;
+  color: #7c4500;
+  font-size: 13px;
+  font-weight: 700;
 }
 
 .bp-disclosures dl > div + div {

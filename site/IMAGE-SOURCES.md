@@ -1,6 +1,6 @@
 # Lifestyle image sources
 
-Updated: 2026-11-16
+Updated: 2026-11-17
 
 The homepage and Sulivo photographs are AI-generated everyday-life scenes created with OpenAI ImageGen. They are illustrative scenes.
 
@@ -9,6 +9,8 @@ The Livaya portrait uses the same crop as before, exported from the supplied App
 The four current Alago App screens come from the PNG attachments supplied on 2026-11-13. Each measures 750 × 1624 px. The published copies total 255,852 bytes, down from 2,030,037 bytes in the attachments.
 
 The Livaya App Home screenshot comes from the PNG supplied on 2026-11-16. The 750 × 1624 px image is published as a 31,942-byte lossless WebP.
+
+The National Privacy Commission mark in the footer is cropped from the screenshot supplied on 2026-11-17 and published as a 48 × 78 px lossless WebP. The agency name and application status are rendered as text.
 
 | Asset | Exact dimensions | Intended use | Source |
 | --- | --- | --- | --- |

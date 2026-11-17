@@ -186,12 +186,16 @@ function bpFooterDisclosures(assetUrl, { phone, phoneHref, supportEmail, dpoEmai
       <section class="bp-footer-disclosures" id="contact" aria-labelledby="contact-title">
         <h2 id="contact-title">Company and regulatory information</h2>
         <div class="bp-disclosures">
-          <div class="bp-disclosure-group">
+          <div class="bp-disclosure-group bp-disclosure-group--agencies">
             ${sec}
             ${bir}
           </div>
-          <div class="bp-disclosure-group">
+          <div class="bp-disclosure-group bp-disclosure-group--agencies">
             ${amlc}
+            <div class="bp-disclosure">
+              <img class="bp-disclosure-mark" src="${assetUrl('assets/bp-npc.webp')}" width="48" height="78" alt="" loading="lazy" decoding="async">
+              <div><h3>National Privacy Commission</h3><p class="bp-disclosure-status">Ongoing Application</p></div>
+            </div>
           </div>
           <div class="bp-disclosure-group">
             ${bpOfficeDisclosure(office)}
